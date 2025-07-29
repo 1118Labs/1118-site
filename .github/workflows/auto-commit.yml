@@ -1,0 +1,27 @@
+name: Auto Commit Changes
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 12 * * *'
+
+jobs:
+  commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Make changes
+        run: |
+          echo "// updated at $(date)" >> logs.txt
+
+      - name: Commit & Push
+        run: |
+          git config user.name "openAI-bot"
+          git config user.email "bot@openai.com"
+          git add .
+          git commit -m "Automated update" || echo "Nothing to commit"
+          git push origin main
