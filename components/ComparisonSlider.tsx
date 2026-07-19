@@ -3,8 +3,16 @@
 import Image from "next/image";
 import { type ChangeEvent, type CSSProperties, useState } from "react";
 
-export function ComparisonSlider() {
-  const [position, setPosition] = useState(52);
+interface ComparisonSliderProps {
+  compact?: boolean;
+  priority?: boolean;
+}
+
+export function ComparisonSlider({
+  compact = false,
+  priority = false,
+}: ComparisonSliderProps) {
+  const [position, setPosition] = useState(50);
   const sliderStyle = {
     "--slider-position": `${position}%`,
   } as CSSProperties;
@@ -14,15 +22,21 @@ export function ComparisonSlider() {
   };
 
   return (
-    <figure className="comparison-figure">
+    <figure
+      className={`comparison-figure${compact ? " comparison-figure-compact" : ""}`}
+    >
       <div className="comparison-frame" style={sliderStyle}>
         <Image
           className="comparison-image comparison-before"
           src="/etchr-before.jpg"
-          alt="Original studio photograph before Etchr portrait treatment"
+          alt="Original photograph supplied to Etchr"
           fill
-          loading="eager"
-          sizes="(max-width: 980px) 90vw, 42vw"
+          priority={priority}
+          sizes={
+            compact
+              ? "(max-width: 760px) 72vw, 300px"
+              : "(max-width: 900px) 92vw, 46vw"
+          }
         />
         <div className="comparison-after-layer" aria-hidden="true">
           <Image
@@ -30,17 +44,25 @@ export function ComparisonSlider() {
             src="/etchr-after.jpg"
             alt=""
             fill
-            loading="eager"
-            sizes="(max-width: 980px) 90vw, 42vw"
+            priority={priority}
+            sizes={
+              compact
+                ? "(max-width: 760px) 72vw, 300px"
+                : "(max-width: 900px) 92vw, 46vw"
+            }
           />
         </div>
 
-        <span className="comparison-label comparison-label-before">Before</span>
-        <span className="comparison-label comparison-label-after">Etchr</span>
+        <span className="comparison-label comparison-label-before">
+          Source photo
+        </span>
+        <span className="comparison-label comparison-label-after">
+          Etchr portrait
+        </span>
 
         <div className="comparison-divider" aria-hidden="true">
           <div className="comparison-handle">
-            <span>‹ ›</span>
+            <span>← →</span>
           </div>
         </div>
 
@@ -51,14 +73,16 @@ export function ComparisonSlider() {
           max="100"
           value={position}
           onChange={handleChange}
-          aria-label="Compare the original photograph with the finished Etchr portrait"
-          aria-valuetext={`${position}% of the original photograph visible`}
+          aria-label="Compare the source photograph with the finished Etchr portrait"
+          aria-valuetext={`${position}% source photograph and ${100 - position}% finished Etchr portrait visible`}
         />
       </div>
-      <figcaption className="comparison-caption">
-        <strong>Drag to compare</strong>
-        <span>Real photo → finished portrait</span>
-      </figcaption>
+      {!compact && (
+        <figcaption className="comparison-caption">
+          <strong>Drag to compare</strong>
+          <span>Source photograph → finished Etchr portrait</span>
+        </figcaption>
+      )}
     </figure>
   );
 }

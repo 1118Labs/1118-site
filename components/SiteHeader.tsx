@@ -6,6 +6,7 @@ import { type KeyboardEvent, useRef } from "react";
 
 const navLinks = [
   { href: "#work", label: "Work" },
+  { href: "#philosophy", label: "Philosophy" },
   { href: "#about", label: "About" },
   { href: "#contact", label: "Contact" },
 ] as const;
@@ -26,10 +27,15 @@ export function SiteHeader() {
 
   return (
     <header className="site-header">
-      <div className="page-shell nav-pill">
+      <div className="page-shell header-inner">
         <Link className="brand-link" href="/" aria-label="1118 home">
-          <Image src="/1118-mark.png" alt="" width={31} height={31} priority />
-          <span>1118</span>
+          <Image
+            src="/brand/1118-logo-blue.png"
+            alt=""
+            width={273}
+            height={175}
+            priority
+          />
         </Link>
 
         <nav className="desktop-nav" aria-label="Primary navigation">
@@ -54,15 +60,6 @@ export function SiteHeader() {
             ))}
           </nav>
         </details>
-
-        <a
-          className="nav-cta"
-          href="https://etchr.ai"
-          target="_blank"
-          rel="noreferrer"
-        >
-          See Etchr <span aria-hidden="true">↗</span>
-        </a>
       </div>
     </header>
   );
