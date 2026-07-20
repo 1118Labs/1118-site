@@ -3,7 +3,7 @@ import path from "node:path";
 
 const chromePort = process.env.CHROME_DEBUG_PORT || "9333";
 const baseUrl = process.env.QA_URL || "http://127.0.0.1:3108";
-const outputDir = path.resolve("artifacts/flagship-homepage-v2-refinement");
+const outputDir = path.resolve("artifacts/flagship-overnight-launch-readiness");
 
 const sleep = (milliseconds) =>
   new Promise((resolve) => setTimeout(resolve, milliseconds));
@@ -254,6 +254,49 @@ async function testSlider(session) {
   return { initial, end, home, arrow, pointer, touch };
 }
 
+async function testContactForm(session) {
+  const before = await session.evaluate(`
+    (() => {
+      const form = document.querySelector(".contact-form");
+      const fields = [...form.elements].filter((field) => ["INPUT", "TEXTAREA"].includes(field.tagName));
+      return {
+        exists: Boolean(form),
+        initiallyValid: form.checkValidity(),
+        labels: [...form.querySelectorAll("label > span")].map((label) => label.textContent.trim()),
+        requiredCount: fields.filter((field) => field.required).length,
+        emailType: form.querySelector('[name="email"]').type,
+        mailto: form.querySelector('a[href="mailto:hello@1118.io"]')?.href || null,
+      };
+    })()
+  `);
+
+  const after = await session.evaluate(`
+    (() => {
+      const form = document.querySelector(".contact-form");
+      const values = {
+        name: "Launch QA",
+        email: "launch-qa@example.com",
+        project: "A browser validation message that must not be sent.",
+      };
+      for (const [name, value] of Object.entries(values)) {
+        const field = form.elements.namedItem(name);
+        field.value = value;
+        field.dispatchEvent(new Event("input", { bubbles: true }));
+      }
+      form.requestSubmit();
+      return new Promise((resolve) => requestAnimationFrame(() => {
+        resolve({
+          validAfterFill: form.checkValidity(),
+          valuesRetained: Object.entries(values).every(([name, value]) => form.elements.namedItem(name).value === value),
+          status: form.querySelector('[role="status"]')?.textContent.trim() || null,
+        });
+      }));
+    })()
+  `);
+
+  return { ...before, ...after };
+}
+
 async function inspectViewport(session, viewport) {
   await session.send("Emulation.setDeviceMetricsOverride", {
     width: viewport.width,
@@ -278,12 +321,12 @@ async function inspectViewport(session, viewport) {
       const sections = [".hero", ".etchr-section", ".belief-section", ".works-section", ".escape-section", ".invitation-section"];
       const images = Array.from(document.images);
       const headings = Array.from(document.querySelectorAll("h1, h2, h3"));
-      const interactive = Array.from(document.querySelectorAll("a, [role='slider']"));
+      const interactive = Array.from(document.querySelectorAll("a, button, input, textarea, [role='slider']"));
       const formatGrid = document.querySelector(".format-grid");
       const formatItems = Array.from(document.querySelectorAll(".format-item"));
       const workRows = Array.from(document.querySelectorAll(".work-row"));
-      const escapePath = [...document.querySelectorAll(".escape-arc path")].find(
-        (path) => getComputedStyle(path).display !== "none",
+      const escapePath = [...document.querySelectorAll(".escape-trajectory-core")].find(
+        (path) => getComputedStyle(path.closest(".escape-route")).display !== "none",
       );
       const navigation = performance.getEntriesByType("navigation")[0];
       const resources = performance.getEntriesByType("resource");
@@ -317,7 +360,7 @@ async function inspectViewport(session, viewport) {
         brokenImages: images.filter((image) => image.naturalWidth === 0).length,
         interactiveCount: interactive.length,
         unlabeledInteractive: interactive.filter((node) => {
-          const name = node.getAttribute("aria-label") || node.textContent.trim();
+          const name = node.getAttribute("aria-label") || node.labels?.[0]?.textContent.trim() || node.textContent.trim();
           return !name;
         }).length,
         navTargets: Array.from(document.querySelectorAll(".site-nav a")).map((link) => ({
@@ -354,7 +397,17 @@ async function inspectViewport(session, viewport) {
           loadEvent: navigation ? Math.round(navigation.loadEventEnd) : null,
           requestCount: resources.length,
           transferredBytes: Math.round(resources.reduce((sum, entry) => sum + (entry.transferSize || 0), 0)),
-          encodedBytes: Math.round(resources.reduce((sum, entry) => sum + (entry.encodedBodySize || 0), 0))
+          encodedBytes: Math.round(resources.reduce((sum, entry) => sum + (entry.encodedBodySize || 0), 0)),
+          initialJavaScript: {
+            requestCount: resources.filter((entry) => entry.initiatorType === "script").length,
+            transferredBytes: Math.round(resources.filter((entry) => entry.initiatorType === "script").reduce((sum, entry) => sum + (entry.transferSize || 0), 0)),
+            encodedBytes: Math.round(resources.filter((entry) => entry.initiatorType === "script").reduce((sum, entry) => sum + (entry.encodedBodySize || 0), 0))
+          },
+          imageResources: resources.filter((entry) => entry.initiatorType === "img").map((entry) => ({
+            path: new URL(entry.name).pathname,
+            transferredBytes: Math.round(entry.transferSize || 0),
+            encodedBytes: Math.round(entry.encodedBodySize || 0)
+          }))
         },
         reducedMotion: {
           media: matchMedia("(prefers-reduced-motion: reduce)").matches,
@@ -367,6 +420,7 @@ async function inspectViewport(session, viewport) {
   `);
 
   report.slider = await testSlider(session);
+  report.contactForm = await testContactForm(session);
   report.consoleErrors = session.events
     .filter(
       (event) =>
@@ -421,10 +475,10 @@ for (const viewport of viewports) {
   }
 
   if (viewport.width === 1440) {
-    await captureFullPage(session, "homepage-full-1440.png");
+    await captureFullPage(session, "full-page-1440.png");
     await captureRegion(
       session,
-      "homepage-hero-1440.png",
+      "hero-1440.png",
       `(() => {
         const header = document.querySelector(".site-header").getBoundingClientRect();
         const hero = document.querySelector(".hero").getBoundingClientRect();
@@ -433,7 +487,7 @@ for (const viewport of viewports) {
     );
     await captureRegion(
       session,
-      "homepage-etchr-1440.png",
+      "etchr-1440.png",
       `(() => {
         const rect = document.querySelector(".etchr-section").getBoundingClientRect();
         return { x: rect.x, y: rect.y + scrollY, width: rect.width, height: rect.height };
@@ -441,7 +495,7 @@ for (const viewport of viewports) {
     );
     await captureRegion(
       session,
-      "homepage-formats-1440.png",
+      "formats-1440.png",
       `(() => {
         const rect = document.querySelector(".format-proof").getBoundingClientRect();
         return { x: rect.x, y: rect.y + scrollY, width: rect.width, height: rect.height };
@@ -449,7 +503,15 @@ for (const viewport of viewports) {
     );
     await captureRegion(
       session,
-      "homepage-works-1440.png",
+      "belief-1440.png",
+      `(() => {
+        const rect = document.querySelector(".belief-section").getBoundingClientRect();
+        return { x: rect.x, y: rect.y + scrollY, width: rect.width, height: rect.height };
+      })()`,
+    );
+    await captureRegion(
+      session,
+      "works-1440.png",
       `(() => {
         const rect = document.querySelector(".works-section").getBoundingClientRect();
         return { x: rect.x, y: rect.y + scrollY, width: rect.width, height: rect.height };
@@ -457,19 +519,27 @@ for (const viewport of viewports) {
     );
     await captureRegion(
       session,
-      "homepage-escape-1440.png",
+      "escape-1440.png",
       `(() => {
         const rect = document.querySelector(".escape-section").getBoundingClientRect();
+        return { x: rect.x, y: rect.y + scrollY, width: rect.width, height: rect.height };
+      })()`,
+    );
+    await captureRegion(
+      session,
+      "contact-1440.png",
+      `(() => {
+        const rect = document.querySelector(".invitation-section").getBoundingClientRect();
         return { x: rect.x, y: rect.y + scrollY, width: rect.width, height: rect.height };
       })()`,
     );
   }
 
   if (viewport.width === 390) {
-    await captureFullPage(session, "homepage-full-390.png");
+    await captureFullPage(session, "full-page-390.png");
     await captureRegion(
       session,
-      "homepage-hero-390.png",
+      "hero-390.png",
       `(() => {
         const hero = document.querySelector(".hero").getBoundingClientRect();
         return { x: 0, y: 0, width: document.documentElement.clientWidth, height: hero.bottom + scrollY };
@@ -477,10 +547,19 @@ for (const viewport of viewports) {
     );
     await captureRegion(
       session,
-      "homepage-escape-390.png",
+      "works-390.png",
       `(() => {
-        const rect = document.querySelector(".escape-section").getBoundingClientRect();
+        const rect = document.querySelector(".works-section").getBoundingClientRect();
         return { x: rect.x, y: rect.y + scrollY, width: rect.width, height: rect.height };
+      })()`,
+    );
+    await captureRegion(
+      session,
+      "escape-contact-390.png",
+      `(() => {
+        const start = document.querySelector(".escape-section").getBoundingClientRect();
+        const end = document.querySelector(".invitation-section").getBoundingClientRect();
+        return { x: 0, y: start.y + scrollY, width: document.documentElement.clientWidth, height: end.bottom - start.top };
       })()`,
     );
   }

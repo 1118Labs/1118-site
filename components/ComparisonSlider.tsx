@@ -95,8 +95,7 @@ export function ComparisonSlider() {
       <span className="comparison-label comparison-label-after">Etchr</span>
       <span className="comparison-divider" aria-hidden="true">
         <span className="comparison-handle">
-          <span>←</span>
-          <span>→</span>
+          <span className="comparison-grip" />
         </span>
       </span>
     </div>

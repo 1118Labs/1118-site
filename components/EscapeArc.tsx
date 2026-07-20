@@ -37,16 +37,30 @@ export function EscapeArc() {
       aria-hidden="true"
     >
       <svg viewBox="0 0 1600 1000" preserveAspectRatio="none">
-        <path
-          className="escape-trajectory escape-trajectory-wide"
-          d="M 470 900 C 650 720, 805 410, 1310 155"
-        />
-        <circle className="escape-endpoint escape-endpoint-wide" cx="1310" cy="155" r="7" />
-        <path
-          className="escape-trajectory escape-trajectory-narrow"
-          d="M 470 900 C 1150 750, 1500 500, 1460 155"
-        />
-        <circle className="escape-endpoint escape-endpoint-narrow" cx="1460" cy="155" r="7" />
+        <g className="escape-route escape-route-wide">
+          <path
+            className="escape-trajectory-halo"
+            d="M 690 645 C 880 700, 910 340, 1250 110"
+            vectorEffect="non-scaling-stroke"
+          />
+          <path
+            className="escape-trajectory-core"
+            d="M 690 645 C 880 700, 910 340, 1250 110"
+            vectorEffect="non-scaling-stroke"
+          />
+        </g>
+        <g className="escape-route escape-route-narrow">
+          <path
+            className="escape-trajectory-halo"
+            d="M 900 710 C 1350 650, 1510 380, 1460 120"
+            vectorEffect="non-scaling-stroke"
+          />
+          <path
+            className="escape-trajectory-core"
+            d="M 900 710 C 1350 650, 1510 380, 1460 120"
+            vectorEffect="non-scaling-stroke"
+          />
+        </g>
       </svg>
     </div>
   );

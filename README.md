@@ -37,7 +37,10 @@ Production-mode browser QA is captured by:
 npm run build
 npm run start -- -p 3108
 node scripts/flagship-homepage-v2-qa.mjs
+node scripts/flagship-overnight-recordings.mjs
 ```
 
-The browser script expects Chrome DevTools on port `9333` and writes ignored
-review evidence to `artifacts/flagship-homepage-v2-refinement/`.
+The browser scripts expect Chrome DevTools on port `9333` and write ignored
+review evidence to `artifacts/flagship-overnight-launch-readiness/`. The
+recording script also expects `ffmpeg` at `/opt/homebrew/bin/ffmpeg` unless
+`FFMPEG_PATH` is set.

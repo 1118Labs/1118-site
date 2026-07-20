@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { ComparisonSlider } from "@/components/ComparisonSlider";
+import { ContactForm } from "@/components/ContactForm";
 import { EscapeArc } from "@/components/EscapeArc";
 
 const formats = [
@@ -16,18 +17,29 @@ const works = [
     status: "Private beta",
     description:
       "A system for turning real customer feedback into polished, publishable proof.",
+    image: "/work/reviews-engine-public-widget.png",
+    imageAlt:
+      "Published Reviews Engine testimonial widget for SkyPups dog training",
+    visualClass: "is-reviews-engine",
   },
   {
     name: "Property Insights",
     status: "In review",
     description:
       "A decision surface that turns service requests into quote-ready property context.",
+    image: "/work/property-insights-synthetic-dashboard.png",
+    imageAlt:
+      "Property Insights request detail using a synthetic product fixture",
+    visualClass: "is-property-insights",
   },
   {
     name: "Manuscript",
     status: "In development",
     description:
       "A private workspace for shaping long-form work without losing its history.",
+    image: "/work/manuscript-empty-editor.png",
+    imageAlt: "Manuscript empty Add Writing workspace",
+    visualClass: "is-manuscript",
   },
 ] as const;
 
@@ -66,27 +78,28 @@ export default function Home() {
 
       <main id="main-content">
         <section className="hero" id="top" aria-labelledby="hero-title">
-          <div className="shell hero-copy">
-            <p className="kicker">1118 / New York</p>
-            <h1 id="hero-title">
-              <span>We build the software</span>
-              <span>we keep looking for.</span>
-            </h1>
-            <div className="hero-intro">
-              <p className="hero-belief">
-                We build things that deserve to exist.
-              </p>
-              <a className="text-link" href="#work">
-                Explore our work <span aria-hidden="true">→</span>
-              </a>
+          <div className="shell-wide hero-layout">
+            <div className="hero-copy">
+              <h1 id="hero-title">
+                <span>We build the software</span>
+                <span>we keep looking for.</span>
+              </h1>
+              <div className="hero-intro">
+                <p className="hero-belief">
+                  We build things that deserve to exist.
+                </p>
+                <a className="text-link" href="#work">
+                  Explore our work <span aria-hidden="true">→</span>
+                </a>
+              </div>
             </div>
-          </div>
 
-          <div className="shell-wide hero-proof">
-            <ComparisonSlider />
-            <div className="proof-caption" aria-hidden="true">
-              <span>One photograph</span>
-              <span>Etchr editorial portrait</span>
+            <div className="hero-proof">
+              <ComparisonSlider />
+              <div className="proof-caption" aria-hidden="true">
+                <span>One photograph</span>
+                <span>Etchr editorial portrait</span>
+              </div>
             </div>
           </div>
         </section>
@@ -95,7 +108,6 @@ export default function Home() {
           <div className="shell">
             <div className="chapter-head etchr-head">
               <div>
-                <p className="kicker">First work</p>
                 <h2 id="etchr-title">Etchr</h2>
               </div>
               <div className="chapter-copy">
@@ -159,22 +171,23 @@ export default function Home() {
 
         <section className="belief-section" id="belief" aria-labelledby="belief-title">
           <div className="shell belief-grid">
-            <p className="kicker">Belief</p>
-            <div>
+            <div className="belief-content">
               <h2 id="belief-title">We build things that deserve to exist.</h2>
               <div className="belief-copy">
-                <p>
-                  The world does not need more software.
-                  <br />
-                  It needs better software.
-                </p>
-                <p>
-                  Software people trust.
-                  <br />
-                  Software people enjoy.
-                  <br />
-                  Software that quietly improves everyday life.
-                </p>
+                <div>
+                  <p>
+                    The world does not need more software.
+                    <br />
+                    It needs better software.
+                  </p>
+                  <p>
+                    Software people trust.
+                    <br />
+                    Software people enjoy.
+                    <br />
+                    Software that quietly improves everyday life.
+                  </p>
+                </div>
                 <p>
                   We build fewer things.
                   <br />
@@ -192,7 +205,6 @@ export default function Home() {
         <section className="works-section" aria-labelledby="works-title">
           <div className="shell">
             <div className="works-head">
-              <p className="kicker">Works</p>
               <h2 id="works-title">
                 Original products.
                 <br />
@@ -200,14 +212,9 @@ export default function Home() {
               </h2>
             </div>
 
-            <article className="work-feature">
-              <div className="work-feature-image">
-                <Image
-                  src="/brand/hero-etchr-aligned.png"
-                  alt="Etchr finished editorial portrait"
-                  fill
-                  sizes="(max-width: 900px) 100vw, 58vw"
-                />
+            <article className="work-feature work-feature-etchr">
+              <div className="work-feature-mark" aria-hidden="true">
+                Etchr
               </div>
               <div className="work-feature-copy">
                 <div>
@@ -232,11 +239,21 @@ export default function Home() {
             <div className="work-list">
               {works.map((work, index) => (
                 <article className="work-row" key={work.name}>
-                  <p className="work-number">
-                    {String(index + 2).padStart(2, "0")} / {work.status}
-                  </p>
-                  <h3>{work.name}</h3>
-                  <p>{work.description}</p>
+                  <div className="work-row-copy">
+                    <p className="work-number">
+                      {String(index + 2).padStart(2, "0")} / {work.status}
+                    </p>
+                    <h3>{work.name}</h3>
+                    <p>{work.description}</p>
+                  </div>
+                  <div className={`work-row-visual ${work.visualClass}`}>
+                    <Image
+                      src={work.image}
+                      alt={work.imageAlt}
+                      fill
+                      sizes="(max-width: 820px) 100vw, 62vw"
+                    />
+                  </div>
                 </article>
               ))}
             </div>
@@ -273,30 +290,19 @@ export default function Home() {
         </section>
 
         <section className="invitation-section" id="contact" aria-labelledby="invitation-title">
-          <div className="shell invitation-grid">
-            <p className="kicker">Invitation</p>
-            <div>
+          <div className="shell-wide invitation-grid">
+            <div className="invitation-copy">
               <h2 id="invitation-title">
                 Still looking for software
                 <br />
                 that does not exist?
               </h2>
-              <a className="email-link" href="mailto:hello@1118.io">
-                hello@1118.io <span aria-hidden="true">→</span>
-              </a>
-              <div className="invitation-note">
-                <p>
-                  Have a good idea?
-                  <br />
-                  Reach out.
-                </p>
-                <p>
-                  We usually build our own products. But when an idea is
-                  unusually strong—and the fit is right—we are always open to a
-                  conversation.
-                </p>
-              </div>
+              <p className="invitation-note">
+                We usually build our own products. But when an idea is unusually
+                strong—and the fit is right—we are always open to a conversation.
+              </p>
             </div>
+            <ContactForm />
           </div>
         </section>
       </main>
