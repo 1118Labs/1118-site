@@ -5,14 +5,16 @@ import { type ChangeEvent, type CSSProperties, useState } from "react";
 
 interface ComparisonSliderProps {
   compact?: boolean;
+  initialPosition?: number;
   priority?: boolean;
 }
 
 export function ComparisonSlider({
   compact = false,
+  initialPosition = 43,
   priority = false,
 }: ComparisonSliderProps) {
-  const [position, setPosition] = useState(43);
+  const [position, setPosition] = useState(initialPosition);
   const sliderStyle = {
     "--slider-position": `${position}%`,
   } as CSSProperties;

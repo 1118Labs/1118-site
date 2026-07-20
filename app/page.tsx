@@ -1,4 +1,5 @@
 import { ComparisonSlider } from "@/components/ComparisonSlider";
+import { SceneTwoProof } from "@/components/SceneTwoProof";
 
 export default function Home() {
   return (
@@ -25,6 +26,7 @@ export default function Home() {
         </div>
       </section>
       <div className="scene-one-flow" aria-hidden="true" />
+      <SceneTwoProof />
     </main>
   );
 }

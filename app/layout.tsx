@@ -1,5 +1,6 @@
 import "./globals.css";
 import "./scene-one.css";
+import "./scene-two.css";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { SiteHeader } from "@/components/SiteHeader";
