@@ -31,7 +31,7 @@ export function ComparisonSlider({
       <div className="canon-comparison-frame" style={sliderStyle}>
         <Image
           className="canon-comparison-image canon-comparison-before"
-          src="/etchr-before.jpg"
+          src="/brand/hero-original-aligned.jpg"
           alt="Original portrait photograph of a woman in a black blazer before Etchr treatment"
           fill
           priority={priority}
@@ -45,7 +45,7 @@ export function ComparisonSlider({
         <div className="canon-comparison-after-layer" aria-hidden="true">
           <Image
             className="canon-comparison-image"
-            src="/etchr-after.jpg"
+            src="/brand/hero-etchr-aligned.png"
             alt=""
             fill
             priority={priority}

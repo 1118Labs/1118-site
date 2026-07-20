@@ -116,14 +116,14 @@
 
 .scene-two-device {
   position: relative;
-  width: min(100%, 430px);
-  height: min(79svh, 790px);
+  width: min(100%, 468px);
+  height: min(79svh, 780px);
   min-height: 620px;
-  padding: 10px;
+  padding: 3px;
   overflow: hidden;
-  border: 1px solid #292d31;
-  border-radius: 54px;
-  background: #15181b;
+  border: 1px solid rgba(21, 24, 27, 0.28);
+  border-radius: 32px;
+  background: #1b1e21;
   animation: scene-two-device-reveal 600ms
     cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -134,11 +134,11 @@
 }
 
 .scene-two-device .canon-comparison-frame {
-  border-radius: 44px;
+  border-radius: 28px;
 }
 
 .scene-two-device .canon-comparison-image {
-  object-position: center 35%;
+  object-position: center;
 }
 
 .scene-two-device .canon-comparison-label {
@@ -295,25 +295,25 @@
 }
 
 .scene-two-export-linkedin img {
-  object-position: 50% 36%;
+  object-position: 50% 48%;
 }
 
 .scene-two-export-square-one img {
-  object-position: 47% 31%;
-}
-
-.scene-two-export-square-two img {
-  object-position: 53% 35%;
-  transform: scale(1.05);
-}
-
-.scene-two-export-tiktok img {
   object-position: 50% 34%;
 }
 
+.scene-two-export-square-two img {
+  object-position: 50% 40%;
+  transform: scale(1.14);
+}
+
+.scene-two-export-tiktok img {
+  object-position: 49% 50%;
+}
+
 .scene-two-export-youtube img {
-  object-position: 50% 29%;
-  transform: scale(1.12);
+  object-position: 50% 27%;
+  transform: scale(1.02);
 }
 
 .scene-two-export figcaption {
@@ -493,12 +493,12 @@
 
   .scene-two-device {
     width: min(88vw, 370px);
-    padding: 8px;
-    border-radius: 44px;
+    padding: 3px;
+    border-radius: 30px;
   }
 
   .scene-two-device .canon-comparison-frame {
-    border-radius: 36px;
+    border-radius: 26px;
   }
 
   .scene-two-device .canon-comparison-label {

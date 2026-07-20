@@ -146,10 +146,10 @@ export function SceneTwoProof() {
                 >
                   <div className="scene-two-export-image">
                     <Image
-                      src="/etchr-after.jpg"
+                      src="/brand/hero-etchr-aligned.png"
                       alt={format.alt}
                       fill
-                      sizes="(max-width: 768px) 70vw, 30vw"
+                      sizes="(max-width: 768px) 220px, 18vw"
                     />
                   </div>
                   <figcaption>
