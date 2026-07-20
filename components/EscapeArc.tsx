@@ -23,7 +23,7 @@ export function EscapeArc() {
           observer.disconnect();
         }
       },
-      { threshold: 0.35 },
+      { threshold: 0.28 },
     );
 
     observer.observe(root);
@@ -36,9 +36,17 @@ export function EscapeArc() {
       ref={rootRef}
       aria-hidden="true"
     >
-      <svg viewBox="0 0 1600 900" preserveAspectRatio="none">
-        <path d="M 370 790 C 500 565, 720 392, 1060 232" />
-        <circle cx="1060" cy="232" r="8" />
+      <svg viewBox="0 0 1600 1000" preserveAspectRatio="none">
+        <path
+          className="escape-trajectory escape-trajectory-wide"
+          d="M 470 900 C 650 720, 805 410, 1310 155"
+        />
+        <circle className="escape-endpoint escape-endpoint-wide" cx="1310" cy="155" r="7" />
+        <path
+          className="escape-trajectory escape-trajectory-narrow"
+          d="M 470 900 C 1150 750, 1500 500, 1460 155"
+        />
+        <circle className="escape-endpoint escape-endpoint-narrow" cx="1460" cy="155" r="7" />
       </svg>
     </div>
   );

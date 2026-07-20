@@ -3,7 +3,7 @@ import path from "node:path";
 
 const chromePort = process.env.CHROME_DEBUG_PORT || "9333";
 const baseUrl = process.env.QA_URL || "http://127.0.0.1:3108";
-const outputDir = path.resolve("artifacts/flagship-homepage-v2");
+const outputDir = path.resolve("artifacts/flagship-homepage-v2-refinement");
 
 const sleep = (milliseconds) =>
   new Promise((resolve) => setTimeout(resolve, milliseconds));
@@ -132,7 +132,7 @@ async function waitForPage(session) {
         })),
         delay(2500)
       ]);
-      await delay(180);
+      await delay(1250);
       document.documentElement.style.scrollBehavior = "";
     })()
   `);
@@ -279,6 +279,12 @@ async function inspectViewport(session, viewport) {
       const images = Array.from(document.images);
       const headings = Array.from(document.querySelectorAll("h1, h2, h3"));
       const interactive = Array.from(document.querySelectorAll("a, [role='slider']"));
+      const formatGrid = document.querySelector(".format-grid");
+      const formatItems = Array.from(document.querySelectorAll(".format-item"));
+      const workRows = Array.from(document.querySelectorAll(".work-row"));
+      const escapePath = [...document.querySelectorAll(".escape-arc path")].find(
+        (path) => getComputedStyle(path).display !== "none",
+      );
       const navigation = performance.getEntriesByType("navigation")[0];
       const resources = performance.getEntriesByType("resource");
       const paints = Object.fromEntries(
@@ -319,6 +325,27 @@ async function inspectViewport(session, viewport) {
           href: link.getAttribute("href"),
           targetExists: Boolean(document.getElementById(link.getAttribute("href").slice(1)))
         })),
+        formatProof: {
+          count: formatItems.length,
+          labels: formatItems.map((item) => item.querySelector("figcaption").textContent.trim()),
+          clientWidth: formatGrid.clientWidth,
+          scrollWidth: formatGrid.scrollWidth,
+          overflowX: getComputedStyle(formatGrid).overflowX,
+          scrollSnapType: getComputedStyle(formatGrid).scrollSnapType,
+          itemWidths: formatItems.map((item) => Math.round(item.getBoundingClientRect().width))
+        },
+        works: {
+          rowCount: workRows.length,
+          rowLinkCount: workRows.filter((row) => row.matches("a") || row.querySelector("a")).length,
+          featuredLink: document.querySelector(".work-feature a")?.href || null
+        },
+        escapeMotion: {
+          decorative: document.querySelector(".escape-arc").getAttribute("aria-hidden") === "true",
+          animationName: getComputedStyle(escapePath).animationName,
+          animationDuration: getComputedStyle(escapePath).animationDuration,
+          animationIterationCount: getComputedStyle(escapePath).animationIterationCount,
+          strokeDashoffset: getComputedStyle(escapePath).strokeDashoffset
+        },
         layoutShift: Number((window.__qaLayoutShift || 0).toFixed(4)),
         performance: {
           firstContentfulPaint: paints["first-contentful-paint"] || null,
@@ -332,8 +359,8 @@ async function inspectViewport(session, viewport) {
         reducedMotion: {
           media: matchMedia("(prefers-reduced-motion: reduce)").matches,
           scrollBehavior: getComputedStyle(document.documentElement).scrollBehavior,
-          arcAnimation: getComputedStyle(document.querySelector(".escape-arc path")).animationName,
-          arcOffset: getComputedStyle(document.querySelector(".escape-arc path")).strokeDashoffset
+          arcAnimation: getComputedStyle(escapePath).animationName,
+          arcOffset: getComputedStyle(escapePath).strokeDashoffset
         }
       };
     })()
@@ -414,6 +441,14 @@ for (const viewport of viewports) {
     );
     await captureRegion(
       session,
+      "homepage-formats-1440.png",
+      `(() => {
+        const rect = document.querySelector(".format-proof").getBoundingClientRect();
+        return { x: rect.x, y: rect.y + scrollY, width: rect.width, height: rect.height };
+      })()`,
+    );
+    await captureRegion(
+      session,
       "homepage-works-1440.png",
       `(() => {
         const rect = document.querySelector(".works-section").getBoundingClientRect();
@@ -442,9 +477,9 @@ for (const viewport of viewports) {
     );
     await captureRegion(
       session,
-      "homepage-etchr-390.png",
+      "homepage-escape-390.png",
       `(() => {
-        const rect = document.querySelector(".etchr-section").getBoundingClientRect();
+        const rect = document.querySelector(".escape-section").getBoundingClientRect();
         return { x: rect.x, y: rect.y + scrollY, width: rect.width, height: rect.height };
       })()`,
     );

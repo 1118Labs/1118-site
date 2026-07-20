@@ -40,4 +40,4 @@ node scripts/flagship-homepage-v2-qa.mjs
 ```
 
 The browser script expects Chrome DevTools on port `9333` and writes ignored
-review evidence to `artifacts/flagship-homepage-v2/`.
+review evidence to `artifacts/flagship-homepage-v2-refinement/`.

@@ -3,12 +3,11 @@ import { ComparisonSlider } from "@/components/ComparisonSlider";
 import { EscapeArc } from "@/components/EscapeArc";
 
 const formats = [
-  { name: "LinkedIn", className: "is-square" },
-  { name: "X", className: "is-landscape" },
-  { name: "Instagram", className: "is-portrait" },
-  { name: "Slack", className: "is-square" },
-  { name: "TikTok", className: "is-tall" },
-  { name: "YouTube", className: "is-landscape" },
+  { name: "LinkedIn", className: "is-linkedin" },
+  { name: "X", className: "is-x" },
+  { name: "Instagram / Slack", className: "is-social" },
+  { name: "TikTok", className: "is-tiktok" },
+  { name: "YouTube", className: "is-youtube" },
 ] as const;
 
 const works = [
@@ -120,38 +119,40 @@ export default function Home() {
 
             <div className="etchr-portrait">
               <Image
-                src="/brand/hero-etchr.png"
+                src="/brand/hero-etchr-aligned.png"
                 alt="Finished Etchr engraved editorial portrait"
                 fill
-                sizes="(max-width: 768px) 100vw, 70vw"
+                sizes="(max-width: 768px) 100vw, 72vw"
               />
               <span className="portrait-index" aria-hidden="true">
                 01
               </span>
             </div>
 
-            <div className="format-intro">
-              <p className="kicker">One portrait / every platform</p>
-              <p>
-                The same finished artwork, composed for the places people
-                actually show up.
-              </p>
-            </div>
+            <div className="format-proof">
+              <div className="format-intro">
+                <p className="kicker">One portrait / every platform</p>
+                <p>
+                  The same finished artwork, composed for the places people
+                  actually show up.
+                </p>
+              </div>
 
-            <div className="format-grid">
-              {formats.map((format) => (
-                <figure className="format-item" key={format.name}>
-                  <div className={`format-crop ${format.className}`}>
-                    <Image
-                      src="/brand/hero-etchr.png"
-                      alt=""
-                      fill
-                      sizes="(max-width: 520px) 30vw, 14vw"
-                    />
-                  </div>
-                  <figcaption>{format.name}</figcaption>
-                </figure>
-              ))}
+              <div className="format-grid">
+                {formats.map((format) => (
+                  <figure className={`format-item ${format.className}`} key={format.name}>
+                    <div className={`format-crop ${format.className}`}>
+                      <Image
+                        src="/brand/hero-etchr-aligned.png"
+                        alt=""
+                        fill
+                        sizes="(max-width: 520px) 76vw, 20vw"
+                      />
+                    </div>
+                    <figcaption>{format.name}</figcaption>
+                  </figure>
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -243,33 +244,31 @@ export default function Home() {
         </section>
 
         <section className="escape-section" id="1118" aria-labelledby="escape-title">
-          <div className="shell escape-head">
-            <div>
-              <p className="kicker">11.18 km/s</p>
-              <h2 id="escape-title">Escape velocity.</h2>
-            </div>
-            <div className="escape-copy">
-              <p>
-                11.18 kilometers per second is approximately the speed required
-                to escape Earth&apos;s gravitational pull.
-              </p>
-              <p>
-                We believe every meaningful idea has an escape velocity—a point
-                where momentum compounds and possibility becomes progress.
-              </p>
-            </div>
-          </div>
-          <div className="shell-wide earth-frame">
+          <div className="earth-chapter">
             <Image
               src="/studio/earth-daylight.jpg"
               alt="Earth in daylight with a blue atmosphere and white clouds"
               fill
               sizes="100vw"
             />
+            <div className="shell escape-overlay">
+              <p className="kicker">The meaning behind our name</p>
+              <p className="escape-number">
+                11.18 <span>km/s</span>
+              </p>
+              <h2 id="escape-title">Escape velocity.</h2>
+              <div className="escape-copy">
+                <p>
+                  The approximate speed required to escape Earth&apos;s
+                  gravitational pull.
+                </p>
+                <p>
+                  Every meaningful idea has an escape velocity—a point where
+                  momentum compounds and possibility becomes progress.
+                </p>
+              </div>
+            </div>
             <EscapeArc />
-            <p className="earth-measure" aria-hidden="true">
-              11.18 <span>km/s</span>
-            </p>
           </div>
         </section>
 
