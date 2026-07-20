@@ -1,0 +1,450 @@
+:root {
+  --canon-white: #ffffff;
+  --canon-graphite: #15181b;
+  --canon-secondary: #6b7178;
+  --canon-blue: #2387f0;
+  --canon-serif: Georgia, "Times New Roman", serif;
+  --canon-sans: "Geist", "Geist Fallback", ui-sans-serif, system-ui,
+    sans-serif;
+}
+
+html {
+  overflow-x: clip;
+  background: var(--canon-white);
+  scroll-padding-top: 24px;
+}
+
+body {
+  overflow-x: clip;
+  background: var(--canon-white);
+  color: var(--canon-graphite);
+}
+
+.canon-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  width: 100%;
+  padding-top: 26px;
+  background: transparent;
+}
+
+.canon-header-inner {
+  display: flex;
+  width: min(calc(100% - 64px), 1440px);
+  margin-inline: auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.canon-brand-link {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  border-radius: 2px;
+}
+
+.canon-brand-link img {
+  width: 112px;
+  height: auto;
+}
+
+.canon-nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(30px, 3.3vw, 52px);
+  color: var(--canon-graphite);
+  font-family: var(--canon-sans);
+  font-size: 15px;
+  font-weight: 550;
+  letter-spacing: -0.01em;
+}
+
+.canon-nav a {
+  position: relative;
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  border-radius: 2px;
+  transition: opacity 180ms ease;
+}
+
+.canon-nav a::after {
+  position: absolute;
+  right: 0;
+  bottom: 7px;
+  left: 0;
+  height: 1px;
+  background: currentColor;
+  content: "";
+  opacity: 0;
+  transform: scaleX(0.65);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.canon-nav a:hover {
+  opacity: 0.62;
+}
+
+.canon-nav a:hover::after,
+.canon-nav a:focus-visible::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.canon-brand-link:focus-visible,
+.canon-nav a:focus-visible,
+.scene-one-link:focus-visible {
+  outline: 3px solid rgba(35, 135, 240, 0.55);
+  outline-offset: 5px;
+}
+
+.scene-one {
+  min-height: 100svh;
+  padding: 178px 32px 0;
+  background: var(--canon-white);
+}
+
+.scene-one-inner {
+  display: grid;
+  width: min(100%, 1440px);
+  min-height: calc(100svh - 178px);
+  margin-inline: auto;
+  grid-template-columns: minmax(0, 42fr) minmax(0, 58fr);
+  align-items: center;
+  gap: clamp(34px, 4.7vw, 68px);
+}
+
+.scene-one-copy {
+  position: relative;
+  z-index: 2;
+  align-self: center;
+  padding-bottom: 5svh;
+}
+
+.scene-one-label {
+  margin: 0 0 30px;
+  color: var(--canon-secondary);
+  font-family: var(--canon-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.scene-one h1 {
+  margin: 0;
+  color: var(--canon-graphite);
+  font-family: var(--canon-serif);
+  font-size: clamp(4.75rem, 7.3vw, 6.75rem);
+  font-weight: 400;
+  letter-spacing: -0.064em;
+  line-height: 0.94;
+}
+
+.scene-one h1 span {
+  display: block;
+  white-space: nowrap;
+}
+
+.scene-one h1 span:nth-child(3) {
+  margin-top: 0.17em;
+}
+
+.scene-one h1 .scene-one-emphasis {
+  font-style: italic;
+  letter-spacing: -0.055em;
+}
+
+.scene-one-link {
+  display: inline-flex;
+  min-height: 44px;
+  margin-top: clamp(46px, 6.4svh, 62px);
+  align-items: center;
+  gap: 13px;
+  border-radius: 2px;
+  color: var(--canon-graphite);
+  font-family: var(--canon-sans);
+  font-size: 18px;
+  font-weight: 520;
+  letter-spacing: -0.025em;
+}
+
+.scene-one-link > span {
+  display: inline-block;
+  transition: transform 180ms ease;
+}
+
+.scene-one-link:hover > span,
+.scene-one-link:focus-visible > span {
+  transform: translateX(5px);
+}
+
+.scene-one-portrait {
+  width: min(100%, 62.4svh, 656px);
+  height: min(78svh, 820px);
+  min-height: 520px;
+  justify-self: end;
+  animation: canon-portrait-settle 700ms cubic-bezier(0.22, 1, 0.36, 1)
+    both;
+  transform-origin: center center;
+}
+
+.canon-comparison {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.canon-comparison-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #e7e7e7;
+  isolation: isolate;
+}
+
+.canon-comparison-image {
+  object-fit: cover;
+  object-position: center 34%;
+  pointer-events: none;
+  user-select: none;
+}
+
+.canon-comparison-before {
+  transform: scale(1.36) translateY(6.3%);
+}
+
+.canon-comparison-after-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  clip-path: inset(0 0 0 var(--slider-position));
+}
+
+.canon-comparison-divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--slider-position);
+  z-index: 3;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.92);
+  transform: translateX(-0.5px);
+  pointer-events: none;
+}
+
+.canon-comparison-handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border: 1px solid rgba(21, 24, 27, 0.2);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--canon-graphite);
+  font-family: var(--canon-sans);
+  font-size: 21px;
+  font-weight: 400;
+  line-height: 1;
+  transform: translate(-50%, -50%);
+}
+
+.canon-comparison-label {
+  position: absolute;
+  top: 18px;
+  z-index: 3;
+  padding: 7px 9px;
+  background: rgba(255, 255, 255, 0.84);
+  color: var(--canon-graphite);
+  font-family: var(--canon-sans);
+  font-size: 11px;
+  font-weight: 560;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.canon-comparison-label-before {
+  left: 18px;
+}
+
+.canon-comparison-label-after {
+  right: 18px;
+}
+
+.canon-comparison-range {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: ew-resize;
+  opacity: 0;
+  touch-action: pan-y;
+}
+
+.canon-comparison-frame:has(.canon-comparison-range:focus-visible) {
+  outline: 3px solid rgba(35, 135, 240, 0.68);
+  outline-offset: 5px;
+}
+
+.scene-one-flow {
+  height: clamp(160px, 22svh, 260px);
+  background: var(--canon-white);
+}
+
+@keyframes canon-portrait-settle {
+  from {
+    transform: scale(1.012);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 1100px) and (min-width: 769px) {
+  .scene-one {
+    padding-inline: 24px;
+  }
+
+  .scene-one-inner {
+    gap: 34px;
+  }
+
+  .scene-one h1 {
+    font-size: 4.75rem;
+    letter-spacing: -0.07em;
+  }
+}
+
+@media (max-width: 768px) {
+  .canon-header {
+    padding-top: 18px;
+  }
+
+  .canon-header-inner {
+    width: calc(100% - 48px);
+    gap: 24px;
+  }
+
+  .canon-brand-link img {
+    width: 88px;
+  }
+
+  .canon-nav {
+    gap: clamp(16px, 4vw, 28px);
+  }
+
+  .scene-one {
+    min-height: 0;
+    padding: 124px 24px 0;
+  }
+
+  .scene-one-inner {
+    min-height: 0;
+    grid-template-columns: 1fr;
+    gap: 58px;
+  }
+
+  .scene-one-copy {
+    padding-bottom: 0;
+  }
+
+  .scene-one-label {
+    margin-bottom: 24px;
+  }
+
+  .scene-one h1 {
+    font-size: clamp(3.5rem, 8.85vw, 4.25rem);
+    letter-spacing: -0.058em;
+    line-height: 0.95;
+  }
+
+  .scene-one-link {
+    margin-top: 42px;
+    font-size: 17px;
+  }
+
+  .scene-one-portrait {
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 4 / 5;
+  }
+
+  .scene-one-flow {
+    height: clamp(140px, 20svh, 220px);
+  }
+}
+
+@media (max-width: 560px) {
+  .canon-header-inner {
+    width: calc(100% - 40px);
+    gap: 18px;
+  }
+
+  .canon-nav {
+    gap: 16px;
+    font-size: 14px;
+  }
+
+  .scene-one {
+    padding: 120px 20px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .scene-one h1 {
+    font-size: clamp(2.875rem, 13.85vw, 3.625rem);
+    letter-spacing: -0.052em;
+  }
+
+  .canon-comparison-label {
+    top: 14px;
+    font-size: 10px;
+  }
+
+  .canon-comparison-label-before {
+    left: 14px;
+  }
+
+  .canon-comparison-label-after {
+    right: 14px;
+  }
+}
+
+@media (max-width: 350px) {
+  .canon-brand-link img {
+    width: 82px;
+  }
+
+  .canon-nav {
+    gap: 11px;
+    font-size: 13px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene-one-portrait {
+    animation: none;
+    transform: none;
+  }
+
+  .scene-one-link > span,
+  .canon-nav a,
+  .canon-nav a::after {
+    transition: none;
+  }
+}

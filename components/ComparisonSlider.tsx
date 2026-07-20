@@ -12,7 +12,7 @@ export function ComparisonSlider({
   compact = false,
   priority = false,
 }: ComparisonSliderProps) {
-  const [position, setPosition] = useState(50);
+  const [position, setPosition] = useState(43);
   const sliderStyle = {
     "--slider-position": `${position}%`,
   } as CSSProperties;
@@ -23,66 +23,64 @@ export function ComparisonSlider({
 
   return (
     <figure
-      className={`comparison-figure${compact ? " comparison-figure-compact" : ""}`}
+      className={`canon-comparison${compact ? " canon-comparison-compact" : ""}`}
+      aria-label="Before and after Etchr portrait comparison"
     >
-      <div className="comparison-frame" style={sliderStyle}>
+      <div className="canon-comparison-frame" style={sliderStyle}>
         <Image
-          className="comparison-image comparison-before"
+          className="canon-comparison-image canon-comparison-before"
           src="/etchr-before.jpg"
-          alt="Original photograph supplied to Etchr"
+          alt="Original portrait photograph of a woman in a black blazer before Etchr treatment"
           fill
           priority={priority}
           sizes={
             compact
-              ? "(max-width: 760px) 72vw, 300px"
-              : "(max-width: 900px) 92vw, 46vw"
+              ? "(max-width: 768px) 72vw, 300px"
+              : "(max-width: 768px) 100vw, 46vw"
           }
         />
-        <div className="comparison-after-layer" aria-hidden="true">
+
+        <div className="canon-comparison-after-layer" aria-hidden="true">
           <Image
-            className="comparison-image"
+            className="canon-comparison-image"
             src="/etchr-after.jpg"
             alt=""
             fill
             priority={priority}
             sizes={
               compact
-                ? "(max-width: 760px) 72vw, 300px"
-                : "(max-width: 900px) 92vw, 46vw"
+                ? "(max-width: 768px) 72vw, 300px"
+                : "(max-width: 768px) 100vw, 46vw"
             }
           />
         </div>
 
-        <span className="comparison-label comparison-label-before">
-          Source photo
+        <span className="canon-comparison-label canon-comparison-label-before">
+          Before
         </span>
-        <span className="comparison-label comparison-label-after">
-          Etchr portrait
+        <span className="canon-comparison-label canon-comparison-label-after">
+          Etchr
         </span>
 
-        <div className="comparison-divider" aria-hidden="true">
-          <div className="comparison-handle">
-            <span>← →</span>
-          </div>
+        <div className="canon-comparison-divider" aria-hidden="true">
+          <span className="canon-comparison-handle">
+            <span>‹</span>
+            <span>›</span>
+          </span>
         </div>
 
         <input
-          className="comparison-range"
+          className="canon-comparison-range"
           type="range"
           min="0"
           max="100"
+          step="1"
           value={position}
           onChange={handleChange}
-          aria-label="Compare the source photograph with the finished Etchr portrait"
-          aria-valuetext={`${position}% source photograph and ${100 - position}% finished Etchr portrait visible`}
+          aria-label="Compare the original portrait with the Etchr portrait"
+          aria-valuetext={`${position}% Before, ${100 - position}% Etchr`}
         />
       </div>
-      {!compact && (
-        <figcaption className="comparison-caption">
-          <strong>Drag to compare</strong>
-          <span>Source photograph → finished Etchr portrait</span>
-        </figcaption>
-      )}
     </figure>
   );
 }

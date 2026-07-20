@@ -1,7 +1,7 @@
 import "./globals.css";
+import "./scene-one.css";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 
 const geistSans = Geist({
@@ -39,7 +39,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <SiteHeader />
         {children}
-        <SiteFooter />
       </body>
     </html>
   );
