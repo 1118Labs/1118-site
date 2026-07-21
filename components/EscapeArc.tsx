@@ -40,30 +40,44 @@ export function EscapeArc() {
         <g className="escape-route escape-route-wide">
           <path
             className="escape-trajectory-halo"
-            d="M 835 685 C 1030 610, 1150 340, 1505 138"
+            d="M 1015 748 C 1128 646, 1245 421, 1516 167"
             vectorEffect="non-scaling-stroke"
           />
           <path
             className="escape-trajectory-core"
-            d="M 835 685 C 1030 610, 1150 340, 1505 138"
+            d="M 1015 748 C 1128 646, 1245 421, 1516 167"
             vectorEffect="non-scaling-stroke"
           />
-          <circle className="escape-endpoint-halo" cx="1505" cy="138" r="12" />
-          <circle className="escape-endpoint-core" cx="1505" cy="138" r="3.5" />
+          <circle className="escape-endpoint-halo" cx="1516" cy="167" r="12" />
+          <circle className="escape-endpoint-core" cx="1516" cy="167" r="3.5" />
         </g>
-        <g className="escape-route escape-route-narrow">
+        <g className="escape-route escape-route-tablet">
           <path
             className="escape-trajectory-halo"
-            d="M 915 730 C 1260 640, 1460 375, 1480 120"
+            d="M 1035 760 C 1225 650, 1395 452, 1510 190"
             vectorEffect="non-scaling-stroke"
           />
           <path
             className="escape-trajectory-core"
-            d="M 915 730 C 1260 640, 1460 375, 1480 120"
+            d="M 1035 760 C 1225 650, 1395 452, 1510 190"
             vectorEffect="non-scaling-stroke"
           />
-          <circle className="escape-endpoint-halo" cx="1480" cy="120" r="14" />
-          <circle className="escape-endpoint-core" cx="1480" cy="120" r="4" />
+          <circle className="escape-endpoint-halo" cx="1510" cy="190" r="13" />
+          <circle className="escape-endpoint-core" cx="1510" cy="190" r="3.8" />
+        </g>
+        <g className="escape-route escape-route-mobile">
+          <path
+            className="escape-trajectory-halo"
+            d="M 1170 830 C 1370 714, 1470 554, 1510 330"
+            vectorEffect="non-scaling-stroke"
+          />
+          <path
+            className="escape-trajectory-core"
+            d="M 1170 830 C 1370 714, 1470 554, 1510 330"
+            vectorEffect="non-scaling-stroke"
+          />
+          <circle className="escape-endpoint-halo" cx="1510" cy="330" r="14" />
+          <circle className="escape-endpoint-core" cx="1510" cy="330" r="4" />
         </g>
       </svg>
     </div>

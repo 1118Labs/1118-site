@@ -9,8 +9,10 @@ The flagship homepage for 1118 LLC.
 - TypeScript
 - npm
 
-The homepage is statically rendered. Interactive behavior is limited to the
-accessible Etchr comparison slider and the one-time escape-trajectory draw.
+The homepage is statically rendered as six cinematic chapters. Client-side
+behavior is limited to the accessible Etchr comparison slider, header and
+entrance-state observers, the Works product selector, the fail-closed preview
+form, and the one-time escape-trajectory draw.
 
 ## Local development
 
@@ -36,11 +38,11 @@ Production-mode browser QA is captured by:
 ```bash
 npm run build
 npm run start -- -p 3108
-node scripts/flagship-homepage-v2-qa.mjs
-node scripts/flagship-overnight-recordings.mjs
+node scripts/cinematic-flagship-qa.mjs
+node scripts/cinematic-flagship-recordings.mjs
 ```
 
 The browser scripts expect Chrome DevTools on port `9333` and write ignored
-review evidence to `artifacts/approved-full-width-composition/`. The
+review evidence to `artifacts/cinematic-flagship-homepage/`. The
 recording script also expects `ffmpeg` at `/opt/homebrew/bin/ffmpeg` unless
 `FFMPEG_PATH` is set.
