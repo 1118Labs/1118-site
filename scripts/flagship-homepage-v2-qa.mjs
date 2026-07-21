@@ -3,7 +3,7 @@ import path from "node:path";
 
 const chromePort = process.env.CHROME_DEBUG_PORT || "9333";
 const baseUrl = process.env.QA_URL || "http://127.0.0.1:3108";
-const outputDir = path.resolve("artifacts/flagship-overnight-launch-readiness");
+const outputDir = path.resolve("artifacts/approved-full-width-composition");
 
 const sleep = (milliseconds) =>
   new Promise((resolve) => setTimeout(resolve, milliseconds));
@@ -175,7 +175,7 @@ async function captureRegion(session, fileName, boundsExpression) {
 async function testSlider(session) {
   const initial = await session.evaluate(`
     (() => {
-      const slider = document.querySelector(".comparison");
+      const slider = document.querySelector(".comparison-divider[role='slider']");
       slider.focus();
       return Number(slider.getAttribute("aria-valuenow"));
     })()
@@ -186,7 +186,7 @@ async function testSlider(session) {
     await session.send("Input.dispatchKeyEvent", { type: "keyUp", key });
     await sleep(30);
     return session.evaluate(
-      `Number(document.querySelector(".comparison").getAttribute("aria-valuenow"))`,
+      `Number(document.querySelector(".comparison-divider[role='slider']").getAttribute("aria-valuenow"))`,
     );
   };
 
@@ -213,6 +213,25 @@ async function testSlider(session) {
     clickCount: 1,
   });
   await session.send("Input.dispatchMouseEvent", {
+    type: "mouseReleased",
+    x: bounds.x + bounds.width * 0.25,
+    y,
+    button: "left",
+    clickCount: 1,
+  });
+  await sleep(40);
+  const click = await session.evaluate(
+    `Number(document.querySelector(".comparison-divider[role='slider']").getAttribute("aria-valuenow"))`,
+  );
+
+  await session.send("Input.dispatchMouseEvent", {
+    type: "mousePressed",
+    x: bounds.x + bounds.width * 0.25,
+    y,
+    button: "left",
+    clickCount: 1,
+  });
+  await session.send("Input.dispatchMouseEvent", {
     type: "mouseMoved",
     x: bounds.x + bounds.width * 0.75,
     y,
@@ -227,7 +246,7 @@ async function testSlider(session) {
   });
   await sleep(40);
   const pointer = await session.evaluate(
-    `Number(document.querySelector(".comparison").getAttribute("aria-valuenow"))`,
+    `Number(document.querySelector(".comparison-divider[role='slider']").getAttribute("aria-valuenow"))`,
   );
 
   await session.send("Input.dispatchTouchEvent", {
@@ -248,10 +267,10 @@ async function testSlider(session) {
   });
   await sleep(40);
   const touch = await session.evaluate(
-    `Number(document.querySelector(".comparison").getAttribute("aria-valuenow"))`,
+    `Number(document.querySelector(".comparison-divider[role='slider']").getAttribute("aria-valuenow"))`,
   );
 
-  return { initial, end, home, arrow, pointer, touch };
+  return { initial, end, home, arrow, click, pointer, touch };
 }
 
 async function testContactForm(session) {
@@ -265,7 +284,7 @@ async function testContactForm(session) {
         labels: [...form.querySelectorAll("label > span")].map((label) => label.textContent.trim()),
         requiredCount: fields.filter((field) => field.required).length,
         emailType: form.querySelector('[name="email"]').type,
-        mailto: form.querySelector('a[href="mailto:hello@1118.io"]')?.href || null,
+        mailto: document.querySelector('.invitation-section a[href="mailto:hello@1118.io"]')?.href || null,
       };
     })()
   `);
@@ -324,9 +343,12 @@ async function inspectViewport(session, viewport) {
       const interactive = Array.from(document.querySelectorAll("a, button, input, textarea, [role='slider']"));
       const formatGrid = document.querySelector(".format-grid");
       const formatItems = Array.from(document.querySelectorAll(".format-item"));
-      const workRows = Array.from(document.querySelectorAll(".work-row"));
+      const workRows = Array.from(document.querySelectorAll(".work-proof"));
       const escapePath = [...document.querySelectorAll(".escape-trajectory-core")].find(
         (path) => getComputedStyle(path.closest(".escape-route")).display !== "none",
+      );
+      const escapeEndpoint = [...document.querySelectorAll(".escape-endpoint-core")].find(
+        (point) => getComputedStyle(point.closest(".escape-route")).display !== "none",
       );
       const navigation = performance.getEntriesByType("navigation")[0];
       const resources = performance.getEntriesByType("resource");
@@ -380,14 +402,15 @@ async function inspectViewport(session, viewport) {
         works: {
           rowCount: workRows.length,
           rowLinkCount: workRows.filter((row) => row.matches("a") || row.querySelector("a")).length,
-          featuredLink: document.querySelector(".work-feature a")?.href || null
+          featuredLink: document.querySelector(".etchr-section a[href='https://etchr.ai']")?.href || null
         },
         escapeMotion: {
           decorative: document.querySelector(".escape-arc").getAttribute("aria-hidden") === "true",
           animationName: getComputedStyle(escapePath).animationName,
           animationDuration: getComputedStyle(escapePath).animationDuration,
           animationIterationCount: getComputedStyle(escapePath).animationIterationCount,
-          strokeDashoffset: getComputedStyle(escapePath).strokeDashoffset
+          strokeDashoffset: getComputedStyle(escapePath).strokeDashoffset,
+          endpointOpacity: getComputedStyle(escapeEndpoint).opacity
         },
         layoutShift: Number((window.__qaLayoutShift || 0).toFixed(4)),
         performance: {
@@ -413,7 +436,8 @@ async function inspectViewport(session, viewport) {
           media: matchMedia("(prefers-reduced-motion: reduce)").matches,
           scrollBehavior: getComputedStyle(document.documentElement).scrollBehavior,
           arcAnimation: getComputedStyle(escapePath).animationName,
-          arcOffset: getComputedStyle(escapePath).strokeDashoffset
+          arcOffset: getComputedStyle(escapePath).strokeDashoffset,
+          endpointOpacity: getComputedStyle(escapeEndpoint).opacity
         }
       };
     })()
@@ -487,17 +511,9 @@ for (const viewport of viewports) {
     );
     await captureRegion(
       session,
-      "etchr-1440.png",
+      "etchr-band-1440.png",
       `(() => {
         const rect = document.querySelector(".etchr-section").getBoundingClientRect();
-        return { x: rect.x, y: rect.y + scrollY, width: rect.width, height: rect.height };
-      })()`,
-    );
-    await captureRegion(
-      session,
-      "formats-1440.png",
-      `(() => {
-        const rect = document.querySelector(".format-proof").getBoundingClientRect();
         return { x: rect.x, y: rect.y + scrollY, width: rect.width, height: rect.height };
       })()`,
     );

@@ -5,7 +5,7 @@ import path from "node:path";
 
 const chromePort = process.env.CHROME_DEBUG_PORT || "9333";
 const baseUrl = process.env.QA_URL || "http://127.0.0.1:3108";
-const outputDir = path.resolve("artifacts/flagship-overnight-launch-readiness");
+const outputDir = path.resolve("artifacts/approved-full-width-composition");
 const ffmpeg = process.env.FFMPEG_PATH || "/opt/homebrew/bin/ffmpeg";
 
 const sleep = (milliseconds) =>

@@ -45,7 +45,6 @@ export function ContactForm() {
         <button type="submit">
           Send message <span aria-hidden="true">→</span>
         </button>
-        <a href="mailto:hello@1118.io">hello@1118.io</a>
       </div>
 
       {showPreviewNotice ? (

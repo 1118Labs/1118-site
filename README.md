@@ -41,6 +41,6 @@ node scripts/flagship-overnight-recordings.mjs
 ```
 
 The browser scripts expect Chrome DevTools on port `9333` and write ignored
-review evidence to `artifacts/flagship-overnight-launch-readiness/`. The
+review evidence to `artifacts/approved-full-width-composition/`. The
 recording script also expects `ffmpeg` at `/opt/homebrew/bin/ffmpeg` unless
 `FFMPEG_PATH` is set.

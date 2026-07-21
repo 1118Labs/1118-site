@@ -40,26 +40,30 @@ export function EscapeArc() {
         <g className="escape-route escape-route-wide">
           <path
             className="escape-trajectory-halo"
-            d="M 690 645 C 880 700, 910 340, 1250 110"
+            d="M 835 685 C 1030 610, 1150 340, 1505 138"
             vectorEffect="non-scaling-stroke"
           />
           <path
             className="escape-trajectory-core"
-            d="M 690 645 C 880 700, 910 340, 1250 110"
+            d="M 835 685 C 1030 610, 1150 340, 1505 138"
             vectorEffect="non-scaling-stroke"
           />
+          <circle className="escape-endpoint-halo" cx="1505" cy="138" r="12" />
+          <circle className="escape-endpoint-core" cx="1505" cy="138" r="3.5" />
         </g>
         <g className="escape-route escape-route-narrow">
           <path
             className="escape-trajectory-halo"
-            d="M 900 710 C 1350 650, 1510 380, 1460 120"
+            d="M 915 730 C 1260 640, 1460 375, 1480 120"
             vectorEffect="non-scaling-stroke"
           />
           <path
             className="escape-trajectory-core"
-            d="M 900 710 C 1350 650, 1510 380, 1460 120"
+            d="M 915 730 C 1260 640, 1460 375, 1480 120"
             vectorEffect="non-scaling-stroke"
           />
+          <circle className="escape-endpoint-halo" cx="1480" cy="120" r="14" />
+          <circle className="escape-endpoint-core" cx="1480" cy="120" r="4" />
         </g>
       </svg>
     </div>
