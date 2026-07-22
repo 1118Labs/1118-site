@@ -1,40 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# 1118 Flagship Homepage
 
-## Getting Started
+Private-review implementation of the 1118 flagship homepage. The page uses the canonical Shipyard layout foundation with 1118 identity, copy, product evidence, and legal identity.
 
-First, run the development server:
+## Local development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Validation
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+```bash
+npm run lint
+npm run typecheck
+npm run build
+npm audit --omit=dev
+git diff --check
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+The contact form intentionally fails closed in review builds: it validates fields, preserves entered values, and does not transmit or store data.
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Source register
 
-## Learn More
+| Purpose | Read-only source | Implemented here |
+| --- | --- | --- |
+| Layout rhythm, container, typography mechanics, project-story, contact, footer, navigation | Shipyard `src/index.css`, `src/App.tsx`, `src/App.css` at `ad9c54d73160024fe9c1d7591acf9b11a763d37b` | Fresh App Router implementation in `app/` and `components/` |
+| Etchr framing | Etchr `src/components/etchr/home/HeroStorySection.tsx` and `src/components/etchr/EtchrBeforeAfterCard.tsx` at `3629be325580fc3453aa136e575ab703e339cfa2` | `components/ComparisonSlider.tsx` and Arrival styling |
+| MacBook | Licensed `assets/img/macbook-61.png` plus committed Etchr screen proof | `public/etchr/etchr-macbook.png` |
+| Reviews Engine | Approved synthetic SkyPups review fixtures | `components/ReviewsEngineProof.tsx` |
+| Property Insights | Approved synthetic property fixture | `public/work/property-insights-synthetic-dashboard.png` |
+| Manuscript | Neutral synthetic content only | Semantic proof in `components/ProductStories.tsx` |
+| Escape Velocity | `/Users/stevehole/Documents/1118/Graphics/earth-space-1.jpg` (1920×1080) | Art-directed native-resolution plates in `public/studio/` |
 
-To learn more about Next.js, take a look at the following resources:
+## Escape crops
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+The source remains at native 1920×1080 resolution; it is never upscaled. The desktop plate is 1920×1080. Tablet uses the 864×1080 crop beginning at x=1056. Mobile uses the 438×1080 crop beginning at x=1200. The launch light is baked into each image through the desktop master—there is no live SVG trajectory.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+All routes carry `noindex, nofollow` metadata until canonical release authorization.
