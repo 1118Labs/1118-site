@@ -4,8 +4,8 @@ import os from "node:os";
 import path from "node:path";
 
 const chromePort = process.env.CHROME_DEBUG_PORT || "9333";
-const baseUrl = process.env.QA_URL || "http://127.0.0.1:3108";
-const outputDir = path.resolve("artifacts/cinematic-flagship-homepage");
+const baseUrl = process.env.QA_URL || "http://localhost:3108";
+const outputDir = path.resolve("artifacts/founder-visual-correction");
 const ffmpeg = process.env.FFMPEG_PATH || "/opt/homebrew/bin/ffmpeg";
 const sleep = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
 
@@ -152,7 +152,7 @@ async function record({ name, width, height, mobile, action }) {
 async function walkthrough(session) {
   await session.evaluate(`new Promise((resolve) => {
     const start = performance.now();
-    const duration = 18000;
+    const duration = 26000;
     const maximum = document.documentElement.scrollHeight - innerHeight;
     const tick = (now) => {
       const progress = Math.min(1, (now - start) / duration);
@@ -174,6 +174,19 @@ async function worksInteraction(session, queueStill) {
     await sleep(900);
     await queueStill(45);
   }
+}
+
+async function reviewsEngineActiveProof(session, queueStill) {
+  await session.evaluate(`document.querySelector("#works").scrollIntoView({ block: "center" })`);
+  await sleep(900);
+  await session.evaluate(`document.querySelectorAll(".works-rail button")[0].click()`);
+  await sleep(900);
+  await queueStill(45);
+  await sleep(5200);
+  await queueStill(45);
+  await session.evaluate(`document.querySelector('.reviews-proof-controls button[aria-label="Next review"]').click()`);
+  await sleep(900);
+  await queueStill(45);
 }
 
 async function comparisonInteraction(session, queueStill) {
@@ -209,8 +222,9 @@ async function comparisonInteraction(session, queueStill) {
 
 await mkdir(outputDir, { recursive: true });
 const results = [];
-results.push(await record({ name: "desktop-cinematic-walkthrough", width: 1440, height: 900, mobile: false, action: walkthrough }));
-results.push(await record({ name: "mobile-cinematic-walkthrough", width: 390, height: 844, mobile: true, action: walkthrough }));
-results.push(await record({ name: "works-interaction", width: 1440, height: 900, mobile: false, action: worksInteraction }));
+results.push(await record({ name: "desktop-founder-review", width: 1440, height: 900, mobile: false, action: walkthrough }));
+results.push(await record({ name: "mobile-founder-review", width: 390, height: 844, mobile: true, action: walkthrough }));
+results.push(await record({ name: "works-product-switching", width: 1440, height: 900, mobile: false, action: worksInteraction }));
+results.push(await record({ name: "reviews-engine-active-proof", width: 1440, height: 900, mobile: false, action: reviewsEngineActiveProof }));
 results.push(await record({ name: "comparison-interaction", width: 1440, height: 900, mobile: false, action: comparisonInteraction }));
 console.log(JSON.stringify(results, null, 2));

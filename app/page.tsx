@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { ComparisonSlider } from "@/components/ComparisonSlider";
 import { ContactForm } from "@/components/ContactForm";
-import { EscapeArc } from "@/components/EscapeArc";
 import { MotionController } from "@/components/MotionController";
 import { SiteHeader } from "@/components/SiteHeader";
 import { WorksGallery } from "@/components/WorksGallery";
@@ -84,21 +83,19 @@ export default function Home() {
           </div>
 
           <div className="etchr-stage" aria-label="Etchr portrait formats">
-            <figure className="laptop product-object" data-reveal>
-              <div className="laptop-screen">
-                <Image
-                  src="/brand/hero-etchr-aligned.png"
-                  alt="Etchr engraved editorial portrait displayed on a laptop"
-                  fill
-                  sizes="(max-width: 780px) 88vw, 56vw"
-                />
-              </div>
-              <div className="laptop-base" aria-hidden="true" />
+            <figure className="etchr-device product-object" data-reveal>
+              <Image
+                src="/etchr/etchr-macbook.png"
+                alt="Etchr homepage and editorial portrait experience displayed on a MacBook Pro"
+                width={2088}
+                height={1204}
+                sizes="(max-width: 800px) 118vw, 68vw"
+              />
             </figure>
 
             <figure className="etchr-output etchr-output-professional product-object" data-reveal>
               <Image
-                src="/brand/hero-etchr-aligned.png"
+                src="/etchr/portrait-professional.png"
                 alt="Etchr professional portrait format"
                 fill
                 sizes="(max-width: 780px) 34vw, 14vw"
@@ -107,7 +104,7 @@ export default function Home() {
             </figure>
             <figure className="etchr-output etchr-output-square product-object" data-reveal>
               <Image
-                src="/brand/hero-etchr-aligned.png"
+                src="/etchr/portrait-square.png"
                 alt="Etchr square social portrait format"
                 fill
                 sizes="(max-width: 780px) 32vw, 12vw"
@@ -116,7 +113,7 @@ export default function Home() {
             </figure>
             <figure className="etchr-output etchr-output-vertical product-object" data-reveal>
               <Image
-                src="/brand/hero-etchr-aligned.png"
+                src="/etchr/portrait-vertical.png"
                 alt="Etchr vertical portrait format"
                 fill
                 sizes="(max-width: 780px) 30vw, 10vw"
@@ -132,13 +129,7 @@ export default function Home() {
           aria-labelledby="belief-title"
           data-header-theme="dark"
         >
-          <Image
-            className="belief-image scene-settle"
-            src="/studio/belief-fog.jpg"
-            alt="Mist moving through a distant forest"
-            fill
-            sizes="100vw"
-          />
+          <div className="belief-field scene-settle" aria-hidden="true" />
           <div className="belief-shade" aria-hidden="true" />
           <div className="belief-copy reveal" data-reveal>
             <h2 id="belief-title">
@@ -177,11 +168,25 @@ export default function Home() {
           data-header-theme="dark"
         >
           <Image
-            className="escape-image scene-settle"
-            src="/studio/earth-daylight.jpg"
+            className="escape-image escape-image-desktop scene-settle"
+            src="/studio/earth-escape-desktop.jpg"
             alt="The enormous curve of Earth meeting open space"
             fill
             sizes="100vw"
+          />
+          <Image
+            className="escape-image escape-image-tablet scene-settle"
+            src="/studio/earth-escape-tablet.jpg"
+            alt=""
+            fill
+            sizes="(max-width: 1120px) 100vw, 0px"
+          />
+          <Image
+            className="escape-image escape-image-mobile scene-settle"
+            src="/studio/earth-escape-mobile.jpg"
+            alt=""
+            fill
+            sizes="(max-width: 800px) 100vw, 0px"
           />
           <div className="escape-shade" aria-hidden="true" />
           <div className="escape-copy reveal" data-reveal>
@@ -199,14 +204,13 @@ export default function Home() {
               momentum compounds and possibility becomes progress.
             </p>
           </div>
-          <EscapeArc />
         </section>
 
         <section
           className="chapter invitation"
           id="contact"
           aria-labelledby="invitation-title"
-          data-header-theme="dark"
+          data-header-theme="light"
         >
           <div className="invitation-copy reveal" data-reveal>
             <h2 id="invitation-title">Have a good idea?</h2>
@@ -232,9 +236,6 @@ export default function Home() {
           <span>1118, LLC</span>
           <span>New York</span>
           <a href="mailto:hello@1118.io">hello@1118.io</a>
-          <a href="https://etchr.ai" target="_blank" rel="noreferrer">
-            Etchr.ai
-          </a>
           <span>© 2026</span>
         </div>
       </footer>

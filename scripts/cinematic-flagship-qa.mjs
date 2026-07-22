@@ -2,8 +2,8 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const chromePort = process.env.CHROME_DEBUG_PORT || "9333";
-const baseUrl = process.env.QA_URL || "http://127.0.0.1:3108";
-const outputDir = path.resolve("artifacts/cinematic-flagship-homepage");
+const baseUrl = process.env.QA_URL || "http://localhost:3108";
+const outputDir = path.resolve("artifacts/founder-visual-correction");
 const sleep = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
 
 class CdpSession {
@@ -177,6 +177,33 @@ async function screenshotElement(session, selector, fileName) {
   await writeFile(path.join(outputDir, fileName), Buffer.from(shot.data, "base64"));
 }
 
+async function screenshotThroughFooter(session, selector, fileName) {
+  await session.evaluate(`document.querySelector(${JSON.stringify(selector)}).scrollIntoView({ block: "start" })`);
+  await sleep(300);
+  const bounds = await session.evaluate(`(() => {
+    const rect = document.querySelector(${JSON.stringify(selector)}).getBoundingClientRect();
+    return {
+      x: 0,
+      y: rect.y + scrollY,
+      width: document.documentElement.clientWidth,
+      height: document.documentElement.scrollHeight - (rect.y + scrollY),
+    };
+  })()`);
+  const shot = await session.send("Page.captureScreenshot", {
+    format: "png",
+    captureBeyondViewport: true,
+    fromSurface: true,
+    clip: {
+      x: 0,
+      y: Math.max(0, Math.floor(bounds.y)),
+      width: Math.ceil(bounds.width),
+      height: Math.max(1, Math.ceil(bounds.height)),
+      scale: 1,
+    },
+  });
+  await writeFile(path.join(outputDir, fileName), Buffer.from(shot.data, "base64"));
+}
+
 async function testSlider(session) {
   await session.evaluate(`document.querySelector(".comparison-divider").focus()`);
   const key = async (value) => {
@@ -229,6 +256,27 @@ async function testWorks(session) {
   return { labels, clicked, keyboard, swipe };
 }
 
+async function testReviewsProof(session) {
+  await session.evaluate(`document.querySelectorAll(".works-rail button")[0].click()`);
+  await sleep(700);
+  const before = await session.evaluate(`document.querySelector(".reviews-review-card blockquote").textContent.trim()`);
+  const counterBefore = await session.evaluate(`document.querySelector(".reviews-proof-controls span").textContent.trim()`);
+  await session.evaluate(`document.querySelector('.reviews-proof-controls button[aria-label="Next review"]').click()`);
+  await sleep(700);
+  const after = await session.evaluate(`(() => {
+    const track = document.querySelector(".reviews-review-track");
+    const style = getComputedStyle(track);
+    return {
+      transform: style.transform,
+      counterAfter: document.querySelector(".reviews-proof-controls span")?.textContent.trim(),
+      cards: document.querySelectorAll(".reviews-review-card").length,
+      paws: document.querySelectorAll(".reviews-paws").length,
+      published: document.querySelector(".reviews-proof-header")?.textContent.replace(/\\s+/g, " ").trim(),
+    };
+  })()`);
+  return { before, counterBefore, ...after, changed: after.counterAfter !== counterBefore };
+}
+
 async function testContact(session) {
   return session.evaluate(`(() => {
     const form = document.querySelector(".contact-form");
@@ -261,16 +309,21 @@ async function inspect(session, viewport) {
   await sleep(100);
   const layout = await session.evaluate(`(() => {
     const images = [...document.images];
+    const visibleImages = images.filter((image) => image.getClientRects().length > 0);
     const resources = performance.getEntriesByType("resource");
     const sections = [...document.querySelectorAll("main > section")];
     const header = document.querySelector(".site-header");
+    const headingLines = [...document.querySelectorAll(".works-heading h2 span")].map((line) => {
+      const rect = line.getBoundingClientRect();
+      return { text: line.textContent.trim(), top: rect.top, bottom: rect.bottom, width: rect.width };
+    });
     return {
       viewport: { width: innerWidth, height: innerHeight },
       clientWidth: document.documentElement.clientWidth,
       scrollWidth: document.documentElement.scrollWidth,
       scrollHeight: document.documentElement.scrollHeight,
       chapters: sections.map((section) => ({ id: section.id, height: Math.round(section.getBoundingClientRect().height) })),
-      brokenImages: images.filter((image) => !image.complete || image.naturalWidth === 0).map((image) => image.currentSrc),
+      brokenImages: visibleImages.filter((image) => !image.complete || image.naturalWidth === 0).map((image) => image.currentSrc),
       missingAlt: images.filter((image) => !image.hasAttribute("alt")).length,
       unlabeledControls: [...document.querySelectorAll("button, input, textarea, [role=slider]")].filter((node) => !node.getAttribute("aria-label") && !node.labels?.length && !node.textContent.trim()).length,
       headerThemeAtTop: header.className,
@@ -280,6 +333,11 @@ async function inspect(session, viewport) {
       transferBytes: resources.reduce((sum, resource) => sum + (resource.encodedBodySize || 0), 0),
       initialJsBytes: resources.filter((resource) => resource.name.includes("/_next/static") && resource.name.includes(".js")).reduce((sum, resource) => sum + (resource.encodedBodySize || 0), 0),
       errorOverlay: Boolean(document.querySelector("[data-nextjs-dialog], .vite-error-overlay")),
+      worksHeading: {
+        lines: headingLines.map(({ text }) => text),
+        overlap: headingLines.length === 2 && headingLines[0].bottom > headingLines[1].top,
+        exceedsViewport: headingLines.some((line) => line.width > document.documentElement.clientWidth),
+      },
     };
   })()`);
   await session.evaluate(`scrollTo(0, document.querySelector("#work").offsetTop + 120)`);
@@ -296,6 +354,7 @@ async function inspect(session, viewport) {
   await session.evaluate(`document.querySelector("#works").scrollIntoView({ behavior: "instant" })`);
   console.log(`inspect ${viewport.name}: works`);
   const works = await testWorks(session);
+  const reviewsProof = await testReviewsProof(session);
   console.log(`inspect ${viewport.name}: contact`);
   const contact = await testContact(session);
   const eventErrors = session.events.filter((event) =>
@@ -303,7 +362,7 @@ async function inspect(session, viewport) {
     event.method === "Network.loadingFailed" ||
     (event.method === "Log.entryAdded" && event.params.entry.level === "error"),
   );
-  return { ...layout, slider, works, contact, eventErrors: eventErrors.length, viewport };
+  return { ...layout, slider, works, reviewsProof, contact, eventErrors: eventErrors.length, viewport };
 }
 
 async function selectProduct(session, index) {
@@ -331,7 +390,7 @@ for (const viewport of viewports) {
   if (viewport.name === "1440") {
     await screenshotFull(session, "full-page-1440.png");
     await screenshotElement(session, ".arrival", "arrival-1440.png");
-    await screenshotElement(session, ".etchr", "etchr-1440.png");
+    await screenshotElement(session, ".etchr", "etchr-laptop-1440.png");
     await screenshotElement(session, ".belief", "belief-1440.png");
     await selectProduct(session, 0);
     await screenshotElement(session, ".works", "works-reviews-1440.png");
@@ -340,15 +399,20 @@ for (const viewport of viewports) {
     await selectProduct(session, 2);
     await screenshotElement(session, ".works", "works-manuscript-1440.png");
     await screenshotElement(session, ".escape", "escape-1440.png");
-    await screenshotElement(session, ".invitation", "invitation-1440.png");
+    await screenshotThroughFooter(session, ".invitation", "invitation-footer-1440.png");
   }
   if (viewport.name === "390") {
     await screenshotFull(session, "full-page-390.png");
     await screenshotElement(session, ".arrival", "arrival-390.png");
     await screenshotElement(session, ".etchr", "etchr-390.png");
-    await screenshotElement(session, ".works", "works-390.png");
+    await selectProduct(session, 0);
+    await screenshotElement(session, ".works", "works-reviews-390.png");
+    await selectProduct(session, 1);
+    await screenshotElement(session, ".works", "works-property-insights-390.png");
+    await selectProduct(session, 2);
+    await screenshotElement(session, ".works", "works-manuscript-390.png");
     await screenshotElement(session, ".escape", "escape-390.png");
-    await screenshotElement(session, ".invitation", "invitation-390.png");
+    await screenshotThroughFooter(session, ".invitation", "invitation-footer-390.png");
   }
   report.push(await inspect(session, viewport));
   await session.close();
@@ -358,14 +422,12 @@ const session = await newPage();
 await configure(session, { width: 390, height: 844 }, true);
 const reducedMotion = await session.evaluate(`(() => {
   document.getElementById("1118").scrollIntoView({ behavior: "instant" });
-  const path = [...document.querySelectorAll(".escape-trajectory-core")].find((node) => getComputedStyle(node.closest(".escape-route")).display !== "none");
-  const point = [...document.querySelectorAll(".escape-endpoint-core")].find((node) => getComputedStyle(node.closest(".escape-route")).display !== "none");
   return {
     media: matchMedia("(prefers-reduced-motion: reduce)").matches,
     scrollBehavior: getComputedStyle(document.documentElement).scrollBehavior,
-    pathOffset: path ? getComputedStyle(path).strokeDashoffset : null,
-    endpointOpacity: point ? getComputedStyle(point).opacity : null,
     arrivalOpacity: getComputedStyle(document.querySelector(".arrival-line")).opacity,
+    imageAnimation: getComputedStyle(document.querySelector(".escape-image-mobile")).animationDuration,
+    reviewTransition: getComputedStyle(document.querySelector(".reviews-review-track")).transitionDuration,
   };
 })()`);
 
