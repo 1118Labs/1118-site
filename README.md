@@ -1,6 +1,32 @@
-# 1118 Flagship Homepage
+# 1118 Company Website
 
-Private-review implementation of the 1118 flagship homepage. The page uses the canonical Shipyard layout foundation with 1118 identity, copy, product evidence, and legal identity.
+Launch-candidate implementation of the 1118 company website. The site is a
+Next.js App Router project built from the recovered, founder-reviewed
+Shipyard-foundation visual direction.
+
+## Public positioning
+
+- Public company name: `1118`
+- Legal reference: `1118 LLC`
+- Founder reference: `Steve`
+- Company contact: `hello@1118.io`
+- Featured live product: [Etchr Portraits](https://etchr.ai)
+- Verified App Store listing:
+  [Etchr Portraits](https://apps.apple.com/us/app/etchr-portraits/id6785615752)
+
+## Information architecture
+
+1. Company statement
+2. Etchr featured product
+3. Product portfolio with public status labels
+4. Founder-led, supervised-AI operating model
+5. About
+6. Meaning behind 1118
+7. Contact
+8. Privacy, terms, and accessibility
+
+Unannounced products stay unnamed. The site contains no contact form,
+analytics, tracking scripts, or customer claims.
 
 ## Local development
 
@@ -21,22 +47,17 @@ npm audit --omit=dev
 git diff --check
 ```
 
-The contact form intentionally fails closed in review builds: it validates fields, preserves entered values, and does not transmit or store data.
+Preview builds use `noindex, nofollow`. A Vercel production build switches the
+metadata and robots route to indexable output.
 
-## Source register
+## Recovered visual sources
 
-| Purpose | Read-only source | Implemented here |
-| --- | --- | --- |
-| Layout rhythm, container, typography mechanics, project-story, contact, footer, navigation | Shipyard `src/index.css`, `src/App.tsx`, `src/App.css` at `ad9c54d73160024fe9c1d7591acf9b11a763d37b` | Fresh App Router implementation in `app/` and `components/` |
-| Etchr framing | Etchr `src/components/etchr/home/HeroStorySection.tsx` and `src/components/etchr/EtchrBeforeAfterCard.tsx` at `3629be325580fc3453aa136e575ab703e339cfa2` | `components/ComparisonSlider.tsx` and Arrival styling |
-| MacBook | Licensed `assets/img/macbook-61.png` plus committed Etchr screen proof | `public/etchr/etchr-macbook.png` |
-| Reviews Engine | Approved synthetic SkyPups review fixtures | `components/ReviewsEngineProof.tsx` |
-| Property Insights | Approved synthetic property fixture | `public/work/property-insights-synthetic-dashboard.png` |
-| Manuscript | Neutral synthetic content only | Semantic proof in `components/ProductStories.tsx` |
-| Escape Velocity | `/Users/stevehole/Documents/1118/Graphics/earth-space-1.jpg` (1920×1080) | Art-directed native-resolution plates in `public/studio/` |
+| Purpose | Source |
+| --- | --- |
+| Typography, spacing, editorial composition | `review/1118-shipyard-foundation` at `5a299541e295e3717b9d69040a33615e246baa41` |
+| Etchr before/after proof | Recovered canonical pair in `public/brand/` |
+| Etchr product composition | Approved assets in `public/etchr/` |
+| Escape-velocity chapter | Approved art-directed source in `public/studio/` |
 
-## Escape crops
-
-The source remains at native 1920×1080 resolution; it is never upscaled. The desktop plate is 1920×1080. Tablet uses the 864×1080 crop beginning at x=1056. Mobile uses the 438×1080 crop beginning at x=1200. The launch light is baked into each image through the desktop master—there is no live SVG trajectory.
-
-All routes carry `noindex, nofollow` metadata until canonical release authorization.
+Production deployment, merge, DNS, analytics, Etchr code, and Founder OS code
+are outside this branch’s scope.
