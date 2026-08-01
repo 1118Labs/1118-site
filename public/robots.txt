@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /
+
+# Protected launch candidate. Replace at the separately approved Production gate.

@@ -1,40 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# 1118 Company Website
 
-## Getting Started
+Launch-candidate website for 1118, LLC: an AI-first product studio that designs, builds, launches, and operates original software.
 
-First, run the development server:
+## Stack
+
+- React 19
+- Vite 8
+- TypeScript
+- Framer Motion
+- Vercel Preview deployment
+
+The site is deliberately static and self-contained. Public product claims and media are recorded in the launch evidence and legal-review checklist; no external CMS or runtime data source is required.
+
+## Local development
 
 ```bash
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Quality checks:
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run typecheck
+npm run lint
+npm run build
+```
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Launch boundary
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+The committed configuration is a protected launch candidate, not a Production release:
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `noindex,nofollow,noarchive` is set in HTML, `robots.txt`, and Vercel response headers.
+- Production, custom-domain, DNS, analytics, and public indexing changes require a separate founder approval.
+- Before Production, follow [docs/production-launch-checklist.md](docs/production-launch-checklist.md) and complete [docs/legal-review-checklist.md](docs/legal-review-checklist.md).
 
-## Learn More
+## Historical case studies
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+Signal is included in V1 as a completed historical 1118 product. A dedicated Signal route and Playbook—the first approved post-launch historical case study—are preserved in the internal roadmap at `src/content/historical-roadmap.ts`. That file is intentionally not imported by the public application.

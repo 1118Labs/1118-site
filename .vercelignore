@@ -1,0 +1,6 @@
+.git
+.vercel
+artifacts
+dist
+node_modules
+*.log
