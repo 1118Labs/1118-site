@@ -2,6 +2,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import {
   type FormEvent,
   type KeyboardEvent as ReactKeyboardEvent,
+  type PointerEvent as ReactPointerEvent,
   type ReactNode,
   useEffect,
   useMemo,
@@ -10,10 +11,14 @@ import {
 } from "react";
 import "./App.css";
 import brandMark from "./assets/brand/1118-mark-blue.png";
+import appStoreBadge from "./assets/showcase/etchr/download-on-the-app-store.svg";
+import etchrAppIcon from "./assets/showcase/etchr/etchr-app-icon-512.png";
 import etchrResult from "./assets/showcase/etchr/hero-result-1118.png";
 import etchrSource from "./assets/showcase/etchr/hero-source-1118.png";
-import propertyRecommendation from "./assets/showcase/property-insights/synthetic-recommendation-card.png";
-import reviewsProof from "./assets/showcase/reviews-engine/skypups-public-widget.png";
+import bearChelsea from "./assets/showcase/reviews-engine/cards/bear-chelsea.jpg";
+import juniperLuis from "./assets/showcase/reviews-engine/cards/juniper-luis.jpg";
+import mochiErin from "./assets/showcase/reviews-engine/cards/mochi-erin.jpg";
+import scoutPriya from "./assets/showcase/reviews-engine/cards/scout-priya.jpg";
 import signalInterface from "./assets/showcase/signal/signal-archival-interface.png";
 
 const APP_STORE_URL = "https://apps.apple.com/us/app/etchr-portraits/id6785615752";
@@ -47,7 +52,7 @@ const products: Product[] = [
     status: "IN DEVELOPMENT",
     headline: "Turn customer reviews\ninto a better reputation.",
     description: "Software for collecting, moderating, and publishing customer reviews.",
-    note: "Public SkyPups installation shown.",
+    note: "Approved SkyPups fixture shown.",
   },
   {
     slug: "property-insights",
@@ -64,9 +69,52 @@ const products: Product[] = [
     headline: "Quantitative intelligence\nfor commodities trading.",
     description:
       "1118 co-founded, designed, built, and launched Signal—an enterprise commodities analytics platform used in live markets, licensed by a major trading firm, and later acquired.",
-    note: "Archival product screen.",
+    note: "Archival product screen · 2019.",
   },
 ];
+
+const skyPupsReviews = [
+  {
+    id: "skypups-1",
+    image: mochiErin,
+    imagePosition: "50% 30%",
+    name: "Mochi & Erin",
+    location: "Austin, TX",
+    paws: 5,
+    quote:
+      "SkyPups made our shy rescue pup feel like the guest of honor. The staff sent polished updates, the yard was spotless, and Mochi came home calm, tired, and grinning.",
+  },
+  {
+    id: "skypups-2",
+    image: juniperLuis,
+    imagePosition: "50% 42%",
+    name: "Juniper & Luis",
+    location: "Nashville, TN",
+    paws: 5,
+    quote:
+      "We booked one stay and never looked back. Juniper sprinted through the doors on visit two. Around here, pups do not leave star reviews — they leave elite paw reviews.",
+  },
+  {
+    id: "skypups-3",
+    image: scoutPriya,
+    imagePosition: "50% 36%",
+    name: "Scout & Priya",
+    location: "Denver, CO",
+    paws: 5,
+    quote:
+      "Scout came home brushed, calm, and clearly cared for. The team handled pickup, playtime, and the final freshen-up with the kind of consistency that makes you trust them fast.",
+  },
+  {
+    id: "skypups-4",
+    image: bearChelsea,
+    imagePosition: "50% 32%",
+    name: "Bear & Chelsea",
+    location: "Seattle, WA",
+    paws: 4,
+    quote:
+      "You can feel the standard the minute you walk in. Bear had a full play day, a warm bath, and a handwritten note waiting when I picked him up.",
+  },
+] as const;
 
 const buildSteps = [
   {
@@ -126,33 +174,158 @@ function BrandLockup({ compact = false }: { compact?: boolean }) {
   );
 }
 
-function PairProof({ className = "", priority = false }: { className?: string; priority?: boolean }) {
+type EtchrDragState = {
+  active: boolean;
+  pointerId: number;
+  pointerType: string;
+  startX: number;
+  startY: number;
+};
+
+function EtchrComparison({
+  className = "",
+  interactive = true,
+  priority = false,
+}: {
+  className?: string;
+  interactive?: boolean;
+  priority?: boolean;
+}) {
+  const frameRef = useRef<HTMLDivElement>(null);
+  const dragRef = useRef<EtchrDragState | null>(null);
+  const [position, setPosition] = useState(50);
+
+  const updateFromClientX = (clientX: number) => {
+    const bounds = frameRef.current?.getBoundingClientRect();
+    if (!bounds?.width) return;
+    const nextPosition = ((clientX - bounds.left) / bounds.width) * 100;
+    setPosition(Math.min(100, Math.max(0, nextPosition)));
+  };
+
+  const releasePointer = () => {
+    const state = dragRef.current;
+    const node = frameRef.current;
+    if (state && node?.hasPointerCapture(state.pointerId)) node.releasePointerCapture(state.pointerId);
+    dragRef.current = null;
+  };
+
+  useEffect(() => {
+    if (!interactive) return;
+    const stopOnBlur = () => releasePointer();
+    window.addEventListener("blur", stopOnBlur);
+    return () => {
+      window.removeEventListener("blur", stopOnBlur);
+      releasePointer();
+    };
+  }, [interactive]);
+
+  const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (!interactive || (event.pointerType === "mouse" && event.button !== 0)) return;
+    const active = event.pointerType !== "touch";
+    dragRef.current = {
+      active,
+      pointerId: event.pointerId,
+      pointerType: event.pointerType,
+      startX: event.clientX,
+      startY: event.clientY,
+    };
+    if (active) {
+      event.currentTarget.setPointerCapture(event.pointerId);
+      updateFromClientX(event.clientX);
+      event.preventDefault();
+    }
+  };
+
+  const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const state = dragRef.current;
+    if (!interactive || !state || state.pointerId !== event.pointerId) return;
+
+    if (!state.active && state.pointerType === "touch") {
+      const deltaX = event.clientX - state.startX;
+      const deltaY = event.clientY - state.startY;
+      if (Math.max(Math.abs(deltaX), Math.abs(deltaY)) < 8) return;
+      if (Math.abs(deltaY) >= Math.abs(deltaX)) {
+        dragRef.current = null;
+        return;
+      }
+      state.active = true;
+      event.currentTarget.setPointerCapture(event.pointerId);
+    }
+
+    if (!state.active) return;
+    event.preventDefault();
+    updateFromClientX(event.clientX);
+  };
+
+  const handlePointerEnd = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const state = dragRef.current;
+    if (!interactive || !state || state.pointerId !== event.pointerId) return;
+    if (!state.active && state.pointerType === "touch") updateFromClientX(event.clientX);
+    releasePointer();
+  };
+
+  const handleKeyboard = (event: ReactKeyboardEvent<HTMLDivElement>) => {
+    const increment = event.shiftKey ? 10 : 2;
+    if (event.key === "ArrowLeft") setPosition((value) => Math.max(0, value - increment));
+    else if (event.key === "ArrowRight") setPosition((value) => Math.min(100, value + increment));
+    else if (event.key === "Home") setPosition(0);
+    else if (event.key === "End") setPosition(100);
+    else return;
+    event.preventDefault();
+  };
+
+  const roundedPosition = Math.round(position);
+
   return (
-    <div className={`hero-media-slot-frame is-pair is-ready ${className}`}>
-      <div className="hero-media-slot-pair">
-        <div className="hero-media-slot-pane">
-          <img
-            alt="Original photograph used for an Etchr portrait"
-            decoding={priority ? "sync" : "async"}
-            fetchPriority={priority ? "high" : "auto"}
-            height="1024"
-            loading={priority ? "eager" : "lazy"}
-            src={etchrSource}
-            width="768"
-          />
-          <span className="hero-media-slot-pane-label">Photograph</span>
-        </div>
-        <div className="hero-media-slot-pane">
-          <img
-            alt="Finished Etchr editorial portrait"
-            decoding={priority ? "sync" : "async"}
-            fetchPriority={priority ? "high" : "auto"}
-            height="1024"
-            loading={priority ? "eager" : "lazy"}
-            src={etchrResult}
-            width="768"
-          />
-          <span className="hero-media-slot-pane-label">Etchr</span>
+    <div
+      className={`etchr-comparison hero-media-slot-frame is-ready ${interactive ? "is-interactive" : "is-static"} ${className}`}
+      onPointerCancel={handlePointerEnd}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerEnd}
+      ref={frameRef}
+      style={{ "--etchr-position": `${position}%` } as React.CSSProperties}
+    >
+      <img
+        alt="Original photograph used for an Etchr portrait"
+        className="etchr-comparison-image etchr-comparison-original"
+        decoding={priority ? "sync" : "async"}
+        fetchPriority={priority ? "high" : "auto"}
+        height="1024"
+        loading={priority ? "eager" : "lazy"}
+        src={etchrSource}
+        width="768"
+      />
+      <div aria-hidden="true" className="etchr-comparison-result">
+        <img
+          alt=""
+          className="etchr-comparison-image"
+          decoding={priority ? "sync" : "async"}
+          fetchPriority={priority ? "high" : "auto"}
+          height="1024"
+          loading={priority ? "eager" : "lazy"}
+          src={etchrResult}
+          width="768"
+        />
+      </div>
+      <div aria-hidden="true" className="etchr-comparison-labels">
+        <span>Original</span>
+        <span>Etchr</span>
+      </div>
+      <div aria-hidden={!interactive} className="etchr-comparison-divider">
+        <div
+          aria-label="Etchr portrait comparison"
+          aria-valuemax={100}
+          aria-valuemin={0}
+          aria-valuenow={roundedPosition}
+          aria-valuetext={`${100 - roundedPosition}% Original, ${roundedPosition}% Etchr`}
+          className="etchr-comparison-handle"
+          onBlur={releasePointer}
+          onKeyDown={handleKeyboard}
+          role={interactive ? "slider" : undefined}
+          tabIndex={interactive ? 0 : -1}
+        >
+          <span aria-hidden="true">↔</span>
         </div>
       </div>
     </div>
@@ -298,7 +471,7 @@ function Hero({ reduceMotion }: { reduceMotion: boolean }) {
         >
           <a aria-label="See Etchr, a live 1118 product" className="hero-visual-card" href="#etchr">
             <div className="hero-visual-media media-frame">
-              <PairProof className="hero-media-slot" priority />
+              <EtchrComparison className="hero-media-slot" interactive={false} priority />
             </div>
           </a>
         </motion.div>
@@ -309,10 +482,14 @@ function Hero({ reduceMotion }: { reduceMotion: boolean }) {
 
 function ReviewsProof({ reduceMotion }: { reduceMotion: boolean }) {
   const frameRef = useRef<HTMLElement>(null);
-  const [activeView, setActiveView] = useState(reduceMotion ? 1 : 0);
+  const swipeRef = useRef<{ active: boolean; pointerId: number; startX: number; startY: number } | null>(null);
+  const [activeView, setActiveView] = useState(0);
+  const [focusPaused, setFocusPaused] = useState(false);
+  const [hoverPaused, setHoverPaused] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [paused, setPaused] = useState(false);
-  const [manualOverride, setManualOverride] = useState(false);
+  const [pageHidden, setPageHidden] = useState(document.hidden);
+  const [userPaused, setUserPaused] = useState(false);
+  const [userAnnouncement, setUserAnnouncement] = useState("");
 
   useEffect(() => {
     const node = frameRef.current;
@@ -323,61 +500,163 @@ function ReviewsProof({ reduceMotion }: { reduceMotion: boolean }) {
   }, []);
 
   useEffect(() => {
-    if (reduceMotion || !isVisible || paused || manualOverride) return;
-    const interval = window.setInterval(() => setActiveView((view) => (view + 1) % 3), 4800);
+    const onVisibilityChange = () => setPageHidden(document.hidden);
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", onVisibilityChange);
+  }, []);
+
+  useEffect(() => {
+    if (reduceMotion || !isVisible || focusPaused || hoverPaused || pageHidden || userPaused) return;
+    const interval = window.setInterval(
+      () => setActiveView((view) => (view + 1) % skyPupsReviews.length),
+      5200,
+    );
     return () => window.clearInterval(interval);
-  }, [isVisible, manualOverride, paused, reduceMotion]);
+  }, [focusPaused, hoverPaused, isVisible, pageHidden, reduceMotion, userPaused]);
+
+  const selectReview = (nextView: number) => {
+    const wrappedView = (nextView + skyPupsReviews.length) % skyPupsReviews.length;
+    setUserPaused(true);
+    setActiveView(wrappedView);
+    setUserAnnouncement(`Review ${wrappedView + 1} of ${skyPupsReviews.length}: ${skyPupsReviews[wrappedView].name}`);
+  };
 
   const move = (direction: -1 | 1) => {
-    setManualOverride(true);
-    setActiveView((view) => (view + direction + 3) % 3);
+    selectReview(activeView + direction);
   };
 
   const handleKeyboard = (event: ReactKeyboardEvent<HTMLElement>) => {
     if (event.key === "ArrowLeft") move(-1);
-    if (event.key === "ArrowRight") move(1);
+    else if (event.key === "ArrowRight") move(1);
+    else if (event.key === "Home") selectReview(0);
+    else if (event.key === "End") selectReview(skyPupsReviews.length - 1);
+    else return;
+    event.preventDefault();
+  };
+
+  const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (event.pointerType !== "touch") return;
+    swipeRef.current = {
+      active: false,
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+    };
+  };
+
+  const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const swipe = swipeRef.current;
+    if (!swipe || swipe.pointerId !== event.pointerId) return;
+    const deltaX = event.clientX - swipe.startX;
+    const deltaY = event.clientY - swipe.startY;
+    if (!swipe.active && Math.max(Math.abs(deltaX), Math.abs(deltaY)) >= 8) {
+      if (Math.abs(deltaY) >= Math.abs(deltaX)) {
+        swipeRef.current = null;
+        return;
+      }
+      swipe.active = true;
+      event.currentTarget.setPointerCapture(event.pointerId);
+    }
+    if (swipe.active) event.preventDefault();
+  };
+
+  const handlePointerEnd = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const swipe = swipeRef.current;
+    if (!swipe || swipe.pointerId !== event.pointerId) return;
+    const deltaX = event.clientX - swipe.startX;
+    if (swipe.active && Math.abs(deltaX) >= 42) move(deltaX < 0 ? 1 : -1);
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
+    swipeRef.current = null;
   };
 
   return (
     <figure
+      aria-label="Approved SkyPups review fixtures"
+      aria-roledescription="carousel"
       className="reviews-proof"
       onBlurCapture={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget)) setPaused(false);
+        if (!event.currentTarget.contains(event.relatedTarget)) setFocusPaused(false);
       }}
-      onFocusCapture={() => setPaused(true)}
+      onFocusCapture={() => setFocusPaused(true)}
       onKeyDown={handleKeyboard}
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
+      onMouseEnter={() => setHoverPaused(true)}
+      onMouseLeave={() => setHoverPaused(false)}
       ref={frameRef}
+      role="region"
     >
-      <div className="reviews-proof-window">
-        <img
-          alt="Public SkyPups installation showing published review cards"
-          className="reviews-proof-image"
-          decoding="async"
-          height="620"
-          loading="lazy"
-          src={reviewsProof}
+      <div
+        className="reviews-proof-window"
+        onPointerCancel={handlePointerEnd}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerEnd}
+        tabIndex={0}
+      >
+        <ul
+          className="reviews-proof-track"
           style={{ "--review-position": activeView } as React.CSSProperties}
-          width="1360"
-        />
+        >
+          {skyPupsReviews.map((review, index) => (
+            <li
+              aria-hidden={index !== activeView}
+              aria-label={`Review ${index + 1} of ${skyPupsReviews.length}`}
+              className="review-fixture-card"
+              key={review.id}
+            >
+              <img
+                alt={`${review.name} SkyPups fixture`}
+                decoding="async"
+                height="720"
+                loading="lazy"
+                src={review.image}
+                style={{ objectPosition: review.imagePosition }}
+                width="900"
+              />
+              <div className="review-fixture-copy">
+                <p aria-label={`${review.paws} out of 5 paws`} className="review-paw-rating">
+                  <span aria-hidden="true">{review.paws} PAWS</span>
+                </p>
+                <blockquote>“{review.quote}”</blockquote>
+                <footer>
+                  <strong>{review.name}</strong>
+                  <span>{review.location}</span>
+                </footer>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
       <div className="reviews-proof-controls" aria-label="Review sequence controls">
-        <button aria-label="Show previous review cards" onClick={() => move(-1)} type="button">
+        <button aria-label="Show previous review" onClick={() => move(-1)} type="button">
           <span aria-hidden="true">←</span>
         </button>
-        <span aria-live="polite" className="reviews-proof-status">View {activeView + 1} of 3</span>
-        <button aria-label="Show next review cards" onClick={() => move(1)} type="button">
+        {reduceMotion ? (
+          <span className="reviews-proof-status">Review {activeView + 1} of {skyPupsReviews.length}</span>
+        ) : (
+          <button
+            aria-label={userPaused ? "Resume reviews" : "Pause reviews"}
+            className="reviews-proof-pause"
+            onClick={(event) => {
+              setUserPaused((value) => !value);
+              event.currentTarget.blur();
+            }}
+            type="button"
+          >
+            {userPaused ? "Resume" : "Pause"} · {activeView + 1}/{skyPupsReviews.length}
+          </button>
+        )}
+        <button aria-label="Show next review" onClick={() => move(1)} type="button">
           <span aria-hidden="true">→</span>
         </button>
       </div>
+      <span aria-live="polite" className="visually-hidden">{userAnnouncement}</span>
     </figure>
   );
 }
 
 function ProductVisual({ product, reduceMotion }: { product: Product; reduceMotion: boolean }) {
   if (product.slug === "etchr") {
-    return <PairProof className="product-pair-proof" />;
+    return <EtchrComparison className="product-pair-proof" />;
   }
 
   if (product.slug === "reviews-engine") {
@@ -386,31 +665,58 @@ function ProductVisual({ product, reduceMotion }: { product: Product; reduceMoti
 
   if (product.slug === "property-insights") {
     return (
-      <figure className="product-proof-figure property-proof">
-        <img
-          alt="Synthetic Property Insights recommendation card showing a starting point, labor estimate, crew, complexity, confidence, and risk"
-          decoding="async"
-          height="310"
-          loading="lazy"
-          src={propertyRecommendation}
-          width="932"
-        />
-        <figcaption>Synthetic product fixture</figcaption>
+      <figure
+        aria-label="Synthetic Property Insights fixture showing a service request becoming a quote-ready recommendation"
+        className="product-proof-figure property-proof"
+      >
+        <div className="property-proof-canvas">
+          <div className="property-proof-request">
+            <span>Request received</span>
+            <strong>Turnover cleaning before Friday arrival</strong>
+          </div>
+          <dl className="property-proof-facts">
+            <div><dt>Beds</dt><dd>5</dd></div>
+            <div><dt>Baths</dt><dd>4</dd></div>
+            <div><dt>Home</dt><dd>3,380 sq ft</dd></div>
+            <div><dt>Lot</dt><dd>10,200 sq ft</dd></div>
+            <div><dt>Type</dt><dd>Single-family</dd></div>
+          </dl>
+          <div className="property-proof-risk">
+            <span>Risk surfaced</span>
+            <strong>Bathroom count increases cleaning time.</strong>
+          </div>
+          <div className="property-proof-decision">
+            <div>
+              <span>Ready after access confirmation</span>
+              <strong>Remote quote is viable now.</strong>
+            </div>
+            <dl>
+              <div><dt>Start at</dt><dd>$365</dd></div>
+              <div><dt>Crew</dt><dd>2 people</dd></div>
+              <div><dt>Confidence</dt><dd>High</dd></div>
+            </dl>
+          </div>
+        </div>
       </figure>
     );
   }
 
   return (
     <figure className="product-proof-figure signal-proof">
-      <img
-        alt="Authentic 2019 Signal interface showing seasonal and correlation analytics"
-        decoding="async"
-        height="1046"
-        loading="lazy"
-        src={signalInterface}
-        width="2167"
-      />
-      <figcaption>Archival product screen · 2019</figcaption>
+      <div className="signal-display-stage">
+        <div className="signal-display-screen">
+          <img
+            alt="Authentic 2019 Signal interface showing seasonal and correlation analytics"
+            decoding="async"
+            height="1046"
+            loading="lazy"
+            src={signalInterface}
+            width="2167"
+          />
+        </div>
+        <div aria-hidden="true" className="signal-display-neck" />
+        <div aria-hidden="true" className="signal-display-base" />
+      </div>
     </figure>
   );
 }
@@ -434,7 +740,14 @@ function ProductSection({ reduceMotion }: { reduceMotion: boolean }) {
                 <div className="fleet-launch-meta">
                   <span className="eyebrow-pill">{product.status}</span>
                 </div>
-                <p className="fleet-showcase-name">{product.name}</p>
+                {product.slug === "etchr" ? (
+                  <div className="etchr-product-lockup">
+                    <img alt="" height="512" src={etchrAppIcon} width="512" />
+                    <p className="fleet-showcase-name">{product.name}</p>
+                  </div>
+                ) : (
+                  <p className="fleet-showcase-name">{product.name}</p>
+                )}
                 <h3>
                   {product.headline.split("\n").map((line, lineIndex) => (
                     <span key={line}>
@@ -447,14 +760,20 @@ function ProductSection({ reduceMotion }: { reduceMotion: boolean }) {
                 {product.note ? <p className="fleet-showcase-why">{product.note}</p> : null}
                 {product.link ? (
                   <div className="fleet-launch-actions">
-                    <a className="text-link fleet-showcase-link" href={product.link.href} rel="noreferrer" target="_blank">
-                      {product.link.label} <span aria-hidden="true">↗</span>
-                    </a>
                     {product.slug === "etchr" ? (
-                      <a className="text-link fleet-showcase-link" href={ETCHR_URL} rel="noreferrer" target="_blank">
-                        Visit Etchr <span aria-hidden="true">↗</span>
+                      <>
+                        <a className="app-store-badge-link" href={product.link.href} rel="noreferrer" target="_blank">
+                          <img alt="Download Etchr Portraits on the App Store" height="40" src={appStoreBadge} width="120" />
+                        </a>
+                        <a className="text-link fleet-showcase-link" href={ETCHR_URL} rel="noreferrer" target="_blank">
+                          Visit Etchr <span aria-hidden="true">↗</span>
+                        </a>
+                      </>
+                    ) : (
+                      <a className="text-link fleet-showcase-link" href={product.link.href} rel="noreferrer" target="_blank">
+                        {product.link.label} <span aria-hidden="true">↗</span>
                       </a>
-                    ) : null}
+                    )}
                   </div>
                 ) : null}
               </div>
@@ -505,10 +824,13 @@ function AboutSection() {
         <div className="studio-quote">
           <Eyebrow>About</Eyebrow>
           <div className="studio-thesis-lockup">
-            <h2>1118 is an AI-first product studio founded by Steve Hole in New York.</h2>
-            <p className="studio-manifesto-secondary">We build things that deserve to exist.</p>
+            <h2>1118 is an AI-first product studio.</h2>
+            <p className="studio-manifesto-secondary">We translate specialized knowledge into products people can actually use.</p>
             <p className="studio-manifesto-support">
-              It creates and operates original software—from public consumer products to specialized systems built around hard-won expertise. Most of what we build is our own. We partner selectively when the idea, problem, and fit are unusually strong.
+              We create and operate original software—from public consumer products to specialized systems built around hard-won expertise.
+            </p>
+            <p className="studio-manifesto-support">
+              Most of what we build is our own. We partner selectively when the idea, problem, and fit are unusually strong.
             </p>
           </div>
         </div>
@@ -663,7 +985,7 @@ function Footer() {
         <div className="site-footer-copy">
           <BrandLockup compact />
           <p>AI-first product studio.</p>
-          <p className="footer-legal">© 2026 1118, LLC · New York</p>
+          <p className="footer-legal">© 2026 1118, LLC</p>
         </div>
 
         <div className="site-footer-links">
