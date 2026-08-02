@@ -5,7 +5,7 @@ import path from "node:path";
 const baseURL = (process.argv.find((argument) => argument.startsWith("--base="))?.split("=")[1] || "http://127.0.0.1:5173").replace(/\/$/, "");
 const recordVideos = process.argv.includes("--videos");
 const skipCaptures = process.argv.includes("--skip-captures");
-const artifactRoot = path.resolve("artifacts/1118-editorial-polish-v1");
+const artifactRoot = path.resolve("artifacts/1118-final-visual-lock");
 const policyDir = path.join(artifactRoot, "policy-pages-source");
 const rawVideoDir = path.join(artifactRoot, "raw-video");
 
@@ -66,29 +66,47 @@ async function captureEvidence(browser) {
   await page.setViewportSize({ width: 1440, height: 900 });
   await primePage(page);
   await page.screenshot({ fullPage: true, path: path.join(artifactRoot, "full-page-1440.png") });
-  await page.locator(".hero-section").screenshot({ path: path.join(artifactRoot, "hero-1440.png") });
+  await page.screenshot({ path: path.join(artifactRoot, "header-hero-1440.png") });
+  await page.addStyleTag({ content: ".floating-nav-shell,.skip-link{display:none!important}" });
   await page.locator("#etchr").screenshot({ path: path.join(artifactRoot, "etchr-1440.png") });
   await page.locator("#etchr .etchr-comparison").screenshot({ path: path.join(artifactRoot, "etchr-slider-50-1440.png") });
-  await page.locator("#reviews-engine").screenshot({ path: path.join(artifactRoot, "reviews-engine-1440.png") });
-  await page.locator("#property-insights").screenshot({ path: path.join(artifactRoot, "property-insights-1440.png") });
+  await page.locator("#reviews-engine").screenshot({ path: path.join(artifactRoot, "reviews-1440.png") });
+  await page.locator("#property-insights").screenshot({ path: path.join(artifactRoot, "property-1440.png") });
   await page.locator("#signal").screenshot({ path: path.join(artifactRoot, "signal-1440.png") });
-  await page.locator(".studio-section").screenshot({ path: path.join(artifactRoot, "about-1440.png") });
-  await page.locator(".contact-section").screenshot({ path: path.join(artifactRoot, "contact-section-source.png") });
-  await page.locator(".site-footer").screenshot({ path: path.join(artifactRoot, "footer-source.png") });
+  await page.locator(".studio-section").screenshot({ path: path.join(artifactRoot, "operating-model-1440.png") });
+  await page.evaluate(() => {
+    const contact = document.querySelector(".contact-section");
+    const footer = document.querySelector(".site-footer");
+    if (!contact || !footer) throw new Error("Contact/footer evidence nodes are unavailable");
+    const wrapper = document.createElement("div");
+    wrapper.dataset.evidence = "contact-footer";
+    footer.before(wrapper);
+    wrapper.append(contact, footer);
+  });
+  await page.locator('[data-evidence="contact-footer"]').screenshot({ path: path.join(artifactRoot, "contact-footer-1440.png") });
 
   await page.setViewportSize({ width: 390, height: 844 });
   await primePage(page);
   await page.screenshot({ fullPage: true, path: path.join(artifactRoot, "full-page-390.png") });
+  await page.locator(".hero-section").screenshot({ path: path.join(artifactRoot, "hero-390.png") });
+  await page.addStyleTag({ content: ".floating-nav-shell,.skip-link{display:none!important}" });
   await page.locator("#etchr").screenshot({ path: path.join(artifactRoot, "etchr-390.png") });
-  await page.locator("#reviews-engine").screenshot({ path: path.join(artifactRoot, "reviews-engine-390.png") });
-  await page.locator("#property-insights").screenshot({ path: path.join(artifactRoot, "property-insights-390.png") });
+  await page.locator("#reviews-engine").screenshot({ path: path.join(artifactRoot, "reviews-390.png") });
+  await page.locator("#property-insights").screenshot({ path: path.join(artifactRoot, "property-390.png") });
   await page.locator("#signal").screenshot({ path: path.join(artifactRoot, "signal-390.png") });
+  await page.locator(".contact-section").screenshot({ path: path.join(artifactRoot, "contact-390.png") });
 
-  for (const route of ["privacy", "terms", "accessibility", "support", "security"]) {
-    await page.setViewportSize({ width: 900, height: 900 });
-    await primePage(page, { route: `/${route}` });
-    await page.screenshot({ fullPage: true, path: path.join(policyDir, `${route}.png`) });
-  }
+  const policyRoutes = ["privacy", "terms", "accessibility", "support", "security"];
+  await page.setViewportSize({ width: 1440, height: 1080 });
+  await page.setContent(`<!doctype html><html><head><style>
+    *{box-sizing:border-box}body{margin:0;padding:30px;background:#e9edf2;color:#10283d;font-family:Arial,sans-serif}
+    h1{margin:0 0 22px;font-size:24px}main{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    section{position:relative;height:450px;overflow:hidden;border:1px solid #c8d0d8;border-radius:12px;background:white}
+    h2{position:absolute;z-index:2;left:12px;top:12px;margin:0;padding:7px 10px;border-radius:6px;background:#10283d;color:white;font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+    iframe{width:900px;height:900px;border:0;transform:scale(.5);transform-origin:0 0;pointer-events:none}
+  </style></head><body><h1>1118 policy and support routes</h1><main>${policyRoutes.map((route) => `<section><h2>/${route}</h2><iframe src="${baseURL}/${route}"></iframe></section>`).join("")}</main></body></html>`, { waitUntil: "load" });
+  await page.waitForTimeout(1200);
+  await page.screenshot({ fullPage: true, path: path.join(artifactRoot, "policy-pages.png") });
   await page.close();
 }
 
@@ -381,7 +399,13 @@ async function recordAllVideos(browser) {
       await page.waitForTimeout(170);
     }
   });
-  await recordReview(browser, "etchr-slider-interaction", { width: 1440, height: 900 }, async (page) => {
+  await recordReview(browser, "product-proof-review", { width: 1440, height: 900 }, async (page) => {
+    for (const selector of ["#etchr", "#reviews-engine", "#property-insights", "#signal"]) {
+      await page.locator(selector).scrollIntoViewIfNeeded();
+      await page.waitForTimeout(700);
+    }
+  });
+  await recordReview(browser, "slider-and-carousel-review", { width: 1440, height: 900 }, async (page) => {
     const slider = page.getByRole("slider", { name: "Etchr portrait comparison" });
     await slider.scrollIntoViewIfNeeded();
     const frame = page.locator("#etchr .etchr-comparison");
@@ -397,10 +421,7 @@ async function recordAllVideos(browser) {
     await page.waitForTimeout(350);
     await slider.press("End");
     await page.waitForTimeout(350);
-  });
-  await recordReview(browser, "reviews-engine-carousel", { width: 1440, height: 900 }, async (page) => {
     await page.emulateMedia({ reducedMotion: "no-preference" });
-    await page.reload({ waitUntil: "networkidle" });
     await page.locator("#reviews-engine").scrollIntoViewIfNeeded();
     await page.waitForTimeout(5400);
     await page.getByRole("button", { name: "Pause reviews" }).click();

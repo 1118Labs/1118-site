@@ -15,6 +15,7 @@ import appStoreBadge from "./assets/showcase/etchr/download-on-the-app-store.svg
 import etchrAppIcon from "./assets/showcase/etchr/etchr-app-icon-512.png";
 import etchrResult from "./assets/showcase/etchr/hero-result-1118.png";
 import etchrSource from "./assets/showcase/etchr/hero-source-1118.png";
+import propertyExterior from "./assets/showcase/property-insights/illustrative-house-pixasquare.jpg";
 import bearChelsea from "./assets/showcase/reviews-engine/cards/bear-chelsea.jpg";
 import juniperLuis from "./assets/showcase/reviews-engine/cards/juniper-luis.jpg";
 import mochiErin from "./assets/showcase/reviews-engine/cards/mochi-erin.jpg";
@@ -43,7 +44,6 @@ const products: Product[] = [
     headline: "Editorial portraits\nfrom real photographs.",
     description:
       "Etchr transforms one clear photograph into a refined editorial portrait designed for profiles, websites, social media, and print.",
-    note: "A public product from 1118.",
     link: { href: APP_STORE_URL, label: "View on the App Store" },
   },
   {
@@ -60,7 +60,6 @@ const products: Product[] = [
     status: "IN DEVELOPMENT",
     headline: "Turn service requests\ninto quote-ready property intelligence.",
     description: "Property context, risk, and recommendations assembled before the estimate begins.",
-    note: "Synthetic product fixture.",
   },
   {
     slug: "signal",
@@ -69,7 +68,7 @@ const products: Product[] = [
     headline: "Quantitative intelligence\nfor commodities trading.",
     description:
       "1118 co-founded, designed, built, and launched Signal—an enterprise commodities analytics platform used in live markets, licensed by a major trading firm, and later acquired.",
-    note: "Archival product screen · 2019.",
+    note: "Archival product screen",
   },
 ];
 
@@ -130,9 +129,18 @@ const buildSteps = [
   {
     step: "03",
     title: "Review",
-    body: "Evidence is checked, releases are gated, and accountability remains with us.",
+    body: "Evidence is checked, releases are gated, and responsibility remains with us.",
   },
 ] as const;
+
+function capturePointer(node: HTMLElement, pointerId: number) {
+  try {
+    node.setPointerCapture(pointerId);
+    return true;
+  } catch {
+    return false;
+  }
+}
 
 const policyMeta: Record<string, { description: string; title: string }> = {
   "/": {
@@ -230,7 +238,7 @@ function EtchrComparison({
       startY: event.clientY,
     };
     if (active) {
-      event.currentTarget.setPointerCapture(event.pointerId);
+      capturePointer(event.currentTarget, event.pointerId);
       updateFromClientX(event.clientX);
       event.preventDefault();
     }
@@ -249,7 +257,7 @@ function EtchrComparison({
         return;
       }
       state.active = true;
-      event.currentTarget.setPointerCapture(event.pointerId);
+      capturePointer(event.currentTarget, event.pointerId);
     }
 
     if (!state.active) return;
@@ -309,8 +317,8 @@ function EtchrComparison({
         />
       </div>
       <div aria-hidden="true" className="etchr-comparison-labels">
-        <span>Original</span>
         <span>Etchr</span>
+        <span>Original</span>
       </div>
       <div aria-hidden={!interactive} className="etchr-comparison-divider">
         <div
@@ -318,7 +326,7 @@ function EtchrComparison({
           aria-valuemax={100}
           aria-valuemin={0}
           aria-valuenow={roundedPosition}
-          aria-valuetext={`${100 - roundedPosition}% Original, ${roundedPosition}% Etchr`}
+          aria-valuetext={`${roundedPosition}% Etchr, ${100 - roundedPosition}% Original`}
           className="etchr-comparison-handle"
           onBlur={releasePointer}
           onKeyDown={handleKeyboard}
@@ -406,7 +414,7 @@ function FloatingNav({ activeHash, pathname }: { activeHash: string; pathname: s
         </nav>
 
         <a className="nav-cta" href={`${homePrefix}#contact`}>
-          Start a conversation
+          Start a conversation <span aria-hidden="true">→</span>
         </a>
 
         <button
@@ -452,9 +460,7 @@ function Hero({ reduceMotion }: { reduceMotion: boolean }) {
           <Eyebrow>1118 — AI-First Product Studio</Eyebrow>
           <h1>We build the software we keep looking for.</h1>
           <p className="hero-copy-body">1118 designs, builds, launches, and operates original software.</p>
-          <p className="hero-copy-secondary">
-            Most of what we build is our own. We partner selectively when the idea is strong, the problem is meaningful, and the fit is right.
-          </p>
+          <p className="hero-copy-secondary">Most of what we build is our own.</p>
 
           <div className="hero-actions">
             <a className="primary-button" href="#work">
@@ -555,7 +561,7 @@ function ReviewsProof({ reduceMotion }: { reduceMotion: boolean }) {
         return;
       }
       swipe.active = true;
-      event.currentTarget.setPointerCapture(event.pointerId);
+      capturePointer(event.currentTarget, event.pointerId);
     }
     if (swipe.active) event.preventDefault();
   };
@@ -613,7 +619,7 @@ function ReviewsProof({ reduceMotion }: { reduceMotion: boolean }) {
                 width="900"
               />
               <div className="review-fixture-copy">
-                <p aria-label={`${review.paws} out of 5 paws`} className="review-paw-rating">
+                <p aria-label={`${review.paws} out of 5 paws`} className="review-paw-rating" role="img">
                   <span aria-hidden="true">{review.paws} PAWS</span>
                 </p>
                 <blockquote>“{review.quote}”</blockquote>
@@ -670,31 +676,44 @@ function ProductVisual({ product, reduceMotion }: { product: Product; reduceMoti
         className="product-proof-figure property-proof"
       >
         <div className="property-proof-canvas">
-          <div className="property-proof-request">
-            <span>Request received</span>
-            <strong>Turnover cleaning before Friday arrival</strong>
-          </div>
-          <dl className="property-proof-facts">
-            <div><dt>Beds</dt><dd>5</dd></div>
-            <div><dt>Baths</dt><dd>4</dd></div>
-            <div><dt>Home</dt><dd>3,380 sq ft</dd></div>
-            <div><dt>Lot</dt><dd>10,200 sq ft</dd></div>
-            <div><dt>Type</dt><dd>Single-family</dd></div>
-          </dl>
-          <div className="property-proof-risk">
-            <span>Risk surfaced</span>
-            <strong>Bathroom count increases cleaning time.</strong>
-          </div>
-          <div className="property-proof-decision">
-            <div>
-              <span>Ready after access confirmation</span>
-              <strong>Remote quote is viable now.</strong>
-            </div>
-            <dl>
-              <div><dt>Start at</dt><dd>$365</dd></div>
-              <div><dt>Crew</dt><dd>2 people</dd></div>
-              <div><dt>Confidence</dt><dd>High</dd></div>
+          <div className="property-proof-image-panel">
+            <img
+              alt="Illustrative modern single-family house exterior; not a customer property"
+              decoding="async"
+              height="1800"
+              loading="lazy"
+              src={propertyExterior}
+              width="1800"
+            />
+            <span className="property-proof-image-label">Illustrative exterior · synthetic fixture</span>
+            <dl className="property-proof-facts">
+              <div><dt>Beds</dt><dd>5</dd></div>
+              <div><dt>Baths</dt><dd>4</dd></div>
+              <div><dt>Home</dt><dd>3,380 sq ft</dd></div>
+              <div><dt>Lot</dt><dd>10,200 sq ft</dd></div>
+              <div><dt>Type</dt><dd>Single-family</dd></div>
             </dl>
+          </div>
+          <div className="property-proof-intelligence">
+            <div className="property-proof-request">
+              <span>Service request</span>
+              <strong>Turnover cleaning before Friday arrival</strong>
+            </div>
+            <div className="property-proof-risk">
+              <span>Risk surfaced</span>
+              <strong>Bathroom count increases cleaning time.</strong>
+            </div>
+            <div className="property-proof-decision">
+              <div>
+                <span>Recommendation</span>
+                <strong>Remote quote is viable after access confirmation.</strong>
+              </div>
+              <dl>
+                <div><dt>Start at</dt><dd>$365</dd></div>
+                <div><dt>Crew</dt><dd>2 people</dd></div>
+                <div><dt>Confidence</dt><dd>High</dd></div>
+              </dl>
+            </div>
           </div>
         </div>
       </figure>
@@ -724,14 +743,6 @@ function ProductVisual({ product, reduceMotion }: { product: Product; reduceMoti
 function ProductSection({ reduceMotion }: { reduceMotion: boolean }) {
   return (
     <section className="fleet-section" id="work">
-      <div className="section-shell fleet-section-intro">
-        <div className="section-header">
-          <Eyebrow>Our Work</Eyebrow>
-          <h2>We build the products we keep looking for.</h2>
-          <p>Each began with a missing tool, workflow, or experience that deserved to exist.</p>
-        </div>
-      </div>
-
       <div className="fleet-launch-list">
         {products.map((product, index) => (
           <article className="fleet-launch" data-product={product.slug} id={product.slug} key={product.slug}>
@@ -748,14 +759,14 @@ function ProductSection({ reduceMotion }: { reduceMotion: boolean }) {
                 ) : (
                   <p className="fleet-showcase-name">{product.name}</p>
                 )}
-                <h3>
+                <h2>
                   {product.headline.split("\n").map((line, lineIndex) => (
                     <span key={line}>
                       {lineIndex ? <><br />{" "}</> : null}
                       {line}
                     </span>
                   ))}
-                </h3>
+                </h2>
                 <p className="fleet-showcase-body">{product.description}</p>
                 {product.note ? <p className="fleet-showcase-why">{product.note}</p> : null}
                 {product.link ? (
@@ -793,47 +804,29 @@ function ProductSection({ reduceMotion }: { reduceMotion: boolean }) {
   );
 }
 
-function ProcessSection() {
-  return (
-    <section className="process-section" id="process">
-      <div className="section-shell process-shell">
-        <div className="section-header process-header">
-          <Eyebrow>How We Build</Eyebrow>
-          <h2>Clear direction. Visible execution. Deliberate review.</h2>
-          <p>We use AI to compress the path from a strong brief to working software without removing founder judgment or release gates.</p>
-        </div>
-
-        <div className="process-grid">
-          {buildSteps.map((item) => (
-            <article className="process-card" key={item.step}>
-              <span className="process-step-index">{item.step}</span>
-              <h3>{item.title}</h3>
-              <p>{item.body}</p>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function AboutSection() {
   return (
     <section className="studio-section" id="about">
       <div className="section-shell studio-shell">
-        <div className="studio-quote">
+        <div className="studio-intro">
           <Eyebrow>About</Eyebrow>
-          <div className="studio-thesis-lockup">
-            <h2>1118 is an AI-first product studio.</h2>
-            <p className="studio-manifesto-secondary">We translate specialized knowledge into products people can actually use.</p>
-            <p className="studio-manifesto-support">
-              We create and operate original software—from public consumer products to specialized systems built around hard-won expertise.
-            </p>
-            <p className="studio-manifesto-support">
-              Most of what we build is our own. We partner selectively when the idea, problem, and fit are unusually strong.
-            </p>
+          <h2>An AI-first<br />product studio.</h2>
+          <div className="studio-intro-copy">
+            <p>1118 creates and operates original software—from public consumer products to specialized systems built around hard-won expertise.</p>
+            <p>Most of what we build is our own. We partner selectively when the idea, problem, and fit are unusually strong.</p>
           </div>
         </div>
+
+        <div className="operating-model" id="process">
+          {buildSteps.map((item) => (
+            <article className="operating-principle" key={item.step}>
+              <span>{item.title}</span>
+              <p>{item.body}</p>
+            </article>
+          ))}
+        </div>
+
+        <p className="studio-closing">We translate specialized knowledge into products people can actually use.</p>
       </div>
     </section>
   );
@@ -984,27 +977,17 @@ function Footer() {
       <div className="site-footer-shell">
         <div className="site-footer-copy">
           <BrandLockup compact />
-          <p>AI-first product studio.</p>
           <p className="footer-legal">© 2026 1118, LLC</p>
         </div>
 
         <div className="site-footer-links">
           <div className="footer-link-group">
-            <strong>Products</strong>
-            <nav aria-label="Product links">
-              <a href={`/#etchr`}>Etchr</a>
-              <a href="/#reviews-engine">Reviews Engine</a>
-              <a href="/#property-insights">Property Insights</a>
-              <a href="/#signal">Signal</a>
-            </nav>
-          </div>
-          <div className="footer-link-group">
-            <strong>Company</strong>
+            <strong>Navigate</strong>
             <nav aria-label="Company links">
-              <a href="/#about">About</a>
+              <a href="/#work">Work</a>
               <a href="/#process">How We Build</a>
+              <a href="/#about">About</a>
               <a href="/#contact">Contact</a>
-              <a href={`mailto:${COMPANY_EMAIL}`}>{COMPANY_EMAIL}</a>
             </nav>
           </div>
           <div className="footer-link-group">
@@ -1071,7 +1054,6 @@ export default function App() {
         <>
           <Hero reduceMotion={reduceMotion} />
           <ProductSection reduceMotion={reduceMotion} />
-          <ProcessSection />
           <AboutSection />
           <ContactSection />
         </>
