@@ -13,9 +13,11 @@ import "./App.css";
 import brandMark from "./assets/brand/1118-mark-blue.png";
 import appStoreBadge from "./assets/showcase/etchr/download-on-the-app-store.svg";
 import etchrAppIcon from "./assets/showcase/etchr/etchr-app-icon-512.png";
+import etchrExport from "./assets/showcase/etchr/export-avery.webp";
 import etchrResult from "./assets/showcase/etchr/hero-result-1118.png";
 import etchrSource from "./assets/showcase/etchr/hero-source-1118.png";
-import propertyExterior from "./assets/showcase/property-insights/illustrative-house-pixasquare.jpg";
+import etchrPortrait from "./assets/showcase/etchr/portrait-elise.webp";
+import propertyRequestToQuote from "./assets/showcase/property-insights/authentic-request-to-quote.png";
 import bearChelsea from "./assets/showcase/reviews-engine/cards/bear-chelsea.jpg";
 import juniperLuis from "./assets/showcase/reviews-engine/cards/juniper-luis.jpg";
 import mochiErin from "./assets/showcase/reviews-engine/cards/mochi-erin.jpg";
@@ -40,16 +42,15 @@ const products: Product[] = [
   {
     slug: "etchr",
     name: "Etchr",
-    status: "LIVE · AVAILABLE ON THE APP STORE",
+    status: "LIVE",
     headline: "Editorial portraits\nfrom real photographs.",
-    description:
-      "Etchr transforms one clear photograph into a refined editorial portrait designed for profiles, websites, social media, and print.",
+    description: "One clear photograph becomes a finished editorial portrait pack.",
     link: { href: APP_STORE_URL, label: "View on the App Store" },
   },
   {
     slug: "reviews-engine",
     name: "Reviews Engine",
-    status: "IN DEVELOPMENT",
+    status: "LIVE",
     headline: "Turn customer reviews\ninto a better reputation.",
     description: "Software for collecting, moderating, and publishing customer reviews.",
     note: "Approved SkyPups fixture shown.",
@@ -115,11 +116,13 @@ const skyPupsReviews = [
   },
 ] as const;
 
+const reviewCarouselItems = [...skyPupsReviews, ...skyPupsReviews.slice(0, 3)];
+
 const buildSteps = [
   {
     step: "01",
     title: "Direction",
-    body: "Product priorities, standards, and final decisions remain founder-led.",
+    body: "Product priorities, standards, and final decisions remain with 1118.",
   },
   {
     step: "02",
@@ -317,8 +320,8 @@ function EtchrComparison({
         />
       </div>
       <div aria-hidden="true" className="etchr-comparison-labels">
-        <span>Etchr</span>
-        <span>Original</span>
+        <span>Finished portrait</span>
+        <span>Original photo</span>
       </div>
       <div aria-hidden={!interactive} className="etchr-comparison-divider">
         <div
@@ -333,7 +336,7 @@ function EtchrComparison({
           role={interactive ? "slider" : undefined}
           tabIndex={interactive ? 0 : -1}
         >
-          <span aria-hidden="true">↔</span>
+          <span aria-hidden="true"><i /> <i /></span>
         </div>
       </div>
     </div>
@@ -475,11 +478,14 @@ function Hero({ reduceMotion }: { reduceMotion: boolean }) {
           initial={reduceMotion ? false : { opacity: 0, y: 28 }}
           transition={{ duration: 0.64, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
         >
-          <a aria-label="See Etchr, a live 1118 product" className="hero-visual-card" href="#etchr">
+          <div className="hero-visual-card">
             <div className="hero-visual-media media-frame">
-              <EtchrComparison className="hero-media-slot" interactive={false} priority />
+              <EtchrComparison className="hero-media-slot" priority />
             </div>
-          </a>
+            <a aria-label="See Etchr, a live product built by 1118" className="hero-product-label" href="#etchr">
+              Etchr <span aria-hidden="true">·</span> Built by 1118
+            </a>
+          </div>
         </motion.div>
       </div>
     </section>
@@ -602,12 +608,14 @@ function ReviewsProof({ reduceMotion }: { reduceMotion: boolean }) {
           className="reviews-proof-track"
           style={{ "--review-position": activeView } as React.CSSProperties}
         >
-          {skyPupsReviews.map((review, index) => (
+          {reviewCarouselItems.map((review, index) => {
+            const duplicate = index >= skyPupsReviews.length;
+            return (
             <li
-              aria-hidden={index !== activeView}
-              aria-label={`Review ${index + 1} of ${skyPupsReviews.length}`}
-              className="review-fixture-card"
-              key={review.id}
+              aria-hidden={duplicate || undefined}
+              aria-label={duplicate ? undefined : `Review ${index + 1} of ${skyPupsReviews.length}`}
+              className={`review-fixture-card ${duplicate ? "is-duplicate" : ""}`}
+              key={`${review.id}-${index}`}
             >
               <img
                 alt={`${review.name} SkyPups fixture`}
@@ -620,7 +628,10 @@ function ReviewsProof({ reduceMotion }: { reduceMotion: boolean }) {
               />
               <div className="review-fixture-copy">
                 <p aria-label={`${review.paws} out of 5 paws`} className="review-paw-rating" role="img">
-                  <span aria-hidden="true">{review.paws} PAWS</span>
+                  <span aria-hidden="true" className="review-stars">
+                    {"★".repeat(review.paws)}{"☆".repeat(5 - review.paws)}
+                  </span>
+                  <span aria-hidden="true"> {review.paws}.0 PAWS</span>
                 </p>
                 <blockquote>“{review.quote}”</blockquote>
                 <footer>
@@ -629,7 +640,8 @@ function ReviewsProof({ reduceMotion }: { reduceMotion: boolean }) {
                 </footer>
               </div>
             </li>
-          ))}
+            );
+          })}
         </ul>
       </div>
       <div className="reviews-proof-controls" aria-label="Review sequence controls">
@@ -662,7 +674,32 @@ function ReviewsProof({ reduceMotion }: { reduceMotion: boolean }) {
 
 function ProductVisual({ product, reduceMotion }: { product: Product; reduceMotion: boolean }) {
   if (product.slug === "etchr") {
-    return <EtchrComparison className="product-pair-proof" />;
+    return (
+      <figure className="etchr-product-proof">
+        <div className="etchr-product-portrait">
+          <img
+            alt="Elise as an approved public Etchr editorial portrait"
+            decoding="async"
+            height="1024"
+            loading="lazy"
+            src={etchrPortrait}
+            width="1024"
+          />
+          <span>Etchr portrait</span>
+        </div>
+        <div className="etchr-export-proof">
+          <img
+            alt="Avery Etchr portrait shown as a profile-ready export"
+            decoding="async"
+            height="1024"
+            loading="lazy"
+            src={etchrExport}
+            width="1024"
+          />
+          <span>Profile-ready export</span>
+        </div>
+      </figure>
+    );
   }
 
   if (product.slug === "reviews-engine") {
@@ -672,50 +709,18 @@ function ProductVisual({ product, reduceMotion }: { product: Product; reduceMoti
   if (product.slug === "property-insights") {
     return (
       <figure
-        aria-label="Synthetic Property Insights fixture showing a service request becoming a quote-ready recommendation"
+        aria-label="Authentic Property Insights interface showing an incoming request, property facts, recommendation, and quote-ready decision"
         className="product-proof-figure property-proof"
       >
-        <div className="property-proof-canvas">
-          <div className="property-proof-image-panel">
-            <img
-              alt="Illustrative modern single-family house exterior; not a customer property"
-              decoding="async"
-              height="1800"
-              loading="lazy"
-              src={propertyExterior}
-              width="1800"
-            />
-            <span className="property-proof-image-label">Illustrative exterior · synthetic fixture</span>
-            <dl className="property-proof-facts">
-              <div><dt>Beds</dt><dd>5</dd></div>
-              <div><dt>Baths</dt><dd>4</dd></div>
-              <div><dt>Home</dt><dd>3,380 sq ft</dd></div>
-              <div><dt>Lot</dt><dd>10,200 sq ft</dd></div>
-              <div><dt>Type</dt><dd>Single-family</dd></div>
-            </dl>
-          </div>
-          <div className="property-proof-intelligence">
-            <div className="property-proof-request">
-              <span>Service request</span>
-              <strong>Turnover cleaning before Friday arrival</strong>
-            </div>
-            <div className="property-proof-risk">
-              <span>Risk surfaced</span>
-              <strong>Bathroom count increases cleaning time.</strong>
-            </div>
-            <div className="property-proof-decision">
-              <div>
-                <span>Recommendation</span>
-                <strong>Remote quote is viable after access confirmation.</strong>
-              </div>
-              <dl>
-                <div><dt>Start at</dt><dd>$365</dd></div>
-                <div><dt>Crew</dt><dd>2 people</dd></div>
-                <div><dt>Confidence</dt><dd>High</dd></div>
-              </dl>
-            </div>
-          </div>
-        </div>
+        <img
+          alt="Property Insights request detail with quote-critical property facts and a high-confidence $365 cleaning recommendation"
+          decoding="async"
+          height="1100"
+          loading="lazy"
+          src={propertyRequestToQuote}
+          width="1360"
+        />
+        <figcaption>Authentic product interface <span aria-hidden="true">·</span> Local simulation fixture</figcaption>
       </figure>
     );
   }
@@ -733,8 +738,6 @@ function ProductVisual({ product, reduceMotion }: { product: Product; reduceMoti
             width="2167"
           />
         </div>
-        <div aria-hidden="true" className="signal-display-neck" />
-        <div aria-hidden="true" className="signal-display-base" />
       </div>
     </figure>
   );
@@ -949,7 +952,7 @@ function PolicyPage({ pathname }: { pathname: string }) {
       <PolicyLayout eyebrow="Help" title="Support">
         <section><h2>1118 inquiries</h2><p>For company, partnership, press, or website questions, email <a href={`mailto:${COMPANY_EMAIL}`}>{COMPANY_EMAIL}</a>.</p></section>
         <section><h2>Etchr</h2><p>For Etchr product information and current support options, visit <a href={ETCHR_URL} rel="noreferrer" target="_blank">etchr.ai</a> or the verified <a href={APP_STORE_URL} rel="noreferrer" target="_blank">App Store listing</a>.</p></section>
-        <section><h2>Other products</h2><p>Reviews Engine and Property Insights are in development. They do not currently offer public company-site support channels.</p></section>
+        <section><h2>Other products</h2><p>Reviews Engine is live. Property Insights is in development. They do not currently offer public company-site support channels.</p></section>
       </PolicyLayout>
     );
   }

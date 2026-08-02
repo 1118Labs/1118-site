@@ -5,7 +5,7 @@ import path from "node:path";
 const baseURL = (process.argv.find((argument) => argument.startsWith("--base="))?.split("=")[1] || "http://127.0.0.1:5173").replace(/\/$/, "");
 const recordVideos = process.argv.includes("--videos");
 const skipCaptures = process.argv.includes("--skip-captures");
-const artifactRoot = path.resolve("artifacts/1118-final-visual-lock");
+const artifactRoot = path.resolve("artifacts/1118-final-art-direction-lock");
 const policyDir = path.join(artifactRoot, "policy-pages-source");
 const rawVideoDir = path.join(artifactRoot, "raw-video");
 
@@ -69,7 +69,7 @@ async function captureEvidence(browser) {
   await page.screenshot({ path: path.join(artifactRoot, "header-hero-1440.png") });
   await page.addStyleTag({ content: ".floating-nav-shell,.skip-link{display:none!important}" });
   await page.locator("#etchr").screenshot({ path: path.join(artifactRoot, "etchr-1440.png") });
-  await page.locator("#etchr .etchr-comparison").screenshot({ path: path.join(artifactRoot, "etchr-slider-50-1440.png") });
+  await page.locator(".hero-section .etchr-comparison").screenshot({ path: path.join(artifactRoot, "hero-slider-50-1440.png") });
   await page.locator("#reviews-engine").screenshot({ path: path.join(artifactRoot, "reviews-1440.png") });
   await page.locator("#property-insights").screenshot({ path: path.join(artifactRoot, "property-1440.png") });
   await page.locator("#signal").screenshot({ path: path.join(artifactRoot, "signal-1440.png") });
@@ -174,7 +174,7 @@ async function runEtchrChecks(page) {
   const home = await slider.getAttribute("aria-valuenow");
   await slider.press("ArrowRight");
   const arrow = await slider.getAttribute("aria-valuenow");
-  const frame = page.locator("#etchr .etchr-comparison");
+  const frame = page.locator(".hero-section .etchr-comparison");
   const bounds = await frame.boundingBox();
   if (!bounds) throw new Error("Etchr comparison is not visible");
   await page.mouse.click(bounds.x + bounds.width * 0.25, bounds.y + bounds.height * 0.5);
@@ -204,7 +204,7 @@ async function runTouchChecks(browser) {
   await page.goto(`${baseURL}/`, { waitUntil: "networkidle" });
   const slider = page.getByRole("slider", { name: "Etchr portrait comparison" });
   await slider.scrollIntoViewIfNeeded();
-  const frame = page.locator("#etchr .etchr-comparison");
+  const frame = page.locator(".hero-section .etchr-comparison");
   const sliderBounds = await frame.boundingBox();
   if (!sliderBounds) throw new Error("Mobile Etchr comparison is not visible");
   await page.touchscreen.tap(sliderBounds.x + sliderBounds.width * 0.2, sliderBounds.y + sliderBounds.height * 0.5);
@@ -254,10 +254,18 @@ async function runReviewChecks(page) {
   const beforeHoverWait = await page.locator(".reviews-proof-pause").textContent();
   await page.waitForTimeout(5400);
   const afterHoverWait = await page.locator(".reviews-proof-pause").textContent();
-  const semanticCards = await page.locator(".review-fixture-card").count();
-  const results = { afterHoverWait, afterManual, afterManualWait, afterResume, before, beforeHoverWait, semanticCards };
+  const semanticCards = await page.locator(".review-fixture-card:not(.is-duplicate)").count();
+  const visibleCards = await page.locator(".reviews-proof-window").evaluate((windowElement) => {
+    const windowRect = windowElement.getBoundingClientRect();
+    return [...windowElement.querySelectorAll(".review-fixture-card")].filter((card) => {
+      const rect = card.getBoundingClientRect();
+      return rect.right > windowRect.left + 12 && rect.left < windowRect.right - 12;
+    }).length;
+  });
+  const results = { afterHoverWait, afterManual, afterManualWait, afterResume, before, beforeHoverWait, semanticCards, visibleCards };
   report.checks.reviews = results;
   assert("reviews-manual-stops-and-resume-works", afterManual === afterManualWait && afterResume !== afterManual && semanticCards === 4, results);
+  assert("reviews-three-cards-visible", visibleCards >= 3 && visibleCards <= 4, results);
   assert("reviews-hover-pauses", beforeHoverWait === afterHoverWait, results);
 
   await page.emulateMedia({ reducedMotion: "reduce" });
@@ -293,7 +301,7 @@ async function runPageChecks(browser) {
     statuses: [...document.querySelectorAll(".eyebrow-pill")].map((element) => element.textContent?.trim()),
   }));
   report.checks.publicContent = publicContent;
-  assert("public-content-contract", JSON.stringify(publicContent.productNames) === JSON.stringify(["Etchr", "Reviews Engine", "Property Insights", "Signal"]) && publicContent.statuses.at(-1) === "BUILT · LICENSED · ACQUIRED" && !publicContent.founderOrLocation && !publicContent.imageAltFailures.length && !publicContent.internalTargetsMissing.length && Object.values(publicContent.landmarks).every((value) => value === 1), publicContent);
+  assert("public-content-contract", JSON.stringify(publicContent.productNames) === JSON.stringify(["Etchr", "Reviews Engine", "Property Insights", "Signal"]) && JSON.stringify(publicContent.statuses) === JSON.stringify(["LIVE", "LIVE", "IN DEVELOPMENT", "BUILT · LICENSED · ACQUIRED"]) && !publicContent.founderOrLocation && !publicContent.imageAltFailures.length && !publicContent.internalTargetsMissing.length && Object.values(publicContent.landmarks).every((value) => value === 1), publicContent);
 
   const schema = JSON.parse((await page.locator('script[type="application/ld+json"]').textContent()) || "{}");
   const serializedSchema = JSON.stringify(schema);
@@ -408,7 +416,7 @@ async function recordAllVideos(browser) {
   await recordReview(browser, "slider-and-carousel-review", { width: 1440, height: 900 }, async (page) => {
     const slider = page.getByRole("slider", { name: "Etchr portrait comparison" });
     await slider.scrollIntoViewIfNeeded();
-    const frame = page.locator("#etchr .etchr-comparison");
+    const frame = page.locator(".hero-section .etchr-comparison");
     const bounds = await frame.boundingBox();
     if (!bounds) return;
     await page.waitForTimeout(500);
