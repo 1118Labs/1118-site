@@ -614,7 +614,7 @@ function ReviewsProof({ reduceMotion }: { reduceMotion: boolean }) {
             <li
               aria-hidden={duplicate || undefined}
               aria-label={duplicate ? undefined : `Review ${index + 1} of ${skyPupsReviews.length}`}
-              className={`review-fixture-card ${duplicate ? "is-duplicate" : ""}`}
+              className={`review-fixture-card ${index === activeView ? "is-primary" : ""} ${duplicate ? "is-duplicate" : ""}`}
               key={`${review.id}-${index}`}
             >
               <img
@@ -712,14 +712,20 @@ function ProductVisual({ product, reduceMotion }: { product: Product; reduceMoti
         aria-label="Authentic Property Insights interface showing an incoming request, property facts, recommendation, and quote-ready decision"
         className="product-proof-figure property-proof"
       >
-        <img
-          alt="Property Insights request detail with quote-critical property facts and a high-confidence $365 cleaning recommendation"
-          decoding="async"
-          height="1100"
-          loading="lazy"
-          src={propertyRequestToQuote}
-          width="1360"
-        />
+        <div className="property-proof-overview">
+          <img
+            alt="Property Insights request detail with quote-critical property facts and a high-confidence $365 cleaning recommendation"
+            decoding="async"
+            height="1100"
+            loading="lazy"
+            src={propertyRequestToQuote}
+            width="1360"
+          />
+        </div>
+        <div aria-hidden="true" className="property-proof-detail">
+          <img alt="" decoding="async" height="1100" loading="lazy" src={propertyRequestToQuote} width="1360" />
+          <span>Recommendation detail</span>
+        </div>
         <figcaption>Authentic product interface <span aria-hidden="true">·</span> Local simulation fixture</figcaption>
       </figure>
     );

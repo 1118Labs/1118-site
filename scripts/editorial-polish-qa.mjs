@@ -5,7 +5,7 @@ import path from "node:path";
 const baseURL = (process.argv.find((argument) => argument.startsWith("--base="))?.split("=")[1] || "http://127.0.0.1:5173").replace(/\/$/, "");
 const recordVideos = process.argv.includes("--videos");
 const skipCaptures = process.argv.includes("--skip-captures");
-const artifactRoot = path.resolve("artifacts/1118-final-art-direction-lock");
+const artifactRoot = path.resolve("artifacts/1118-founder-corrections-v2");
 const policyDir = path.join(artifactRoot, "policy-pages-source");
 const rawVideoDir = path.join(artifactRoot, "raw-video");
 
@@ -94,7 +94,9 @@ async function captureEvidence(browser) {
   await page.locator("#reviews-engine").screenshot({ path: path.join(artifactRoot, "reviews-390.png") });
   await page.locator("#property-insights").screenshot({ path: path.join(artifactRoot, "property-390.png") });
   await page.locator("#signal").screenshot({ path: path.join(artifactRoot, "signal-390.png") });
+  await page.locator(".studio-section").screenshot({ path: path.join(artifactRoot, "operating-model-390.png") });
   await page.locator(".contact-section").screenshot({ path: path.join(artifactRoot, "contact-390.png") });
+  await page.locator(".site-footer").screenshot({ path: path.join(artifactRoot, "footer-390.png") });
 
   const policyRoutes = ["privacy", "terms", "accessibility", "support", "security"];
   await page.setViewportSize({ width: 1440, height: 1080 });
