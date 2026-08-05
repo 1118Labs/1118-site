@@ -1,6 +1,5 @@
 import { motion, useReducedMotion } from "framer-motion";
 import {
-  type FormEvent,
   type KeyboardEvent as ReactKeyboardEvent,
   type PointerEvent as ReactPointerEvent,
   type ReactNode,
@@ -17,7 +16,10 @@ import etchrExport from "./assets/showcase/etchr/export-avery.webp";
 import etchrResult from "./assets/showcase/etchr/hero-result-1118.png";
 import etchrSource from "./assets/showcase/etchr/hero-source-1118.png";
 import etchrPortrait from "./assets/showcase/etchr/portrait-elise.webp";
-import propertyRequestToQuote from "./assets/showcase/property-insights/authentic-request-to-quote.png";
+import propertyDecision from "./assets/showcase/property-insights/operator-decision-current-head.jpg";
+import propertyDecisionMobile from "./assets/showcase/property-insights/operator-decision-current-head-mobile.jpg";
+import propertyFacts from "./assets/showcase/property-insights/property-facts-current-head.jpg";
+import propertyFactsMobile from "./assets/showcase/property-insights/property-facts-current-head-mobile.jpg";
 import bearChelsea from "./assets/showcase/reviews-engine/cards/bear-chelsea.jpg";
 import juniperLuis from "./assets/showcase/reviews-engine/cards/juniper-luis.jpg";
 import mochiErin from "./assets/showcase/reviews-engine/cards/mochi-erin.jpg";
@@ -26,6 +28,7 @@ import signalInterface from "./assets/showcase/signal/signal-archival-interface.
 
 const APP_STORE_URL = "https://apps.apple.com/us/app/etchr-portraits/id6785615752";
 const ETCHR_URL = "https://etchr.ai";
+const REVIEWS_ENGINE_PUBLIC_PROOF_URL = "https://www.skypupstreats.com/reviews";
 const COMPANY_EMAIL = "hello@1118.io";
 
 type Product = {
@@ -51,16 +54,17 @@ const products: Product[] = [
     slug: "reviews-engine",
     name: "Reviews Engine",
     status: "LIVE",
-    headline: "Turn customer reviews\ninto a better reputation.",
-    description: "Software for collecting, moderating, and publishing customer reviews.",
-    note: "Approved SkyPups fixture shown.",
+    headline: "Collect, moderate,\nand publish customer reviews.",
+    description: "A live system for keeping customer proof current across client sites.",
+    link: { href: REVIEWS_ENGINE_PUBLIC_PROOF_URL, label: "See Reviews Engine in use" },
+    note: "Live product shown with demonstration reviews.",
   },
   {
     slug: "property-insights",
     name: "Property Insights",
     status: "IN DEVELOPMENT",
     headline: "Turn service requests\ninto quote-ready property intelligence.",
-    description: "Property context, risk, and recommendations assembled before the estimate begins.",
+    description: "An incoming service request, property context, risk, and a recommendation assembled before the estimate begins.",
   },
   {
     slug: "signal",
@@ -69,7 +73,7 @@ const products: Product[] = [
     headline: "Quantitative intelligence\nfor commodities trading.",
     description:
       "1118 co-founded, designed, built, and launched Signal—an enterprise commodities analytics platform used in live markets, licensed by a major trading firm, and later acquired.",
-    note: "Archival product screen",
+    note: "Authentic product screen · 2019",
   },
 ];
 
@@ -127,7 +131,7 @@ const buildSteps = [
   {
     step: "02",
     title: "Execution",
-    body: "AI systems and specialist tools help turn clear briefs into visible work.",
+    body: "AI accelerates research, design, and production while 1118 owns the product decisions.",
   },
   {
     step: "03",
@@ -460,7 +464,7 @@ function Hero({ reduceMotion }: { reduceMotion: boolean }) {
           initial={reduceMotion ? false : { opacity: 0, y: 24 }}
           transition={{ duration: 0.58, ease: [0.22, 1, 0.36, 1] }}
         >
-          <Eyebrow>1118 — AI-First Product Studio</Eyebrow>
+          <Eyebrow>1118 is an AI-first product studio.</Eyebrow>
           <h1>We build the software we keep looking for.</h1>
           <p className="hero-copy-body">1118 designs, builds, launches, and operates original software.</p>
           <p className="hero-copy-secondary">Most of what we build is our own.</p>
@@ -583,7 +587,7 @@ function ReviewsProof({ reduceMotion }: { reduceMotion: boolean }) {
 
   return (
     <figure
-      aria-label="Approved SkyPups review fixtures"
+      aria-label="Reviews Engine demonstration review carousel"
       aria-roledescription="carousel"
       className="reviews-proof"
       onBlurCapture={(event) => {
@@ -618,7 +622,7 @@ function ReviewsProof({ reduceMotion }: { reduceMotion: boolean }) {
               key={`${review.id}-${index}`}
             >
               <img
-                alt={`${review.name} SkyPups fixture`}
+                alt={`${review.name} demonstration review`}
                 decoding="async"
                 height="720"
                 loading="lazy"
@@ -678,7 +682,7 @@ function ProductVisual({ product, reduceMotion }: { product: Product; reduceMoti
       <figure className="etchr-product-proof">
         <div className="etchr-product-portrait">
           <img
-            alt="Elise as an approved public Etchr editorial portrait"
+            alt="Elise shown as an Etchr editorial portrait"
             decoding="async"
             height="1024"
             loading="lazy"
@@ -689,7 +693,7 @@ function ProductVisual({ product, reduceMotion }: { product: Product; reduceMoti
         </div>
         <div className="etchr-export-proof">
           <img
-            alt="Avery Etchr portrait shown as a profile-ready export"
+            alt="Avery shown as an Etchr profile-ready export"
             decoding="async"
             height="1024"
             loading="lazy"
@@ -709,24 +713,37 @@ function ProductVisual({ product, reduceMotion }: { product: Product; reduceMoti
   if (product.slug === "property-insights") {
     return (
       <figure
-        aria-label="Authentic Property Insights interface showing an incoming request, property facts, recommendation, and quote-ready decision"
+        aria-label="Authentic Property Insights interface showing an incoming request, property facts, risk, recommendation, quote readiness, and next action"
         className="product-proof-figure property-proof"
       >
         <div className="property-proof-overview">
-          <img
-            alt="Property Insights request detail with quote-critical property facts and a high-confidence $365 cleaning recommendation"
-            decoding="async"
-            height="1100"
-            loading="lazy"
-            src={propertyRequestToQuote}
-            width="1360"
-          />
+          <picture>
+            <source media="(max-width: 760px)" srcSet={propertyDecisionMobile} />
+            <img
+              alt="Property Insights local demo request with a quote-ready $281 recommendation, draft-quote action, labor plan, risk, and high confidence"
+              decoding="async"
+              height="700"
+              loading="lazy"
+              src={propertyDecision}
+              width="1024"
+            />
+          </picture>
         </div>
-        <div aria-hidden="true" className="property-proof-detail">
-          <img alt="" decoding="async" height="1100" loading="lazy" src={propertyRequestToQuote} width="1360" />
-          <span>Recommendation detail</span>
+        <div className="property-proof-detail">
+          <picture>
+            <source media="(max-width: 760px)" srcSet={propertyFactsMobile} />
+            <img
+              alt="Property Insights local demo property facts for a Southold single-family home"
+              decoding="async"
+              height="600"
+              loading="lazy"
+              src={propertyFacts}
+              width="1024"
+            />
+          </picture>
+          <span aria-hidden="true">Property facts</span>
         </div>
-        <figcaption>Authentic product interface <span aria-hidden="true">·</span> Local simulation fixture</figcaption>
+        <figcaption>Authentic product interface <span aria-hidden="true">· Demonstration data</span></figcaption>
       </figure>
     );
   }
@@ -822,7 +839,7 @@ function AboutSection() {
           <h2>An AI-first<br />product studio.</h2>
           <div className="studio-intro-copy">
             <p>1118 creates and operates original software—from public consumer products to specialized systems built around hard-won expertise.</p>
-            <p>Most of what we build is our own. We partner selectively when the idea, problem, and fit are unusually strong.</p>
+            <p>The portfolio includes live products, systems in development, and completed software with a commercial history.</p>
           </div>
         </div>
 
@@ -842,64 +859,22 @@ function AboutSection() {
 }
 
 function ContactSection() {
-  const [pitchStatus, setPitchStatus] = useState<"idle" | "unwired">("idle");
-
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setPitchStatus("unwired");
-  };
-
   return (
     <section className="contact-section" id="contact">
       <div className="section-shell contact-shell">
         <div className="contact-copy">
           <Eyebrow>Contact</Eyebrow>
           <h2>Start a conversation.</h2>
-          <p>Most of what we build is our own.</p>
-          <p>We partner selectively—when the idea is strong, the problem is meaningful, and the fit is right.</p>
+          <p>We partner selectively when the idea, problem, and fit are unusually strong.</p>
           <a className="contact-email" href={`mailto:${COMPANY_EMAIL}`}>{COMPANY_EMAIL}</a>
         </div>
 
-        <form className="pitch-form" onChange={() => setPitchStatus("idle")} onSubmit={handleSubmit}>
-          <p className="form-instructions">All fields are required. This Preview does not transmit form entries.</p>
-          <div className="pitch-form-grid">
-            <label className="field">
-              <span>Name</span>
-              <input autoComplete="name" name="name" required type="text" />
-            </label>
-            <label className="field">
-              <span>Email</span>
-              <input autoComplete="email" name="email" required type="email" />
-            </label>
-            <label className="field field-full">
-              <span>Stage</span>
-              <select defaultValue="" name="stage" required>
-                <option disabled value="">Select stage</option>
-                <option value="idea">Idea</option>
-                <option value="prototype">Prototype</option>
-                <option value="launching">Launching</option>
-                <option value="scaling">Scaling</option>
-              </select>
-            </label>
-            <label className="field field-full">
-              <span>What are you building?</span>
-              <textarea
-                name="idea"
-                placeholder="Tell us what you are building, what exists today, and why the problem matters."
-                required
-              />
-            </label>
-          </div>
-
-          <div className="pitch-form-actions">
-            <button className="primary-button" type="submit">Start the conversation</button>
-            {pitchStatus === "unwired" ? (
-              <p className="pitch-form-status" id="form-status" role="status">
-                This Preview does not send form entries. Email <a href={`mailto:${COMPANY_EMAIL}`}>{COMPANY_EMAIL}</a> instead.
-              </p>
-            ) : null}
-          </div>
-        </form>
+        <div className="contact-direct">
+          <Eyebrow>Direct contact</Eyebrow>
+          <h3>Tell us what you’re building.</h3>
+          <p>Share the problem, what exists today, and why it matters.</p>
+          <a className="contact-direct-action" href={`mailto:${COMPANY_EMAIL}`}>Email 1118 <span aria-hidden="true">→</span></a>
+        </div>
       </div>
     </section>
   );
@@ -923,7 +898,7 @@ function PolicyPage({ pathname }: { pathname: string }) {
     return (
       <PolicyLayout eyebrow="Policy" title="Privacy">
         <section><h2>What this site collects</h2><p>1118 does not intentionally use advertising cookies or analytics on this website. Our hosting provider may process standard request information—such as IP address, browser details, requested URL, and time of access—to deliver and protect the site.</p></section>
-        <section><h2>Contact and forms</h2><p>The form displayed on this Preview is fail-closed: entries are not transmitted or stored. If you email {COMPANY_EMAIL}, your message is handled by the email services used by 1118 and retained as needed to respond and maintain business records.</p></section>
+        <section><h2>Contact</h2><p>This website does not currently offer a contact form. If you email {COMPANY_EMAIL}, your message is handled by the email services used by 1118 and retained as needed to respond and maintain business records.</p></section>
         <section><h2>External services</h2><p>Links to Etchr, the App Store, and other websites are governed by those services’ own privacy practices.</p></section>
         <section><h2>Your questions</h2><p>To ask about privacy or request access, correction, or deletion of information you sent directly to 1118, email <a href={`mailto:${COMPANY_EMAIL}`}>{COMPANY_EMAIL}</a>.</p></section>
       </PolicyLayout>
@@ -935,7 +910,7 @@ function PolicyPage({ pathname }: { pathname: string }) {
       <PolicyLayout eyebrow="Policy" title="Terms">
         <section><h2>Using this site</h2><p>This website provides information about 1118, its products, and selected historical work. You may use it for lawful, personal, and business-information purposes.</p></section>
         <section><h2>Product information</h2><p>Product descriptions and availability may change. Historical work is presented for context and does not promise current availability, trading performance, or future results.</p></section>
-        <section><h2>Ownership</h2><p>Unless otherwise stated, the site design, writing, and original media are owned by 1118, LLC or used with permission. Third-party names and marks remain the property of their respective owners.</p></section>
+        <section><h2>Ownership</h2><p>The site design and writing are owned by 1118, LLC unless otherwise stated. Product names, screenshots, photographs, and third-party marks may be owned by their respective rights holders.</p></section>
         <section><h2>Disclaimers</h2><p>The site is provided as available without warranties to the extent permitted by law. 1118, LLC is not liable for indirect or consequential losses arising from use of this informational site.</p></section>
         <section><h2>Contact</h2><p>Questions about these terms may be sent to <a href={`mailto:${COMPANY_EMAIL}`}>{COMPANY_EMAIL}</a>.</p></section>
       </PolicyLayout>

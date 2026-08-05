@@ -5,7 +5,7 @@ The protected Preview is not authority to release Production. Complete every ite
 ## Founder decisions
 
 - Confirm the final `1118.io` domain and DNS owner.
-- Confirm the final contact-form delivery method and recipient.
+- Confirm that `hello@1118.io` is monitored and remains the approved email-first contact method. A contact backend is not part of this candidate.
 - Confirm analytics and cookie choices; update Privacy accordingly.
 - Complete every media and story item in `legal-review-checklist.md`.
 - Approve the final desktop and mobile visual evidence.

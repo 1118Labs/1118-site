@@ -5,7 +5,7 @@ import path from "node:path";
 const baseURL = (process.argv.find((argument) => argument.startsWith("--base="))?.split("=")[1] || "http://127.0.0.1:5173").replace(/\/$/, "");
 const recordVideos = process.argv.includes("--videos");
 const skipCaptures = process.argv.includes("--skip-captures");
-const artifactRoot = path.resolve("artifacts/1118-founder-corrections-v2");
+const artifactRoot = path.resolve("artifacts/1118-overnight-launch-director");
 const policyDir = path.join(artifactRoot, "policy-pages-source");
 const rawVideoDir = path.join(artifactRoot, "raw-video");
 
@@ -334,21 +334,14 @@ async function runPageChecks(browser) {
 
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(`${baseURL}/#contact`, { waitUntil: "networkidle" });
-  await page.getByRole("button", { name: "Start the conversation" }).click();
-  const invalidFocusName = await page.evaluate(() => document.activeElement?.getAttribute("name"));
-  await page.getByLabel("Name").fill("Launch QA");
-  await page.getByLabel("Email").fill("launch-qa@example.com");
-  await page.getByLabel("Stage").selectOption("prototype");
-  await page.getByLabel("What are you building?").fill("Fail-closed launch validation.");
-  await page.getByRole("button", { name: "Start the conversation" }).click();
   const contact = {
-    emptySubmitFocusesFirstInvalid: invalidFocusName === "name",
-    formAction: await page.locator("form").getAttribute("action"),
-    formMethod: await page.locator("form").getAttribute("method"),
-    status: await page.locator('[role="status"]').textContent(),
+    cardHeading: await page.locator(".contact-direct h3").textContent(),
+    directContactCards: await page.locator(".contact-direct").count(),
+    forms: await page.locator("form").count(),
+    mailtoLinks: await page.locator('.contact-section a[href^="mailto:"]').count(),
   };
   report.checks.contact = contact;
-  assert("contact-fails-closed", contact.emptySubmitFocusesFirstInvalid && contact.formAction === null && contact.formMethod === null && /(not connected|does not send)/i.test(contact.status || ""), contact);
+  assert("contact-is-email-first", contact.forms === 0 && contact.directContactCards === 1 && contact.mailtoLinks >= 2 && /what you.re building/i.test(contact.cardHeading || ""), contact);
 
   const policyResults = [];
   for (const route of ["privacy", "terms", "accessibility", "support", "security"]) {
