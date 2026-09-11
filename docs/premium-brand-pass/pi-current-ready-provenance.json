@@ -1,0 +1,49 @@
+{
+  "captured": "2026-09-11",
+  "captureTool": "CUA tab.screenshot; exact tool-output image bytes persisted locally",
+  "sourceURL": "https://insights.1118.io/dashboard/requests/review?request=Z2lkOi8vSm9iYmVyL1JlcXVlc3QvMzE4MjUyNzc%3D",
+  "sourceSafety": "Only the Avery Brooks Test approved synthetic reviewer drawer; no real client queue or account details in crop. Opened existing read-only reviewer fixture; no refresh, synchronization, draft quote, account change, or request creation.",
+  "interpretation": "Current rendered approved synthetic reviewer presentation. $150 is a manual starting point, not a final quote or demonstrated real customer outcome. Facts in this persisted example showed Updated Aug25 when viewed lower in drawer.",
+  "localSourceSHA": "9694e2f3e9ce77811486f3cbcf6c9674dd4ceb48",
+  "liveSHAVerification": "Unavailable; do not equate local checkout SHA with live deployed SHA.",
+  "derivation": "Factual rectangular crops only; no UI reconstruction, text changes, stretching, compositing, or generation.",
+  "files": [
+    {
+      "path": "artifacts/1118-premium-brand-pass/pi-current-ready-cua-source.jpg",
+      "size": [
+        1024,
+        1050
+      ],
+      "crop": null,
+      "sha256": "1b50fbc0845566e576c1988f9788481787ae82d1e94ad8afef03edda0db648a6"
+    },
+    {
+      "path": "worktrees/1118-final-launch-candidate/src/assets/showcase/property-insights/current-synthetic-ready-decision.png",
+      "size": [
+        1024,
+        934
+      ],
+      "crop": [
+        0,
+        116,
+        1024,
+        1050
+      ],
+      "sha256": "fd0e90bd5a797cfd928879c9dd80d7821eb9836d7faefc5630b1731f9c698836"
+    },
+    {
+      "path": "worktrees/1118-final-launch-candidate/src/assets/showcase/property-insights/current-synthetic-ready-recommendation.png",
+      "size": [
+        975,
+        295
+      ],
+      "crop": [
+        25,
+        254,
+        1000,
+        549
+      ],
+      "sha256": "14f8b65a4ae64bf9b3f212de121d028023cf1d4f82f041b796454fbbe875e472"
+    }
+  ]
+}

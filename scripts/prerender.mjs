@@ -10,6 +10,9 @@ const origin = 'https://1118.io';
 const organization = { '@id': `${origin}/#organization` };
 const routes = {
   '/': ['1118 — AI-First Product Studio', '1118 designs, builds, launches, and operates original software.'],
+  '/work': ['Selected Work | 1118', 'Explore Portrait and Signal: original software designed, built, and launched by 1118.'],
+  '/work/portrait': ['Portrait — From Photograph to Editorial Portrait | 1118', 'How 1118 built Portrait: an image-to-portrait experience, finished outputs, and an app distributed through the App Store.'],
+  '/work/signal': ['Signal — Quantitative Commodities Analytics | 1118', 'Signal was designed, built, and launched by 1118, used in live markets, licensed commercially, and later acquired.'],
   '/privacy': ['Privacy | 1118', 'How 1118 handles information on this website.'],
   '/terms': ['Terms | 1118', 'Terms for using the 1118 company website.'],
   '/accessibility': ['Accessibility | 1118', 'The 1118 accessibility commitment and contact method.'],
@@ -38,12 +41,13 @@ const products = [
   },
   {
     '@type': 'CreativeWork', '@id': `${origin}/#signal`, name: 'Signal',
-    description: '1118 co-founded, designed, built, and launched Signal—an enterprise commodities analytics platform used in live markets, licensed by a major trading firm, and later acquired.',
-    url: `${origin}/#signal`, creator: organization, creativeWorkStatus: 'Built, licensed, and acquired',
+    description: '1118 designed, built, and launched Signal, a quantitative commodities analytics platform created to uncover compelling trade ideas using data, quantitative analysis, and machine learning. The platform was used in live markets, licensed commercially, and later acquired.',
+    url: `${origin}/work/signal`, creator: organization, creativeWorkStatus: 'Built, licensed, and acquired',
   },
 ];
 function schema(pathname, title, description) {
   const url = `${origin}${pathname}`;
+  const pageProducts = pathname === '/' ? products : pathname === '/work' ? [products[0], products[3]] : pathname === '/work/portrait' ? [products[0]] : pathname === '/work/signal' ? [products[3]] : [];
   return {
     '@context': 'https://schema.org',
     '@graph': [
@@ -57,11 +61,11 @@ function schema(pathname, title, description) {
         publisher: organization, inLanguage: 'en-US',
       },
       {
-        '@type': 'WebPage', '@id': `${url}#webpage`, name: title, description, url,
+        '@type': pathname === '/work' ? 'CollectionPage' : 'WebPage', '@id': `${url}#webpage`, name: title, description, url,
         isPartOf: { '@id': `${origin}/#website` }, publisher: organization, inLanguage: 'en-US',
-        ...(pathname === '/' ? { about: products.map(({ '@id': id }) => ({ '@id': id })) } : {}),
+        ...(pageProducts.length ? { about: pageProducts.map(({ '@id': id }) => ({ '@id': id })) } : {}),
       },
-      ...(pathname === '/' ? products : []),
+      ...pageProducts,
     ],
   };
 }

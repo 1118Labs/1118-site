@@ -1,0 +1,33 @@
+.re-proof { width: 100%; min-width: 0; margin: 0; }
+.re-proof-window { overflow: hidden; touch-action: pan-y; border-radius: 20px; }
+.re-proof-window:focus-visible { outline: 3px solid #3d7bf7; outline-offset: 5px; }
+.re-proof-track { display: flex; align-items: stretch; gap: 2%; margin: 0; padding: 0; list-style: none; transform: translateX(calc(var(--re-position) * -28%)); transition: transform 720ms cubic-bezier(.22,.68,.22,1); }
+.re-card-card { flex: 0 0 26%; min-width: 0; display: flex; flex-direction: column; overflow: hidden; border: 1px solid #dce4ef; border-radius: 20px; background: #fff; color: #132445; transition: flex-basis 720ms cubic-bezier(.22,.68,.22,1); }
+.re-card-card.is-primary { flex-basis: 44%; }
+.re-card-card > img { display: block; width: 100%; height: clamp(280px, 27vw, 390px); object-fit: cover; }
+.re-card-copy { flex: 1; display: flex; flex-direction: column; padding: clamp(20px, 2.2vw, 34px); }
+.re-paw-rating { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 0 0 18px; color: #3d7bf7; }
+.re-paws { display: flex; gap: 3px; }
+.re-paws svg { display: block; width: 26px; height: 26px; }
+.re-paw-rating > span:last-child { color: #132445; font-size: 14px; font-weight: 800; letter-spacing: .06em; }
+.re-card-copy blockquote { margin: 0 0 28px; font-size: clamp(16px, 1.3vw, 19px); line-height: 1.55; font-weight: 500; text-wrap: pretty; }
+.re-card-copy footer { display: grid; gap: 5px; margin-top: auto; font-size: 14px; line-height: 1.5; }
+.re-card-copy footer strong { font-weight: 750; }
+.re-card-copy footer span { color: #596778; }
+.re-proof-controls { display: flex; justify-content: flex-end; align-items: center; gap: 10px; margin-top: 20px; }
+.re-proof-controls button { display: grid; place-items: center; min-height: 44px; min-width: 44px; border: 1px solid #bdcce0; border-radius: 999px; background: #fff; color: #132445; font: inherit; font-size: 20px; cursor: pointer; }
+.re-proof-controls button:hover { background: #eef4fd; }
+.re-proof-controls button:focus-visible { outline: 3px solid #3d7bf7; outline-offset: 3px; }
+.re-proof-controls .re-proof-pause, .re-proof-status { min-width: 112px; padding: 0 18px; font-size: 14px; font-weight: 650; }
+@media (max-width: 760px) {
+  .re-proof-track { gap: 4%; align-items: flex-start; transform: translateX(calc(var(--re-position) * -100%)); }
+  .re-card-card, .re-card-card.is-primary { flex-basis: 96%; }
+  .re-card-card > img { height: 330px; }
+  .re-card-copy { padding: 25px; }
+  .re-card-copy blockquote { font-size: 18px; }
+  .re-card-copy footer { margin-top: 0; }
+  .re-proof-controls { justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .re-proof-track, .re-card-card { transition: none; }
+}

@@ -1,7 +1,5 @@
 import { motion, useReducedMotion } from "framer-motion";
 import {
-  type KeyboardEvent as ReactKeyboardEvent,
-  type PointerEvent as ReactPointerEvent,
   type ReactNode,
   useEffect,
   useMemo,
@@ -10,15 +8,17 @@ import {
   useSyncExternalStore,
 } from "react";
 import "./App.css";
+import PortraitStory from "./components/PortraitStory";
+import ReviewsProof from "./components/ReviewsProof";
+import PropertyProof from "./components/PropertyProof";
+import SignalWorkstation from "./components/SignalWorkstation";
+import CaseStudies from "./components/CaseStudies";
+import { caseMeta } from "./content/case-studies";
+import "./premium.css";
 import brandMark from "./assets/brand/1118-mark-blue.png";
 import appStoreBadge from "./assets/showcase/etchr/download-on-the-app-store.svg";
 import etchrAppIcon from "./assets/showcase/portrait/portrait-app-icon.png";
-import etchrExport from "./assets/showcase/portrait/avery-export.webp";
 import PortraitComparison from "./components/PortraitComparison";
-import etchrPortrait from "./assets/showcase/portrait/elise-result.webp";
-import propertyDecision from "./assets/showcase/property-insights/actual-synthetic-hold-decision.png";
-import { currentSkyPupsReviews } from "./content/reviews";
-import signalInterface from "./assets/showcase/signal/signal-archival-interface.png";
 
 const APP_STORE_URL = "https://apps.apple.com/us/app/etchr-portraits/id6785615752";
 const PORTRAIT_URL = "https://getportrait.ai";
@@ -40,16 +40,16 @@ const products: Product[] = [
     slug: "portrait",
     name: "Portrait",
     status: "LIVE",
-    headline: "Editorial portraits\nfrom real photographs.",
-    description: "One clear photograph becomes a finished editorial portrait pack.",
+    headline: "One photo.\nA portrait for everywhere.",
+    description: "Turn a real photograph into an editorial portrait. Save it, share it, and make it yours across profiles and formats.",
     link: { href: APP_STORE_URL, label: "View on the App Store" },
   },
   {
     slug: "reviews-engine",
     name: "Reviews Engine",
     status: "LIVE",
-    headline: "Collect, moderate,\nand publish customer reviews.",
-    description: "A live system for keeping customer proof current across client sites.",
+    headline: "Real reviews.\nReady to be seen.",
+    description: "Collect, moderate, and publish customer reviews. A working reputation system, with the people and moments behind every review.",
     link: { href: REVIEWS_ENGINE_PUBLIC_PROOF_URL, label: "See Reviews Engine in use" },
     note: "Reviews from the live SkyPups installation.",
   },
@@ -58,7 +58,7 @@ const products: Product[] = [
     name: "Property Insights",
     status: "EARLY ACCESS",
     link: { href: "https://insights.1118.io", label: "Explore Property Insights" },
-    headline: "Turn service requests\ninto quote-ready property intelligence.",
+    headline: "Understand the house.\nKnow the next step.",
     description: "Property facts, scope risks, and a recommended next step—before the team finishes the quote in Jobber.",
   },
   {
@@ -67,14 +67,10 @@ const products: Product[] = [
     status: "BUILT · LICENSED · ACQUIRED",
     headline: "Quantitative intelligence\nfor commodities trading.",
     description:
-      "1118 co-founded, designed, built, and launched Signal—an enterprise commodities analytics platform used in live markets, licensed by a major trading firm, and later acquired.",
+      "1118 designed, built, and launched Signal, a quantitative commodities analytics platform created to uncover compelling trade ideas using data, quantitative analysis, and machine learning. The platform was used in live markets, licensed commercially, and later acquired.",
     note: "Authentic product screen · 2019",
   },
 ];
-
-const skyPupsReviews = currentSkyPupsReviews;
-
-const reviewCarouselItems = [...skyPupsReviews, ...skyPupsReviews.slice(0, 3)];
 
 const buildSteps = [
   {
@@ -93,15 +89,6 @@ const buildSteps = [
     body: "Evidence is checked, releases are gated, and responsibility remains with us.",
   },
 ] as const;
-
-function capturePointer(node: HTMLElement, pointerId: number) {
-  try {
-    node.setPointerCapture(pointerId);
-    return true;
-  } catch {
-    return false;
-  }
-}
 
 const policyMeta: Record<string, { description: string; title: string }> = {
   "/": {
@@ -150,7 +137,7 @@ function FloatingNav({ activeHash, pathname }: { activeHash: string; pathname: s
   const mobileNavRef = useRef<HTMLElement>(null);
   const homePrefix = pathname === "/" ? "" : "/";
   const links = [
-    { label: "Work", href: `${homePrefix}#work`, key: "work" },
+    { label: "Work", href: "/work", key: "work" },
     { label: "How We Build", href: `${homePrefix}#process`, key: "process" },
     { label: "About", href: `${homePrefix}#about`, key: "about" },
     { label: "Contact", href: `${homePrefix}#contact`, key: "contact" },
@@ -287,252 +274,14 @@ function Hero({ reduceMotion }: { reduceMotion: boolean }) {
   );
 }
 
-function ReviewsProof({ reduceMotion }: { reduceMotion: boolean }) {
-  const frameRef = useRef<HTMLElement>(null);
-  const swipeRef = useRef<{ active: boolean; pointerId: number; startX: number; startY: number } | null>(null);
-  const [activeView, setActiveView] = useState(0);
-  const [focusPaused, setFocusPaused] = useState(false);
-  const [hoverPaused, setHoverPaused] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-  const [pageHidden, setPageHidden] = useState(false);
-  const [userPaused, setUserPaused] = useState(false);
-  const [userAnnouncement, setUserAnnouncement] = useState("");
-
-  useEffect(() => {
-    const node = frameRef.current;
-    if (!node) return;
-    const observer = new IntersectionObserver(([entry]) => setIsVisible(entry.isIntersecting), { threshold: 0.25 });
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const onVisibilityChange = () => setPageHidden(document.hidden);
-    onVisibilityChange();
-    document.addEventListener("visibilitychange", onVisibilityChange);
-    return () => document.removeEventListener("visibilitychange", onVisibilityChange);
-  }, []);
-
-  useEffect(() => {
-    if (reduceMotion || !isVisible || focusPaused || hoverPaused || pageHidden || userPaused) return;
-    const interval = window.setInterval(
-      () => setActiveView((view) => (view + 1) % skyPupsReviews.length),
-      5200,
-    );
-    return () => window.clearInterval(interval);
-  }, [focusPaused, hoverPaused, isVisible, pageHidden, reduceMotion, userPaused]);
-
-  const selectReview = (nextView: number) => {
-    const wrappedView = (nextView + skyPupsReviews.length) % skyPupsReviews.length;
-    setUserPaused(true);
-    setActiveView(wrappedView);
-    setUserAnnouncement(`Review ${wrappedView + 1} of ${skyPupsReviews.length}: ${skyPupsReviews[wrappedView].name}`);
-  };
-
-  const move = (direction: -1 | 1) => {
-    selectReview(activeView + direction);
-  };
-
-  const handleKeyboard = (event: ReactKeyboardEvent<HTMLElement>) => {
-    if (event.key === "ArrowLeft") move(-1);
-    else if (event.key === "ArrowRight") move(1);
-    else if (event.key === "Home") selectReview(0);
-    else if (event.key === "End") selectReview(skyPupsReviews.length - 1);
-    else return;
-    event.preventDefault();
-  };
-
-  const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (event.pointerType !== "touch") return;
-    swipeRef.current = {
-      active: false,
-      pointerId: event.pointerId,
-      startX: event.clientX,
-      startY: event.clientY,
-    };
-  };
-
-  const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
-    const swipe = swipeRef.current;
-    if (!swipe || swipe.pointerId !== event.pointerId) return;
-    const deltaX = event.clientX - swipe.startX;
-    const deltaY = event.clientY - swipe.startY;
-    if (!swipe.active && Math.max(Math.abs(deltaX), Math.abs(deltaY)) >= 8) {
-      if (Math.abs(deltaY) >= Math.abs(deltaX)) {
-        swipeRef.current = null;
-        return;
-      }
-      swipe.active = true;
-      capturePointer(event.currentTarget, event.pointerId);
-    }
-    if (swipe.active) event.preventDefault();
-  };
-
-  const handlePointerEnd = (event: ReactPointerEvent<HTMLDivElement>) => {
-    const swipe = swipeRef.current;
-    if (!swipe || swipe.pointerId !== event.pointerId) return;
-    const deltaX = event.clientX - swipe.startX;
-    if (swipe.active && Math.abs(deltaX) >= 42) move(deltaX < 0 ? 1 : -1);
-    if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
-    swipeRef.current = null;
-  };
-
-  return (
-    <figure
-      aria-label="Reviews Engine customer review carousel"
-      aria-roledescription="carousel"
-      className="reviews-proof"
-      onBlurCapture={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget)) setFocusPaused(false);
-      }}
-      onFocusCapture={() => setFocusPaused(true)}
-      onKeyDown={handleKeyboard}
-      onMouseEnter={() => setHoverPaused(true)}
-      onMouseLeave={() => setHoverPaused(false)}
-      ref={frameRef}
-      role="region"
-    >
-      <div
-        className="reviews-proof-window"
-        onPointerCancel={handlePointerEnd}
-        onPointerDown={handlePointerDown}
-        onPointerMove={handlePointerMove}
-        onPointerUp={handlePointerEnd}
-        tabIndex={0}
-      >
-        <ul
-          className="reviews-proof-track"
-          style={{ "--review-position": activeView } as React.CSSProperties}
-        >
-          {reviewCarouselItems.map((review, index) => {
-            const duplicate = index >= skyPupsReviews.length;
-            return (
-            <li
-              aria-hidden={duplicate || undefined}
-              aria-label={duplicate ? undefined : `Review ${index + 1} of ${skyPupsReviews.length}`}
-              className={`review-fixture-card ${index === activeView ? "is-primary" : ""} ${duplicate ? "is-duplicate" : ""}`}
-              key={`${review.id}-${index}`}
-            >
-              <img
-                alt={`${review.name} from the live SkyPups review collection`}
-                decoding="async"
-                height="720"
-                loading="lazy"
-                src={review.image}
-                style={{ objectPosition: review.imagePosition }}
-                width="900"
-              />
-              <div className="review-fixture-copy">
-                <p aria-label={`${review.paws} out of 5 paws`} className="review-paw-rating" role="img">
-                  <span aria-hidden="true" className="review-stars">
-                    {"★".repeat(review.paws)}{"☆".repeat(5 - review.paws)}
-                  </span>
-                  <span aria-hidden="true"> {review.paws}.0 PAWS</span>
-                </p>
-                <blockquote>“{review.quote}”</blockquote>
-                <footer>
-                  <strong>{review.name}</strong>
-                  <span>{review.location}</span>
-                </footer>
-              </div>
-            </li>
-            );
-          })}
-        </ul>
-      </div>
-      <div className="reviews-proof-controls" aria-label="Review sequence controls">
-        <button aria-label="Show previous review" onClick={() => move(-1)} type="button">
-          <span aria-hidden="true">←</span>
-        </button>
-        {reduceMotion ? (
-          <span className="reviews-proof-status">Review {activeView + 1} of {skyPupsReviews.length}</span>
-        ) : (
-          <button
-            aria-label={userPaused ? "Resume reviews" : "Pause reviews"}
-            className="reviews-proof-pause"
-            onClick={() => setUserPaused((value) => !value)}
-            type="button"
-          >
-            {userPaused ? "Resume" : "Pause"} · {activeView + 1}/{skyPupsReviews.length}
-          </button>
-        )}
-        <button aria-label="Show next review" onClick={() => move(1)} type="button">
-          <span aria-hidden="true">→</span>
-        </button>
-      </div>
-      <span aria-live="polite" className="visually-hidden">{userAnnouncement}</span>
-    </figure>
-  );
+function ProductVisual({ product }: { product: Product }) {
+  if (product.slug === "portrait") return <PortraitStory />;
+  if (product.slug === "reviews-engine") return <ReviewsProof />;
+  if (product.slug === "property-insights") return <PropertyProof />;
+  return <SignalWorkstation />;
 }
 
-function ProductVisual({ product, reduceMotion }: { product: Product; reduceMotion: boolean }) {
-  if (product.slug === "portrait") {
-    return (
-      <figure className="etchr-product-proof">
-        <div className="etchr-product-portrait">
-          <img
-            alt="Elise shown as a Portrait editorial portrait"
-            decoding="async"
-            height="1024"
-            loading="lazy"
-            src={etchrPortrait}
-            width="1024"
-          />
-          <span>Editorial portrait</span>
-        </div>
-        <div className="etchr-export-proof">
-          <img
-            alt="Avery shown as a Portrait profile-ready export"
-            decoding="async"
-            height="1024"
-            loading="lazy"
-            src={etchrExport}
-            width="1024"
-          />
-          <span>Profile-ready export</span>
-        </div>
-      </figure>
-    );
-  }
-
-  if (product.slug === "reviews-engine") {
-    return <ReviewsProof reduceMotion={reduceMotion} />;
-  }
-
-  if (product.slug === "property-insights") {
-    return (
-      <figure
-        aria-label="Authentic Property Insights interface showing an incoming request, property facts, risk, recommendation, quote readiness, and next action"
-        className="product-proof-figure property-proof"
-      >
-        <div className="property-proof-current" tabIndex={0} role="region" aria-label="Property Insights demonstration screenshot; scroll horizontally for detail on small screens">
-          <img alt="Property Insights synthetic service request: Hold, do not quote yet. Get missing facts about bedrooms, bathrooms, square footage, occupancy, and preferred timing before quoting." src={propertyDecision} width={1024} height={630} loading="lazy" decoding="async" />
-        </div>
-        <figcaption><span>Actual product interface · Synthetic example</span><span className="proof-mobile-hint">Swipe image to inspect details.</span><a href={propertyDecision} target="_blank" rel="noreferrer">View full image ↗</a></figcaption>
-      </figure>
-    );
-  }
-
-  return (
-    <figure className="product-proof-figure signal-proof">
-      <div className="signal-display-stage">
-        <div className="signal-display-screen" tabIndex={0} role="region" aria-label="Signal archival interface; scroll horizontally for detail on small screens">
-          <img
-            alt="Authentic 2019 Signal interface showing seasonal and correlation analytics"
-            decoding="async"
-            height="1046"
-            loading="lazy"
-            src={signalInterface}
-            width="2167"
-          />
-        </div>
-      </div>
-      <figcaption><span className="proof-mobile-hint">Swipe image to inspect details.</span><a className="signal-detail-link" href={signalInterface} target="_blank" rel="noreferrer">View the original Signal screen <span aria-hidden="true">↗</span></a></figcaption>
-    </figure>
-  );
-}
-
-function ProductSection({ reduceMotion }: { reduceMotion: boolean }) {
+function ProductSection() {
   return (
     <section className="fleet-section" id="work">
       <div className="fleet-launch-list">
@@ -579,12 +328,13 @@ function ProductSection({ reduceMotion }: { reduceMotion: boolean }) {
                     )}
                   </div>
                 ) : null}
+                {(product.slug === "portrait" || product.slug === "signal") && <a className="case-study-link" href={`/work/${product.slug}`}>Explore the {product.name} case study <span aria-hidden="true">→</span></a>}
               </div>
 
               <div className="fleet-launch-stage">
                 <div className="fleet-showcase-media-shell">
                   <div className="fleet-showcase-media media-frame">
-                    <ProductVisual product={product} reduceMotion={reduceMotion} />
+                    <ProductVisual product={product} />
                   </div>
                 </div>
               </div>
@@ -740,7 +490,7 @@ function Footer() {
           <div className="footer-link-group">
             <strong>Navigate</strong>
             <nav aria-label="Company links">
-              <a href="/#work">Work</a>
+              <a href="/work">Work</a>
               <a href="/#process">How We Build</a>
               <a href="/#about">About</a>
               <a href="/#contact">Contact</a>
@@ -763,7 +513,7 @@ function Footer() {
 }
 
 function updateMetadata(pathname: string) {
-  const meta = policyMeta[pathname] ?? { title: "Page not found | 1118", description: "The requested page was not found." };
+  const meta = caseMeta[pathname] ?? policyMeta[pathname] ?? { title: "Page not found | 1118", description: "The requested page was not found." };
   document.title = meta.title;
   document.querySelector<HTMLMetaElement>('meta[name="description"]')?.setAttribute("content", meta.description);
   document.querySelector<HTMLMetaElement>('meta[property="og:title"]')?.setAttribute("content", meta.title);
@@ -814,12 +564,13 @@ export default function App({ initialPathname = "/" }: { initialPathname?: strin
       return (
         <>
           <Hero reduceMotion={reduceMotion} />
-          <ProductSection reduceMotion={reduceMotion} />
+          <ProductSection />
           <AboutSection />
           <ContactSection />
         </>
       );
     }
+    if (Object.hasOwn(caseMeta, pathname)) return <CaseStudies pathname={pathname} />;
     if (isPublicPolicy) return <PolicyPage pathname={pathname} />;
     return <NotFoundPage />;
   }, [isPublicPolicy, pathname, reduceMotion]);
