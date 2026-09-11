@@ -3,10 +3,10 @@
 .pi-brand-wordmark { display: flex; flex-direction: column; color: #0d1a5b; font-size: 22px; line-height: .9; font-weight: 800; letter-spacing: -.045em; text-transform: uppercase; }
 .pi-brand-wordmark > span:last-child { color: #14d8ff; margin-top: .28em; font-weight: 700; letter-spacing: .31em; }
 
-.pi-proof { margin:0; padding:0 28px; width:100%; color:#0d1a5b; }
+.pi-proof { margin:0; padding:0 28px; width:100%; color:var(--ink); }
 .pi-brand > img { width:80px; height:80px; }
 .pi-brand-wordmark { font-size:30px; }
-.pi-product-frame { border-radius:24px; overflow:hidden; border:1px solid #ffffffb3; background:#fff; box-shadow:0 34px 90px -42px #071a328c; }
+.pi-product-frame { color:#0d1a5b; border-radius:24px; overflow:hidden; border:1px solid #ffffffb3; background:#fff; box-shadow:0 34px 90px -42px #071a328c; }
 .pi-frame-bar { display:flex; justify-content:space-between; align-items:center; gap:24px; padding:20px 28px; border-bottom:1px solid #e1e7ec; font-size:14px; font-weight:700; }
 .pi-frame-bar > span:first-child { display:flex; gap:12px; align-items:center; }
 .pi-frame-bar i { width:10px; height:10px; border-radius:50%; background:#14d8ff; }

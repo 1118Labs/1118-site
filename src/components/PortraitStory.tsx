@@ -25,7 +25,7 @@ export default function PortraitStory({ variant = 'homepage' }: { variant?: 'hom
         <div className="portrait-native-formats">
           {[{src:profile,label:'Profile',width:640,height:800},{src:circle,label:'Circle',width:640,height:640}].map(item=><figure key={item.label} className={`portrait-format portrait-format-${item.label.toLowerCase()}`}><img src={item.src} width={item.width} height={item.height} alt={`Sloane’s original Portrait ${item.label.toLowerCase()} export`} loading="lazy" decoding="async"/><figcaption>{item.label}</figcaption></figure>)}
         </div>
-        <div className="portrait-platforms">{(['linkedin','instagram','tiktok','x'] as const).map(platform=><PlatformIconBadge key={platform} platform={platform} />)}</div>
+        <div className="portrait-platforms">{(['linkedin','instagram','tiktok','facebook','x','youtube','slack','discord'] as const).map(platform=><PlatformIconBadge key={platform} platform={platform} />)}</div>
       </section>
     </div>
     <p className="portrait-story-caption">Sloane · Studio example <a href="https://getportrait.ai/gallery" target="_blank" rel="noreferrer">View the gallery →</a></p>

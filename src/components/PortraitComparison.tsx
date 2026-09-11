@@ -6,6 +6,7 @@ import eliseResult from '../assets/showcase/portrait/elise-result.webp';
 import sloaneSource from '../assets/showcase/portrait/sloane-source.webp';
 import sloaneResult from '../assets/showcase/portrait/sloane-result.webp';
 import './PortraitComparison.css';
+import PortraitHeroReveal from './PortraitHeroReveal';
 
 interface PortraitComparisonProps {
   className?: string;
@@ -74,6 +75,8 @@ export default function PortraitComparison({ className = '', interactive = true,
     else return;
     event.preventDefault();
   };
+
+  if (priority && subject === 'laurie') return <PortraitHeroReveal sourceUrl={portrait.source} outputUrl={portrait.result} sourceImageStyle={{transform:portrait.transform}} sourceAlt="Laurie V. original source image" outputAlt="Laurie V. as a Portrait editorial portrait" title="Laurie V. Portrait comparison" />;
 
   return (
     <div className={`portrait-comparison ${className}`} data-subject={subject} ref={stage}

@@ -55,13 +55,13 @@
   border-radius: 50%;
   background: #111c;
   color: #fff;
-  font: 24px/1 Arial, sans-serif;
+  font: 24px/1 var(--body-font);
   cursor: ew-resize;
   box-shadow: 0 2px 12px #0003;
 }
 
 .portrait-comparison-handle:focus-visible {
-  outline: 3px solid #174fde;
+  outline: 3px solid var(--blue);
   outline-offset: 4px;
   box-shadow: 0 0 0 4px #fff;
 }
@@ -80,7 +80,7 @@
   border-radius: 5px;
   color: #fff;
   background: #111e;
-  font: 500 14px/1.25 Manrope, sans-serif;
+  font: 500 14px/1.25 var(--body-font);
   letter-spacing: .02em;
 }
 

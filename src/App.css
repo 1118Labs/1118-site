@@ -1,18 +1,17 @@
-:root { --white:#fff; --warm-white:#fff; --neutral:#f2f5f7; --neutral-deep:#e7edf1; --ink:#101922; --ink-soft:#52606d; --ink-faint:#62717d; --navy:#142432; --graphite:#142432; --blue:#17628a; --line:#dbe2e7; --line-strong:#aab8c3; --shell:min(1512px,calc(100% - 96px)); --body:18px; --label:14px; }
 *,*::before,*::after { box-sizing:border-box; }
-html { scroll-behavior:smooth; scroll-padding-top:112px; background:#fff; }
-body { margin:0; min-width:320px; color:var(--ink); font-family:Manrope,"Avenir Next","Segoe UI",sans-serif; font-size:18px; line-height:1.6; background:#fff; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+html { scroll-behavior:smooth; scroll-padding-top:112px; background:var(--paper); }
+body { margin:0; min-width:320px; color:var(--ink); font-family:var(--body-font); font-size:18px; line-height:1.6; background:var(--paper); -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
 button,input,select,textarea { font:inherit; } button,a,input,textarea { -webkit-tap-highlight-color:transparent; }
 a { color:inherit; text-decoration:none; }
 img,svg { display:block; max-width:100%; }
 button { cursor:pointer; }
 .page-shell { min-height:100svh; }
 .visually-hidden { position:absolute!important; width:1px!important; height:1px!important; padding:0!important; margin:-1px!important; overflow:hidden!important; clip:rect(0,0,0,0)!important; white-space:nowrap!important; border:0!important; }
-.skip-link { position:fixed; z-index:100; top:12px; left:12px; padding:12px 18px; background:#142432; color:white; transform:translateY(-160%); }
+.skip-link { position:fixed; z-index:100; top:12px; left:12px; padding:12px 18px; background:var(--navy); color:white; transform:translateY(-160%); }
 .skip-link:focus { transform:translateY(0); }
-a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible { outline:3px solid #2486c4; outline-offset:5px; }
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible { outline:3px solid var(--blue); outline-offset:5px; }
 .section-shell,.hero-shell,.fleet-launch-shell,.site-footer-shell,.policy-page-shell { width:var(--shell); margin-inline:auto; }
 .hero-section,.fleet-launch,.studio-section,.contact-section,.policy-page { position:relative; scroll-margin-top:110px; }
 .section-eyebrow,.eyebrow-pill,.fleet-showcase-name,.product-index,.footer-link-group strong,.policy-reviewed { font-size:14px; line-height:1.4; font-weight:650; letter-spacing:.09em; text-transform:uppercase; }
-.section-eyebrow { margin:0; color:#0b1423; }
+.section-eyebrow { margin:0; color:var(--navy); }
 @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } *,*::before,*::after { animation-duration:.01ms!important; animation-iteration-count:1!important; transition-duration:.01ms!important; } }

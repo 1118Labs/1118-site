@@ -85,7 +85,7 @@ export default function ReviewsProof() {
                   onPointerLeave={() => setHoverPaused(false)}
                 >
                   <img
-                    alt={`${review.name} from the live SkyPups review collection`}
+                    alt={`${review.name} from the SkyPups review collection`}
                     decoding="async"
                     height="1200"
                     loading={copy === 0 ? 'eager' : 'lazy'}

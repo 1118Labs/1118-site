@@ -69,7 +69,7 @@ function WorkIndex() {
     </div>
     <section className="work-more case-shell" aria-labelledby="work-more-title">
       <h2 id="work-more-title">More from 1118.</h2>
-      <div><p className="case-product-status">{productStatus["reviews-engine"]}</p><a href="/#reviews-engine">Reviews Engine <span aria-hidden="true">↗</span></a><p>Live review collection, moderation, and publishing.</p></div>
+      <div><a href="/#reviews-engine">Reviews Engine <span aria-hidden="true">↗</span></a><p>A platform for collecting, moderating, and publishing customer reviews.</p></div>
       <div><p className="case-product-status">{productStatus["property-insights"]}</p><a href="/#property-insights">Property Insights <span aria-hidden="true">↗</span></a><p>Property context and operator decision support.</p></div>
     </section>
   </article>;

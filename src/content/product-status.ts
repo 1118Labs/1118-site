@@ -2,7 +2,6 @@
 // Avoid inferring company ownership, launch completeness, or client status.
 export const productStatus = {
   portrait: 'Live',
-  'reviews-engine': 'Live',
   'property-insights': 'Early access',
   signal: 'Built · Licensed · Acquired',
 } as const;

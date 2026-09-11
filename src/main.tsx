@@ -1,5 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot, hydrateRoot } from 'react-dom/client'
+import './brand.css'
 import './index.css'
 import './fonts.css'
 import App from './App.tsx'

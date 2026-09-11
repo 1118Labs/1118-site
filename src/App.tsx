@@ -7,6 +7,7 @@ import {
   useState,
   useSyncExternalStore,
 } from "react";
+import "./brand.css";
 import "./App.css";
 import PortraitStory from "./components/PortraitStory";
 import ReviewsProof from "./components/ReviewsProof";
@@ -14,13 +15,11 @@ import PropertyProof, { PropertyBrand } from "./components/PropertyProof";
 import SignalWorkstation from "./components/SignalWorkstation";
 import CaseStudies from "./components/CaseStudies";
 import ContactPanel from "./components/ContactPanel";
-import { productStatus } from "./content/product-status";
 import { caseMeta } from "./content/case-studies";
 import "./premium.css";
 
 import reviewsShield from "./assets/showcase/reviews-engine/reviews-engine-shield-primary.png";
 import appStoreBadge from "./assets/showcase/etchr/download-on-the-app-store.svg";
-import etchrAppIcon from "./assets/showcase/portrait/portrait-native-icon.png";
 import PortraitComparison from "./components/PortraitComparison";
 
 const APP_STORE_URL = "https://apps.apple.com/us/app/etchr-portraits/id6785615752";
@@ -35,14 +34,12 @@ type Product = {
   name: string;
   note?: string;
   slug: "portrait" | "reviews-engine" | "property-insights" | "signal";
-  status: string;
 };
 
 const products: Product[] = [
   {
     slug: "portrait",
     name: "Portrait",
-    status: productStatus.portrait,
     headline: "Editorial portraits\nfrom real photographs.",
     description: "Portrait turns one clear photograph into a refined editorial portrait, ready for profiles, websites, social media, and print.",
     link: { href: APP_STORE_URL, label: "View on the App Store" },
@@ -50,16 +47,13 @@ const products: Product[] = [
   {
     slug: "reviews-engine",
     name: "Reviews Engine",
-    status: productStatus["reviews-engine"],
     headline: "Turn customer reviews\ninto a better reputation.",
-    description: "A live platform for collecting, moderating, and publishing customer reviews.",
+    description: "A platform for collecting, moderating, and publishing customer reviews.",
     link: { href: REVIEWS_ENGINE_PUBLIC_PROOF_URL, label: "See Reviews Engine in use" },
-    note: "Reviews from the live SkyPups installation.",
   },
   {
     slug: "property-insights",
     name: "Property Insights",
-    status: productStatus["property-insights"],
     link: { href: "https://insights.1118.io", label: "Explore Property Insights" },
     headline: "Turn service requests\ninto quote-ready property intelligence.",
     description: "Property context, risk, and recommendations assembled before the estimate begins.",
@@ -67,7 +61,6 @@ const products: Product[] = [
   {
     slug: "signal",
     name: "Signal",
-    status: productStatus.signal,
     headline: "Quantitative intelligence\nfor commodities trading.",
     description:
       "1118 designed and built Signal to help commodities traders uncover compelling trade ideas through data, quantitative analysis, and machine learning.",
@@ -95,7 +88,7 @@ const buildSteps = [
 
 const policyMeta: Record<string, { description: string; title: string }> = {
   "/": {
-    title: "1118 — AI-First Product Studio",
+    title: "1118 — We build the software we keep looking for.",
     description: "Original products, built from problems we understand and ideas we believe should exist.",
   },
   "/privacy": {
@@ -125,7 +118,7 @@ function Eyebrow({ children }: { children: string }) {
 }
 
 function BrandLockup({ compact = false }: { compact?: boolean }) {
-  return <span className={`logo ${compact ? "is-compact" : ""}`}><img className="logo-mark" src="/brand/1118-restored-dark.svg" alt="1118" width="819" height="525" /></span>;
+  return <span className={`logo ${compact ? "is-compact" : ""}`}><span className="logo-mark" role="img" aria-label="1118" /></span>;
 }
 
 function FloatingNav({ activeHash, pathname }: { activeHash: string; pathname: string }) {
@@ -237,9 +230,9 @@ function Hero({ reduceMotion }: { reduceMotion: boolean }) {
         <h1>We build the software<br />{" "}we keep looking for.</h1>
         <p className="hero-copy-body">Original products, built from problems we understand and ideas we believe should exist.</p>
         <p className="hero-philosophy">Most of what we build is our own.</p>
-        <a className="primary-button" href="#work">Explore our work <span aria-hidden="true">→</span></a>
+        <a className="primary-button" href="#work">See what we build <span aria-hidden="true">→</span></a>
       </div>
-      <div className="hero-portrait"><PortraitComparison className="portrait-lead-comparison" priority /><p className="portrait-lead-caption"><span>Portrait</span><span>Drag to compare ↔</span></p></div>
+      <div className="hero-portrait"><PortraitComparison className="portrait-lead-comparison" priority /></div>
     </div>
   </section>;
 }
@@ -263,7 +256,6 @@ function ProductSection() {
 
                 {product.slug === "portrait" ? (
                   <div className="etchr-product-lockup">
-                    <img alt="" height="512" src={etchrAppIcon} width="512" />
                     <p className="fleet-showcase-name">{product.name}</p>
                   </div>
                  ) : product.slug === "reviews-engine" ? (
@@ -273,7 +265,6 @@ function ProductSection() {
                 ) : (
                   <p className="fleet-showcase-name">{product.name}</p>
                 )}
-                <div className="fleet-launch-meta"><span className="eyebrow-pill">{product.status}</span></div>
                 <h2>
                   {product.headline.split("\n").map((line, lineIndex) => (
                     <span key={line}>
@@ -328,7 +319,7 @@ function AboutSection() {
         <div className="studio-intro" data-reveal="rise">
 
           <h2>We build our own<br />software.</h2>
-          <div className="studio-intro-copy"><p>1118 is an AI-first product studio creating original software from problems we understand firsthand.</p><p>Most of what we build is our own. We partner selectively when the problem is meaningful and the fit is right.</p></div>
+          <div className="studio-intro-copy"><p>1118 creates original software from problems we understand firsthand and ideas we believe should exist.</p><p>Most of what we build is our own. We partner selectively when the problem is meaningful and the fit is right.</p></div>
         </div>
         <div className="operating-model" id="process">
           {buildSteps.map((item) => (
@@ -402,7 +393,7 @@ function PolicyPage({ pathname }: { pathname: string }) {
       <PolicyLayout eyebrow="Help" title="Support">
         <section><h2>1118 inquiries</h2><p>For company, partnership, press, or website questions, use the <a href="/#contact">contact form</a>.</p></section>
         <section><h2>Portrait</h2><p>For Portrait product information and current support options, visit <a href={PORTRAIT_URL} rel="noreferrer" target="_blank">getportrait.ai</a> or the verified <a href={APP_STORE_URL} rel="noreferrer" target="_blank">App Store listing</a>.</p></section>
-        <section><h2>Other products</h2><p>Reviews Engine is live. Property Insights is in early access. They do not currently offer public company-site support channels.</p></section>
+        <section><h2>Other products</h2><p>Property Insights is in early access. They do not currently offer public company-site support channels.</p></section>
       </PolicyLayout>
     );
   }
