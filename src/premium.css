@@ -106,3 +106,7 @@
 .fleet-launch[data-product="signal"] .fleet-showcase-body { font-size:21px; line-height:1.6; }
 @media(max-width:1120px) { .fleet-launch[data-product="signal"] .fleet-showcase-body { font-size:20px; } }
 @media(max-width:600px) { .fleet-launch[data-product="signal"] .fleet-showcase-body { font-size:18px; } }
+/* Chapter spacing is owned by the article; do not double it in the recovered shell. */
+.fleet-launch .fleet-launch-shell,
+.fleet-launch .fleet-launch-shell.is-lead,
+.fleet-launch .fleet-launch-shell.is-reversed { padding-block:0; }
