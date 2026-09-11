@@ -23,3 +23,10 @@
 .contact-panel-trap { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 @media(max-width: 640px) { .contact-panel-grid { grid-template-columns: 1fr; gap: 24px; } .contact-panel-bottom { align-items: flex-start; flex-direction: column; gap: 20px; } .contact-panel button { min-width: 200px; } .contact-panel .contact-panel-privacy { max-width: 100%; } }
 @media(prefers-reduced-motion: reduce) { .contact-panel button { transition: none; } }
+
+.contact-security { margin-top: 24px; color: #fff; font-size: 14px; }
+.contact-security > span { display: block; margin-bottom: 10px; font-weight: 600; }
+.contact-security-widget { min-height: 65px; max-width: 100%; }
+.contact-security-status { max-width: 54ch; margin: 10px 0 0; font-size: 14px; line-height: 1.5; }
+.contact-security-retry { margin-top: 12px; min-height: 44px; padding: 10px 14px; border: 1px solid currentColor; border-radius: 6px; color: #fff; background: transparent; font: inherit; cursor: pointer; }
+.contact-security-retry:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }

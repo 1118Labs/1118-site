@@ -7,9 +7,10 @@ const root = resolve(import.meta.dirname, '..');
 const output = join(root, 'dist');
 const serverOutput = await mkdtemp(join(root, '.1118-prerender-'));
 const origin = 'https://1118.io';
+const indexing = process.env.VERCEL_ENV === 'production' && process.env.PUBLIC_INDEXING_ENABLED === 'true';
 const organization = { '@id': `${origin}/#organization` };
 const routes = {
-  '/': ['1118 — We build the software we keep looking for.', 'Original products, built from problems we understand and ideas we believe should exist.'],
+  '/': ['1118 — Original Software & Products', '1118 creates original software, including Portrait, Reviews Engine, and Property Insights, from problems we understand and ideas we believe should exist.'],
   '/work': ['Selected Work | 1118', 'Explore Portrait and Signal: products designed, built, and launched by 1118.'],
   '/work/portrait': ['Portrait — From Photograph to Editorial Portrait | 1118', 'How 1118 built Portrait: an image-to-portrait experience, finished outputs, and an app distributed through the App Store.'],
   '/work/signal': ['Signal — Quantitative Commodities Analytics | 1118', 'Signal was designed, built, and launched by 1118, used in live markets, licensed commercially, and later acquired.'],
@@ -29,9 +30,9 @@ const products = [
   },
   {
     '@type': 'SoftwareApplication', '@id': `${origin}/#reviews-engine`, name: 'Reviews Engine',
-    description: 'A live platform for collecting, moderating, and publishing customer reviews.',
+    description: 'Software for collecting, moderating, and publishing customer reviews.',
     applicationCategory: 'BusinessApplication', url: `${origin}/#reviews-engine`,
-    creator: organization, creativeWorkStatus: 'Live',
+    creator: organization,
   },
   {
     '@type': 'SoftwareApplication', '@id': `${origin}/#property-insights`, name: 'Property Insights',
@@ -65,6 +66,7 @@ function schema(pathname, title, description) {
         isPartOf: { '@id': `${origin}/#website` }, publisher: organization, inLanguage: 'en-US',
         ...(pageProducts.length ? { about: pageProducts.map(({ '@id': id }) => ({ '@id': id })) } : {}),
       },
+      ...(pathname.startsWith('/work') ? [{ '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: '1118', item: `${origin}/` }, { '@type': 'ListItem', position: 2, name: 'Work', item: `${origin}/work` }, ...(pathname === '/work' ? [] : [{ '@type': 'ListItem', position: 3, name: pathname.endsWith('portrait') ? 'Portrait' : 'Signal', item: url }])] }] : []),
       ...pageProducts,
     ],
   };
@@ -101,13 +103,14 @@ try {
       .replace('<div id="root"></div>', `<div id="root">${markup}</div>`);
     if (!html.includes('noindex,nofollow,noarchive')) throw new Error(`Missing noindex protection: ${pathname}`);
     await mkdir(destination, { recursive: true });
-    await writeFile(join(destination, 'index.html'), html);
+    await writeFile(join(destination, 'index.html'), indexing ? html.replace('noindex,nofollow,noarchive', 'index,follow') : html);
   }
+  await cp(join(root, 'public', indexing ? 'robots.production.txt' : 'robots.txt'), join(output, 'robots.txt'));
   // Vite's server output uses the same content-hashed asset URLs as the client build.
   if ((await readdir(serverOutput)).includes('assets')) {
     await cp(join(serverOutput, 'assets'), join(output, 'assets'), { recursive: true });
   }
-  console.log(`Prerendered ${Object.keys(routes).length} protected pages with initial HTML, metadata, and structured data.`);
+  console.log(`Prerendered ${Object.keys(routes).length} ${indexing ? 'indexable Production' : 'protected'} pages with initial HTML, metadata, and structured data.`);
 } finally {
   await rm(serverOutput, { recursive: true, force: true });
 }

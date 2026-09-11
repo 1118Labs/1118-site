@@ -88,7 +88,7 @@ export default function ReviewsProof() {
                     alt={`${review.name} from the SkyPups review collection`}
                     decoding="async"
                     height="1200"
-                    loading={copy === 0 ? 'eager' : 'lazy'}
+                    loading="lazy"
                     src={review.image}
                     style={{ objectPosition: review.imagePosition }}
                     width="900"

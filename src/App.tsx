@@ -17,7 +17,9 @@ import CaseStudies from "./components/CaseStudies";
 import ContactPanel from "./components/ContactPanel";
 import { caseMeta } from "./content/case-studies";
 import "./premium.css";
+import "./prelaunch.css";
 
+import portraitIcon from "./assets/showcase/portrait/portrait-native-icon.png";
 import reviewsShield from "./assets/showcase/reviews-engine/reviews-engine-shield-primary.png";
 import appStoreBadge from "./assets/showcase/etchr/download-on-the-app-store.svg";
 import PortraitComparison from "./components/PortraitComparison";
@@ -88,8 +90,8 @@ const buildSteps = [
 
 const policyMeta: Record<string, { description: string; title: string }> = {
   "/": {
-    title: "1118 — We build the software we keep looking for.",
-    description: "Original products, built from problems we understand and ideas we believe should exist.",
+    title: "1118 — Original Software & Products",
+    description: "1118 creates original software, including Portrait, Reviews Engine, and Property Insights, from problems we understand and ideas we believe should exist.",
   },
   "/privacy": {
     title: "Privacy | 1118",
@@ -188,7 +190,7 @@ function FloatingNav({ activeHash, pathname }: { activeHash: string; pathname: s
         </nav>
 
         <a className="nav-cta" href={`${homePrefix}#contact`}>
-          Work with us <span aria-hidden="true">↗</span>
+          Contact <span aria-hidden="true">↗</span>
         </a>
 
         <button
@@ -215,7 +217,7 @@ function FloatingNav({ activeHash, pathname }: { activeHash: string; pathname: s
               {item.label}
             </a>
           ))}
-          <a href={`${homePrefix}#contact`} onClick={() => setMenuOpen(false)}>Work with us ↗</a>
+          <a href={`${homePrefix}#contact`} onClick={() => setMenuOpen(false)}>Contact ↗</a>
         </nav>
       </div>
     </header>
@@ -256,6 +258,7 @@ function ProductSection() {
 
                 {product.slug === "portrait" ? (
                   <div className="etchr-product-lockup">
+                    <img src={portraitIcon} width="56" height="56" alt="" loading="lazy" decoding="async" />
                     <p className="fleet-showcase-name">{product.name}</p>
                   </div>
                  ) : product.slug === "reviews-engine" ? (
@@ -358,7 +361,7 @@ function PolicyPage({ pathname }: { pathname: string }) {
     return (
       <PolicyLayout eyebrow="Policy" title="Privacy">
         <section><h2>What this site collects</h2><p>1118 does not intentionally use advertising cookies or analytics on this website. Our hosting provider may process standard request information—such as IP address, browser details, requested URL, and time of access—to deliver and protect the site.</p></section>
-        <section><h2>Contact</h2><p>When you submit the contact form, the details you provide are processed by our hosting provider and Formspree to deliver and store your inquiry. We use them to respond and maintain relevant business records. Basic request information is used to prevent abuse. Please do not include sensitive personal information.</p></section>
+        <section><h2>Contact</h2><p>When you submit the contact form, the details you provide are processed by our hosting provider and Formspree to deliver and store your inquiry. We use them to respond and maintain relevant business records. Cloudflare Turnstile processes basic device and request information to check for automated abuse before a message is sent. Basic request information is also used to limit repeated submissions. Please do not include sensitive personal information.</p></section>
         <section><h2>External services</h2><p>Links to Portrait, the App Store, and other websites are governed by those services’ own privacy practices.</p></section>
         <section><h2>Your questions</h2><p>To ask about privacy or request access, correction, or deletion of information you sent directly to 1118, use the <a href="/#contact">contact form</a>.</p></section>
       </PolicyLayout>
@@ -421,7 +424,7 @@ function Footer() {
       <div className="site-footer-shell">
         <div className="site-footer-copy">
           <BrandLockup compact />
-          <p className="footer-legal">© 2026 1118, LLC</p>
+
         </div>
 
         <div className="site-footer-links">
@@ -444,6 +447,7 @@ function Footer() {
             </nav>
           </div>
         </div>
+        <p className="footer-legal">© 2026 1118, LLC</p>
       </div>
     </footer>
   );
@@ -456,7 +460,7 @@ function updateMetadata(pathname: string) {
   document.querySelector<HTMLMetaElement>('meta[property="og:title"]')?.setAttribute("content", meta.title);
   document.querySelector<HTMLMetaElement>('meta[property="og:description"]')?.setAttribute("content", meta.description);
   const canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
-  canonical?.setAttribute("href", `https://1118.io${pathname === "/" ? "" : pathname}`);
+  canonical?.setAttribute("href", `https://1118.io${pathname}`);
 }
 
 const subscribeToHydration = () => () => {};

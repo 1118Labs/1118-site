@@ -1,4 +1,4 @@
-import house from '../assets/showcase/property-insights/product-showroom-home.png';
+import house from '../assets/showcase/property-insights/product-showroom-home.webp';
 import propertyMark from '../assets/showcase/property-insights/brand/property-insights-mark.png';
 import './PropertyProof.css';
 
@@ -33,6 +33,6 @@ export default function PropertyProof() {
         </div>
       </div>
     </div>
-    <figcaption><span>Property Insights product showroom · Synthetic example</span><a href="https://insights.1118.io/#product" target="_blank" rel="noreferrer">Explore the product ↗</a></figcaption>
+    <figcaption><span>Property Insights product showroom · Synthetic example</span><a href="https://insights.1118.io/#product" target="_blank" rel="noreferrer">Explore the product →</a></figcaption>
   </figure>;
 }

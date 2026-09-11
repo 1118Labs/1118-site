@@ -1,4 +1,5 @@
-import { useRef, useState, type FormEvent } from 'react';
+import ContactTurnstile from './ContactTurnstile';
+import { useCallback, useRef, useState, type FormEvent } from 'react';
 import './ContactPanel.css';
 
 type ContactDraft = { name: string; email: string; company: string; stage: string; message: string; website: string };
@@ -11,6 +12,9 @@ export default function ContactPanel() {
   const [status, setStatus] = useState<'idle' | 'sending' | 'error' | 'sent'>('idle');
   const [notice, setNotice] = useState('');
   const submission = useRef('');
+  const token = useRef('');
+  const [securityReset, setSecurityReset] = useState(0);
+  const onToken = useCallback((value: string) => { token.current = value; }, []);
   const formRef = useRef<HTMLFormElement>(null);
   const noticeRef = useRef<HTMLParagraphElement>(null);
   const update = (field: keyof ContactDraft, value: string) => {
@@ -32,13 +36,14 @@ export default function ContactPanel() {
       const first = Object.keys(next)[0]; formRef.current?.querySelector<HTMLElement>(`[name="${first}"]`)?.focus();
       return;
     }
+    if (!token.current) { setStatus('error'); setNotice('Please complete the security check before sending your message.'); requestAnimationFrame(() => noticeRef.current?.focus()); return; }
     setStatus('sending'); setNotice('Sending your message…');
     submission.current ||= crypto.randomUUID();
     try {
       const response = await fetch('/api/contact', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...draft, message: `Stage: ${draft.stage}\n\n${draft.message}`, submissionId: submission.current }),
-        signal: AbortSignal.timeout(12000),
+        body: JSON.stringify({ ...draft, turnstileToken: token.current, submissionId: submission.current }),
+        signal: AbortSignal.timeout(22000),
       });
       const data = await response.json().catch(() => null);
       if (!response.ok || data?.ok !== true) {
@@ -47,6 +52,7 @@ export default function ContactPanel() {
         setNotice(typeof data?.message === 'string' ? data.message : 'We couldn’t send your message right now. Your details are still here. Please try again later.');
       } else { setStatus('sent'); setNotice('Thank you. Your message is on its way. We’ll be in touch.'); }
     } catch { setStatus('error'); setNotice('We couldn’t confirm your message was sent. Your details are still here. Please try again.'); }
+    token.current = ''; setSecurityReset(value => value + 1);
     requestAnimationFrame(() => noticeRef.current?.focus());
   };
   return <div className="contact-panel">
@@ -56,9 +62,10 @@ export default function ContactPanel() {
         <div className="contact-panel-field"><label htmlFor="contact-email">Email</label><input id="contact-email" name="email" type="email" inputMode="email" autoComplete="email" maxLength={254} required value={draft.email} onChange={event => update('email', event.target.value)} disabled={status === 'sending' || status === 'sent'} aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? 'contact-email-error' : undefined} />{errors.email && <span id="contact-email-error" className="contact-field-error">{errors.email}</span>}</div>
         <div className="contact-panel-field"><label htmlFor="contact-company">Company <span>(optional)</span></label><input id="contact-company" name="company" autoComplete="organization" maxLength={160} value={draft.company} onChange={event => update('company', event.target.value)} disabled={status === 'sending' || status === 'sent'} aria-invalid={Boolean(errors.company)} aria-describedby={errors.company ? 'contact-company-error' : undefined} />{errors.company && <span id="contact-company-error" className="contact-field-error">{errors.company}</span>}</div>
         <div className="contact-panel-field"><label htmlFor="contact-stage">Stage</label><select id="contact-stage" name="stage" required value={draft.stage} onChange={event => update('stage', event.target.value)} disabled={status === 'sending' || status === 'sent'} aria-invalid={Boolean(errors.stage)} aria-describedby={errors.stage ? 'contact-stage-error' : undefined}><option value="" disabled>Select stage</option>{['Idea', 'Prototype', 'Launching', 'Scaling'].map(stage => <option key={stage} value={stage}>{stage}</option>)}</select>{errors.stage && <span id="contact-stage-error" className="contact-field-error">{errors.stage}</span>}</div>
-        <div className="contact-panel-field contact-panel-wide"><label htmlFor="contact-message">What are you building?</label><textarea id="contact-message" name="message" rows={5} minLength={20} maxLength={4982} required value={draft.message} onChange={event => update('message', event.target.value)} disabled={status === 'sending' || status === 'sent'} aria-invalid={Boolean(errors.message)} aria-describedby={errors.message ? 'contact-message-error' : undefined} />{errors.message && <span id="contact-message-error" className="contact-field-error">{errors.message}</span>}</div>
+        <div className="contact-panel-field contact-panel-wide"><label htmlFor="contact-message">What are you building?</label><textarea id="contact-message" name="message" rows={5} minLength={20} maxLength={5000} required value={draft.message} onChange={event => update('message', event.target.value)} disabled={status === 'sending' || status === 'sent'} aria-invalid={Boolean(errors.message)} aria-describedby={errors.message ? 'contact-message-error' : undefined} />{errors.message && <span id="contact-message-error" className="contact-field-error">{errors.message}</span>}</div>
       </div>
       <div className="contact-panel-trap" aria-hidden="true"><label htmlFor="contact-website">Website</label><input id="contact-website" name="website" tabIndex={-1} autoComplete="off" value={draft.website} onChange={event => update('website', event.target.value)} /></div>
+      {status !== 'sent' && <ContactTurnstile onToken={onToken} resetVersion={securityReset} />}
       <div className="contact-panel-bottom">
         {status === 'sent' ? <button type="button" onClick={event => { event.preventDefault(); setDraft(emptyDraft); setErrors({}); setStatus('idle'); setNotice(''); submission.current = ''; requestAnimationFrame(() => formRef.current?.querySelector<HTMLInputElement>('#contact-name')?.focus()); }}>Send another message <span aria-hidden="true">→</span></button> : <button type="submit" disabled={status === 'sending'}>{status === 'sending' ? 'Sending…' : 'Send'} <span aria-hidden="true">→</span></button>}
         <p className="contact-panel-privacy">We’ll use your details to respond to your inquiry. <a href="/privacy">Privacy</a></p>

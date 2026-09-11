@@ -1,3 +1,4 @@
+import { verifyTurnstile } from './turnstile.mjs';
 import { createHash, createHmac, randomBytes } from 'node:crypto';
 
 export const BODY_LIMIT = 12_000;
@@ -10,7 +11,7 @@ export function validateContact(input) {
   const fields = {};
   if (!input || typeof input !== 'object' || Array.isArray(input)) return { fields: { message: 'Please check your message and try again.' } };
   const values = {};
-  for (const field of ['name', 'email', 'company', 'message', 'website', 'submissionId']) {
+  for (const field of ['name', 'email', 'company', 'message', 'website', 'submissionId', 'stage']) {
     if (typeof input[field] !== 'string') values[field] = '';
     else values[field] = input[field].trim();
   }
@@ -18,6 +19,7 @@ export function validateContact(input) {
   if (!EMAIL.test(values.email) || values.email.length > 254 || CONTROL.test(values.email)) fields.email = 'Enter a valid email address.';
   if (values.company.length > 160 || CONTROL.test(values.company)) fields.company = 'Keep the company name under 160 characters.';
   if (values.message.length < 20 || values.message.length > 5000 || /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/.test(values.message)) fields.message = 'Tell us a little more (20–5,000 characters).';
+  if (!['Idea', 'Prototype', 'Launching', 'Scaling'].includes(values.stage)) fields.stage = 'Select your stage.';
   if (!SESSION_ID.test(values.submissionId)) fields.form = 'Please refresh this page and try again.';
   if (values.website) fields.form = 'We couldn’t accept this submission. Please try again.';
   return { values, fields };
@@ -74,7 +76,7 @@ async function readBody(request) {
   try { return JSON.parse(text); } catch { throw Object.assign(new Error('Invalid JSON'), { status: 400 }); }
 }
 
-export function createContactHandler({ env = process.env, send = fetch, allowRequest = createLimiter() } = {}) {
+export function createContactHandler({ env = process.env, send = fetch, verify = fetch, allowRequest = createLimiter() } = {}) {
   const deliveries = new Map();
   return async function contact(request, response) {
     const reply = (status, payload) => {
@@ -98,6 +100,8 @@ export function createContactHandler({ env = process.env, send = fetch, allowReq
     const useFormspree = typeof formspree === 'string' && /^[a-z]{8}$/.test(formspree);
     if (formspree && !useFormspree) return reply(503, { ok: false, message: UNAVAILABLE });
     if (!useFormspree && (!env.RESEND_API_KEY || !EMAIL.test(env.CONTACT_TO || '') || !EMAIL.test(env.CONTACT_FROM || '') || CONTROL.test(env.CONTACT_TO || '') || CONTROL.test(env.CONTACT_FROM || ''))) return reply(503, { ok: false, message: UNAVAILABLE });
+    const security = await verifyTurnstile({ token: data.turnstileToken, origin: header(request, 'origin'), ip, env, verify });
+    if (!security.ok) return reply(security.status, { ok: false, message: security.message });
     // Prevent concurrent/accepted duplicate sends on this warm instance. Resend
     // also enforces the key remotely; Formspree has no equivalent guarantee.
     const now = Date.now();
@@ -111,7 +115,7 @@ export function createContactHandler({ env = process.env, send = fetch, allowReq
         const result = await send(useFormspree ? `https://formspree.io/f/${formspree}` : 'https://api.resend.com/emails', {
           method: 'POST',
           headers: useFormspree ? { Accept: 'application/json', 'Content-Type': 'application/json' } : { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json', 'Idempotency-Key': `1118-contact-${values.submissionId}` },
-          body: JSON.stringify(useFormspree ? { name: values.name, email: values.email, company: values.company, message: values.message, _subject: 'New conversation from 1118', submissionId: values.submissionId } : { from: `1118 <${env.CONTACT_FROM}>`, to: [env.CONTACT_TO], reply_to: values.email, subject: 'New conversation from 1118', text: `Name: ${values.name}\nEmail: ${values.email}\nCompany: ${values.company || 'Not provided'}\n\n${values.message}` }),
+          body: JSON.stringify(useFormspree ? { name: values.name, email: values.email, company: values.company, stage: values.stage, message: values.message, _subject: 'New conversation from 1118', submissionId: values.submissionId } : { from: `1118 <${env.CONTACT_FROM}>`, to: [env.CONTACT_TO], reply_to: values.email, subject: 'New conversation from 1118', text: `Name: ${values.name}\nEmail: ${values.email}\nCompany: ${values.company || 'Not provided'}\nStage: ${values.stage}\n\n${values.message}` }),
           signal: AbortSignal.timeout(8000),
         });
         const payload = await result.json().catch(() => ({}));
