@@ -3,7 +3,8 @@
   --paper:#fff; --mist:#f5f6f7; --ink:#151719; --ink-soft:#53575b;
   --navy:#101922; --blue:#151719; --line:#d9dcdf;
   --shell:min(1480px,calc(100% - 96px));
-  --display-product:clamp(48px,4.15vw,64px); --display-section:clamp(48px,4.15vw,64px);
+  --editorial:Didot,"Bodoni 72","Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --display-product:clamp(56px,4.7vw,72px); --display-section:clamp(56px,4.7vw,72px);
 }
 .floating-nav-shell { position:sticky; top:0; z-index:50; height:112px; background:#fff; border-bottom:1px solid transparent; transition:border-color .25s; }
 .floating-nav-shell.is-compressed { border-color:var(--line); }
@@ -22,11 +23,12 @@
 .hero-shell { display:grid; grid-template-columns:minmax(0,1.45fr) minmax(0,1fr); gap:60px; align-items:center; }
 .hero-copy { padding-block:40px; }
 .section-eyebrow { font-size:13px; font-weight:550; letter-spacing:.09em; }
-.hero-copy h1 { font-size:clamp(64px,4.65vw,80px); line-height:1.08; letter-spacing:-.047em; font-weight:500; margin:32px 0; text-transform:none; }
+.hero-copy h1 { font-size:clamp(72px,5.8vw,92px); line-height:1.08; letter-spacing:-.047em; font-weight:500; margin:32px 0; text-transform:none; }
 .hero-copy-body { max-width:38ch; margin:0; font-size:21px; line-height:1.6; color:var(--ink-soft); }
 .hero-philosophy { margin:24px 0 32px; font-size:19px; line-height:1.6; }
 .hero-portrait { width:100%; }
-.hero-portrait .portrait-comparison { border-radius:0; }
+.hero-portrait { max-width:560px; justify-self:end; padding:8px; border:1px solid #0000000e; border-radius:50px; box-shadow:0 18px 42px #1111110d; }
+.hero-portrait .portrait-comparison { border-radius:42px; }
 .portrait-lead-caption { display:flex; align-items:center; justify-content:space-between; gap:16px; margin:18px 0 0; color:var(--ink-soft); font-size:14px; }
 .primary-button,.contact-panel button,.case-button { display:inline-flex; align-items:center; justify-content:space-between; gap:38px; min-height:52px; padding:5px 0; border:0; border-bottom:1px solid var(--ink); border-radius:0; background:transparent; color:var(--ink); font-size:16px; font-weight:600; white-space:nowrap; }
 .primary-button > span,.contact-panel button > span,.case-button > span { font-size:24px; }
@@ -56,8 +58,8 @@
 .fleet-launch[data-product="portrait"] .fleet-launch-copy h2 { grid-row:3/span 5; }
 .fleet-launch[data-product="reviews-engine"] { background:var(--mist); padding-bottom:76px; }
 .fleet-launch[data-product="reviews-engine"] .fleet-launch-copy { grid-template-columns:minmax(0,1.7fr) minmax(0,1fr); gap:0 6%; }
-.fleet-launch[data-product="reviews-engine"] .fleet-launch-copy h2 { font-size:clamp(48px,3.55vw,58px); }
-.fleet-launch[data-product="property-insights"] { padding-bottom:88px; }
+.fleet-launch[data-product="reviews-engine"] .fleet-launch-copy h2 { font-size:var(--display-product); }
+.fleet-launch[data-product="property-insights"] { padding-bottom:88px; background:#eafaff; }
 .fleet-launch[data-product="signal"] { padding-bottom:0; color:#fff; background:#0c1117; }
 .fleet-launch[data-product="signal"] .fleet-showcase-name { color:#fff; }
 .fleet-launch[data-product="signal"] .product-index,.fleet-launch[data-product="signal"] .eyebrow-pill,.fleet-launch[data-product="signal"] .fleet-showcase-body,.fleet-launch[data-product="signal"] .fleet-showcase-why { color:#c3c9ce; }
@@ -101,10 +103,10 @@
 @media(max-width:1250px) {
  :root { --shell:calc(100% - 72px); }
  .hero-shell { gap:36px; grid-template-columns:1.5fr 1fr; }
- .hero-copy h1 { font-size:64px; }
+ .hero-copy h1 { font-size:72px; }
  .hero-copy-body { font-size:20px; }
  .fleet-launch-copy { column-gap:6%; }
- .fleet-launch[data-product="reviews-engine"] .fleet-launch-copy h2 { font-size:48px; }
+
 }
 @media(max-width:1000px) {
  :root { --shell:calc(100% - 56px); }
@@ -136,7 +138,7 @@
  .mobile-nav.is-open { display:flex; position:absolute; top:88px; left:-20px; right:-20px; flex-direction:column; align-items:stretch; padding:16px 20px 24px; gap:8px; background:#fff; border-bottom:1px solid var(--line); font-size:20px; }
  .mobile-nav a { min-height:52px; }
  .hero-section { padding-top:36px; padding-bottom:60px; }
- .hero-copy h1 { font-size:clamp(42px,10.8vw,52px); line-height:1.12; letter-spacing:-.045em; margin:24px 0; }
+ .hero-copy h1 { font-size:clamp(44px,11.7vw,56px); line-height:1.12; letter-spacing:-.045em; margin:24px 0; }
  .hero-copy h1 br { display:none; }
  .hero-copy-body { font-size:19px; }
  .hero-philosophy { font-size:17px; margin:20px 0 24px; }
@@ -147,7 +149,7 @@
  .fleet-launch-shell { gap:32px; }
  .fleet-launch-meta { margin-bottom:20px; gap:14px; }
  .fleet-showcase-name { font-size:25px; margin-bottom:24px; }
- .fleet-launch[data-product="reviews-engine"] .fleet-launch-copy h2 { font-size:38px; }
+
  .fleet-launch-copy h2 { line-height:1.15; }
  .fleet-showcase-body { font-size:18px; line-height:1.65; margin-top:22px; }
  .fleet-showcase-why { font-size:16px; }
@@ -181,3 +183,20 @@
  .policy-content { margin-top:36px; }
  .policy-content p { font-size:17px; }
 }
+
+/* Native product typography: Portrait display stack and shared Manrope interface face. */
+.hero-copy h1,.fleet-launch[data-product="portrait"] h2,.studio-intro h2,.contact-copy h2,.case-portrait h1,.case-portrait h2,.work-feature-portrait h2 { font-family:var(--editorial); font-weight:400; letter-spacing:-.042em; font-feature-settings:"kern" 1,"liga" 1; text-rendering:optimizeLegibility; }
+.hero-copy h1 { line-height:1.02; }
+.etchr-product-lockup .fleet-showcase-name { font-family:var(--editorial); font-size:44px; font-weight:400; }
+.fleet-launch-copy h2 { grid-row:3 / span 5; }
+.reviews-product-lockup,.property-product-lockup { grid-column:1/-1; display:flex; gap:20px; align-items:center; margin-bottom:32px; }
+.reviews-product-lockup > img { width:66px; height:80px; object-fit:contain; }
+.reviews-product-lockup .fleet-showcase-name { margin:0; font-size:32px; text-transform:uppercase; font-weight:800; color:#0b1736; letter-spacing:-.05em; }
+.reviews-product-lockup .fleet-showcase-name span { color:#D4A64A; }
+.fleet-launch-meta { order:0; }
+.fleet-showcase-name { font-size:34px; }
+.fleet-launch[data-product="signal"] { background:#080a0d; }
+.site-footer-shell { padding-top:0; }
+.footer-link-group strong,.section-eyebrow,.product-index,.eyebrow-pill,.portrait-lead-caption { font-size:14px; }
+@media(max-width:1000px) { .fleet-launch-copy h2 { grid-row:auto; } }
+@media(max-width:600px) { .hero-portrait { padding:6px; border-radius:40px; } .hero-portrait .portrait-comparison { border-radius:32px; } .hero-copy-body,.hero-philosophy { font-size:18px; } .etchr-product-lockup .fleet-showcase-name { font-size:36px; } .reviews-product-lockup { gap:14px; } .reviews-product-lockup .fleet-showcase-name { font-size:26px; } .reviews-product-lockup > img { width:52px; height:64px; } .section-eyebrow { letter-spacing:.045em; } }

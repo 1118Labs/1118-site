@@ -1,4 +1,4 @@
-import decision from '../assets/showcase/property-insights/current-synthetic-ready-context.png';
+import house from '../assets/showcase/property-insights/product-showroom-home.png';
 import propertyMark from '../assets/showcase/property-insights/brand/property-insights-mark.png';
 import './PropertyProof.css';
 
@@ -9,13 +9,25 @@ export function PropertyBrand() {
   </span>;
 }
 
+// Ported from the current PI public ProductFrame and property-to-price composition.
+// The scenario is synthetic; intentionally omit the example street address.
 export default function PropertyProof() {
   return <figure className="pi-proof">
-    <div className="pi-proof-heading"><PropertyBrand /><span>Actual product interface</span></div>
-    <p className="pi-proof-scroll-hint">Scroll horizontally to inspect the product view.</p>
-    <div className="pi-proof-window" role="region" tabIndex={0} aria-label="Property Insights product screenshot" aria-describedby="pi-proof-description">
-      <img src={decision} width="1024" height="1068" alt="Actual Property Insights approved synthetic request: biweekly house cleaning, a $150 manual starting recommendation, next action, house facts, fields marked Needs review, and signals to confirm scope and access before quoting." loading="lazy" decoding="async" />
+    <div className="pi-product-frame">
+      <div className="pi-frame-bar"><span><i aria-hidden="true" />Synthetic example</span><span className="pi-ready">Ready to quote</span></div>
+      <div className="pi-product-grid">
+        <div className="pi-house"><img src={house} width="1536" height="1024" alt="House image from Property Insights’ public product showroom, used in this synthetic example" loading="lazy" decoding="async" />
+          <div className="pi-house-facts"><span>Property found</span><p>3 bed · 2 bath · 1,640 sq ft</p></div>
+        </div>
+        <div className="pi-request">
+          <p className="pi-request-label">Biweekly home cleaning</p>
+          <h3>Start at $150</h3>
+          <p>The company minimum sets the starting price. The recurring schedule and home details are ready for a final check.</p>
+          <dl><div><dt>Estimated work</dt><dd>2.3–3.0 cleaner-hours</dd></div><div><dt>Suggested crew</dt><dd>2 cleaners</dd></div></dl>
+          <div className="pi-before-send"><strong>Before you send it</strong><p>Review access and pet notes, then finish the quote in Jobber.</p></div>
+        </div>
+      </div>
     </div>
-    <figcaption id="pi-proof-description"><span>Actual product interface · Approved synthetic example</span><a href={decision} target="_blank" rel="noreferrer">Inspect the product view <span aria-hidden="true">↗</span></a></figcaption>
+    <figcaption><span>Property Insights product showroom · Synthetic example</span><a href="https://insights.1118.io/#product" target="_blank" rel="noreferrer">Explore the product ↗</a></figcaption>
   </figure>;
 }

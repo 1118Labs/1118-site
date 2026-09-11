@@ -10,7 +10,7 @@ import {
 import "./App.css";
 import PortraitStory from "./components/PortraitStory";
 import ReviewsProof from "./components/ReviewsProof";
-import PropertyProof from "./components/PropertyProof";
+import PropertyProof, { PropertyBrand } from "./components/PropertyProof";
 import SignalWorkstation from "./components/SignalWorkstation";
 import CaseStudies from "./components/CaseStudies";
 import ContactPanel from "./components/ContactPanel";
@@ -18,8 +18,9 @@ import { productStatus } from "./content/product-status";
 import { caseMeta } from "./content/case-studies";
 import "./premium.css";
 
+import reviewsShield from "./assets/showcase/reviews-engine/reviews-engine-shield-primary.png";
 import appStoreBadge from "./assets/showcase/etchr/download-on-the-app-store.svg";
-import etchrAppIcon from "./assets/showcase/portrait/portrait-app-icon.png";
+import etchrAppIcon from "./assets/showcase/portrait/portrait-native-icon.png";
 import PortraitComparison from "./components/PortraitComparison";
 
 const APP_STORE_URL = "https://apps.apple.com/us/app/etchr-portraits/id6785615752";
@@ -42,15 +43,15 @@ const products: Product[] = [
     slug: "portrait",
     name: "Portrait",
     status: productStatus.portrait,
-    headline: "Look like you\nbelong in print.",
-    description: "Turn one clear photograph into a refined editorial portrait made for profiles, websites, social media, and print.",
+    headline: "Editorial portraits\nfrom real photographs.",
+    description: "Portrait turns one clear photograph into a refined editorial portrait, ready for profiles, websites, social media, and print.",
     link: { href: APP_STORE_URL, label: "View on the App Store" },
   },
   {
     slug: "reviews-engine",
     name: "Reviews Engine",
     status: productStatus["reviews-engine"],
-    headline: "Turn great customer experiences\ninto a reputation people can see.",
+    headline: "Turn customer reviews\ninto a better reputation.",
     description: "A live platform for collecting, moderating, and publishing customer reviews.",
     link: { href: REVIEWS_ENGINE_PUBLIC_PROOF_URL, label: "See Reviews Engine in use" },
     note: "Reviews from the live SkyPups installation.",
@@ -60,16 +61,16 @@ const products: Product[] = [
     name: "Property Insights",
     status: productStatus["property-insights"],
     link: { href: "https://insights.1118.io", label: "Explore Property Insights" },
-    headline: "Know the property.\nQuote with context.",
-    description: "Property intelligence for service businesses—turning incoming requests into clearer estimates and better operating decisions.",
+    headline: "Turn service requests\ninto quote-ready property intelligence.",
+    description: "Property context, risk, and recommendations assembled before the estimate begins.",
   },
   {
     slug: "signal",
     name: "Signal",
     status: productStatus.signal,
-    headline: "Finding the trade\nbefore the market does.",
+    headline: "Quantitative intelligence\nfor commodities trading.",
     description:
-      "1118 built Signal to surface compelling commodities trade ideas through quantitative analysis, visualization, and machine learning.",
+      "1118 designed, built, and launched Signal, a quantitative commodities analytics platform created to uncover compelling trade ideas using data, quantitative analysis, and machine learning.",
     note: "Signal was used in live markets, licensed commercially, and later acquired.",
   },
 ];
@@ -265,6 +266,10 @@ function ProductSection() {
                     <img alt="" height="512" src={etchrAppIcon} width="512" />
                     <p className="fleet-showcase-name">{product.name}</p>
                   </div>
+                 ) : product.slug === "reviews-engine" ? (
+                  <div className="reviews-product-lockup"><img src={reviewsShield} width="470" height="575" alt="" /><p className="fleet-showcase-name">Reviews <span>Engine</span></p></div>
+                ) : product.slug === "property-insights" ? (
+                  <div className="property-product-lockup"><PropertyBrand /></div>
                 ) : (
                   <p className="fleet-showcase-name">{product.name}</p>
                 )}
@@ -421,7 +426,6 @@ function NotFoundPage() {
 function Footer() {
   return (
     <footer className="site-footer">
-      <div className="site-footer-top section-shell"><p>Most of what we build is our own.</p><a className="footer-conversation" href="/#contact">Let’s talk <span aria-hidden="true">↗</span></a></div>
       <div className="site-footer-shell">
         <div className="site-footer-copy">
           <BrandLockup compact />

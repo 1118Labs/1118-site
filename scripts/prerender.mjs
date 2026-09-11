@@ -22,7 +22,7 @@ const routes = {
 const products = [
   {
     '@type': 'SoftwareApplication', '@id': `${origin}/#portrait`, name: 'Portrait',
-    description: 'Turn one clear photograph into a refined editorial portrait made for profiles, websites, social media, and print.',
+    description: 'Portrait turns one clear photograph into a refined editorial portrait, ready for profiles, websites, social media, and print.',
     applicationCategory: 'MultimediaApplication', url: 'https://getportrait.ai/',
     downloadUrl: 'https://apps.apple.com/us/app/etchr-portraits/id6785615752',
     creator: organization, creativeWorkStatus: 'Live',
@@ -35,13 +35,13 @@ const products = [
   },
   {
     '@type': 'SoftwareApplication', '@id': `${origin}/#property-insights`, name: 'Property Insights',
-    description: 'Property intelligence for service businesses—turning incoming requests into clearer estimates and better operating decisions.',
+    description: 'Property context, risk, and recommendations assembled before the estimate begins.',
     applicationCategory: 'BusinessApplication', url: `${origin}/#property-insights`,
     creator: organization, creativeWorkStatus: 'Early access',
   },
   {
     '@type': 'CreativeWork', '@id': `${origin}/#signal`, name: 'Signal',
-    description: '1118 built Signal to surface compelling commodities trade ideas through quantitative analysis, visualization, and machine learning. Signal was used in live markets, licensed commercially, and later acquired.',
+    description: '1118 designed, built, and launched Signal, a quantitative commodities analytics platform created to uncover compelling trade ideas using data, quantitative analysis, and machine learning. Signal was used in live markets, licensed commercially, and later acquired.',
     url: `${origin}/work/signal`, creator: organization, creativeWorkStatus: 'Built, licensed, and acquired',
   },
 ];

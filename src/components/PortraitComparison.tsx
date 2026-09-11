@@ -3,16 +3,19 @@ import laurieSource from '../assets/showcase/portrait/laurie-source.jpg';
 import laurieResult from '../assets/showcase/portrait/laurie-result.webp';
 import eliseSource from '../assets/showcase/portrait/elise-source.webp';
 import eliseResult from '../assets/showcase/portrait/elise-result.webp';
+import sloaneSource from '../assets/showcase/portrait/sloane-source.webp';
+import sloaneResult from '../assets/showcase/portrait/sloane-result.webp';
 import './PortraitComparison.css';
 
 interface PortraitComparisonProps {
   className?: string;
   interactive?: boolean;
   priority?: boolean;
-  subject?: 'laurie' | 'elise';
+  subject?: 'laurie' | 'elise' | 'sloane';
 }
 
 const portraits = {
+  sloane: { name: 'Sloane', source: sloaneSource, result: sloaneResult, width: 1122, height: 1402, transform: 'translate(0.339%, 9.223%) rotate(0.278deg) scale(1.2674)' },
   laurie: { name: 'Laurie V.', source: laurieSource, result: laurieResult, width: 768, height: 1024, transform: 'translate(-0.837%, 3.078%) rotate(0.215deg) scale(1.0339)' },
   elise: { name: 'Elise', source: eliseSource, result: eliseResult, width: 1122, height: 1402, transform: 'translate(2.499%, 7.171%) rotate(-0.579deg) scale(1.1304)' },
 };
@@ -93,7 +96,7 @@ export default function PortraitComparison({ className = '', interactive = true,
           aria-orientation="horizontal" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(position)}
           aria-valuetext={`${Math.round(position)}% finished portrait, ${100 - Math.round(position)}% original photo`}
           aria-describedby={instructions} onKeyDown={keyboard}>
-          <span aria-hidden="true">‹</span><span aria-hidden="true">›</span>
+          <span className="portrait-native-handle" aria-hidden="true"><i /></span>
         </div>
         <span className="portrait-comparison-instructions" id={instructions}>Drag horizontally to compare. Use arrow keys to adjust, Home for the original photo, or End for the finished portrait.</span>
       </>}

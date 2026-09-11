@@ -1,8 +1,11 @@
 import type { ReactNode } from 'react';
+import rowanPortrait from '../assets/showcase/portrait/rowan-result.webp';
+import theoPortrait from '../assets/showcase/portrait/theo-result.webp';
+import grahamPortrait from '../assets/showcase/portrait/graham-result.webp';
 import PortraitStory from './PortraitStory';
 import SignalWorkstation from './SignalWorkstation';
 import portraitResult from '../assets/showcase/portrait/elise-result.webp';
-import portraitIcon from '../assets/showcase/portrait/portrait-app-icon.png';
+import portraitIcon from '../assets/showcase/portrait/portrait-native-icon.png';
 import signalOverview from '../assets/showcase/signal/signal-archival-interface.png';
 import signalHistory from '../assets/showcase/signal/signal-historical-data-2019.png';
 import signalStructures from '../assets/showcase/signal/signal-manage-structures-2019.png';
@@ -45,8 +48,8 @@ function WorkIndex() {
         <a className="work-feature-link case-shell" href="/work/portrait">
           <div className="work-feature-copy">
             <p className="case-kicker">Portrait / {productStatus.portrait}</p>
-            <h2>Look like you<br />belong in print.</h2>
-            <p>Turn one clear photograph into a refined editorial portrait made for profiles, websites, social media, and print.</p>
+            <h2>Editorial portraits<br />from real photographs.</h2>
+            <p>Portrait turns one clear photograph into a refined editorial portrait, ready for profiles, websites, social media, and print.</p>
             <span className="case-text-link">Explore Portrait <span aria-hidden="true">→</span></span>
           </div>
           <div className="work-feature-image"><img src={portraitResult} width="1024" height="1024" alt="Elise shown as a finished Portrait editorial illustration" loading="lazy" decoding="async" /></div>
@@ -56,8 +59,8 @@ function WorkIndex() {
         <a className="work-feature-link case-shell" href="/work/signal">
           <div className="work-feature-copy">
             <p className="case-kicker">Signal / {productStatus.signal}</p>
-            <h2>Finding the trade<br />before the market does.</h2>
-            <p>1118 built Signal to surface compelling commodities trade ideas through quantitative analysis, visualization, and machine learning.</p>
+            <h2>Quantitative intelligence<br />for commodities trading.</h2>
+            <p>1118 designed, built, and launched Signal, a quantitative commodities analytics platform created to uncover compelling trade ideas using data, quantitative analysis, and machine learning.</p>
             <span className="case-text-link">Explore Signal <span aria-hidden="true">→</span></span>
           </div>
           <div className="work-feature-image"><img src={signalOverview} width="2167" height="1046" alt="Authentic Signal seasonal and correlation analysis interface from 2019" loading="lazy" decoding="async" /></div>
@@ -78,8 +81,8 @@ function PortraitCase() {
       <a className="case-back" href="/work">← Selected work</a>
       <p className="case-kicker">01 / {productStatus.portrait}</p>
       <div className="case-product-name"><img src={portraitIcon} width="64" height="64" alt="" /><span>Portrait</span></div>
-      <h1>Look like you<br />belong in print.</h1>
-      <p className="case-intro">Turn one clear photograph into a refined editorial portrait made for profiles, websites, social media, and print.</p>
+      <h1>Editorial portraits<br />from real photographs.</h1>
+      <p className="case-intro">Portrait turns one clear photograph into a refined editorial portrait, ready for profiles, websites, social media, and print.</p>
     </header>
     <figure className="case-portrait-hero case-shell">
       <img src={portraitResult} alt="A finished Portrait of Elise, with detailed editorial line work" width="1024" height="1024" decoding="async" fetchPriority="high" />
@@ -101,8 +104,9 @@ function PortraitCase() {
     <section className="case-experience case-shell" aria-labelledby="portrait-experience-title">
       <p className="case-kicker">05 / Product experience</p>
       <h2 id="portrait-experience-title">Product experience.</h2>
-      <p className="case-intro">The source photograph, transformation, and completed portrait, shown in the current published App Store screenshots.</p>
+      <p className="case-intro">The source photograph, transformation, and finished profile formats from Portrait.</p>
       <PortraitStory variant="case-study" />
+      <div className="case-portrait-gallery">{[{name:'Rowan',src:rowanPortrait},{name:'Theo',src:theoPortrait},{name:'Graham',src:grahamPortrait}].map(item=><figure key={item.name}><a href="https://getportrait.ai/gallery" target="_blank" rel="noreferrer"><img src={item.src} width="1024" height="1024" alt={`${item.name}, approved Portrait studio example`} loading="lazy" decoding="async" /></a><figcaption>{item.name} · Studio example</figcaption></figure>)}</div>
     </section>
     <div className="case-shell">
       <CaseSection number="06" label="Outcome" title="Available on the App Store.">
@@ -123,8 +127,8 @@ function SignalCase() {
     <header className="case-hero case-shell">
       <a className="case-back" href="/work">← Selected work</a>
       <p className="case-kicker">01 / Signal · {productStatus.signal}</p>
-      <h1>Finding the trade<br />before the market does.</h1>
-      <p className="case-intro">1118 built Signal to surface compelling commodities trade ideas through quantitative analysis, visualization, and machine learning.</p><p className="case-intro">Signal was used in live markets, licensed commercially, and later acquired.</p>
+      <h1>Quantitative intelligence<br />for commodities trading.</h1>
+      <p className="case-intro">1118 designed, built, and launched Signal, a quantitative commodities analytics platform created to uncover compelling trade ideas using data, quantitative analysis, and machine learning.</p><p className="case-intro">Signal was used in live markets, licensed commercially, and later acquired.</p>
     </header>
     <div className="case-signal-hero"><SignalWorkstation /></div>
     <div className="case-shell">

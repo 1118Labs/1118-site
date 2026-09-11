@@ -1,38 +1,34 @@
-import sourceScreen from '../assets/showcase/portrait/app-store-source.webp';
-import transformationScreen from '../assets/showcase/portrait/app-store-transformation.webp';
-import finishedScreen from '../assets/showcase/portrait/app-store-finished.webp';
+import { PlatformIconBadge } from './PortraitPlatformIcon';
+import PortraitComparison from './PortraitComparison';
+import source from '../assets/showcase/portrait/sloane-source.webp';
+import square from '../assets/showcase/portrait/sloane-square-1024.png';
+import profile from '../assets/showcase/portrait/sloane-profile-640x800.png';
+import circle from '../assets/showcase/portrait/sloane-circle-640.png';
+import story from '../assets/showcase/portrait/sloane-story-540x960.png';
 import './PortraitStory.css';
 
-type PortraitStoryProps = {
-  className?: string;
-  variant?: 'chapter' | 'case-study';
-};
-
-/** Published App Store screenshots, preserved in full without simulated controls. */
-export default function PortraitStory({ className = '', variant = 'chapter' }: PortraitStoryProps) {
-  return (
-    <figure className={`portrait-story portrait-story--${variant} ${className}`}>
-      <div className="portrait-story-screens">
-        <figure className="portrait-story-screen portrait-story-screen-source">
-          <figcaption><span>01</span> Source photograph</figcaption>
-          <a href={sourceScreen} target="_blank" rel="noreferrer" aria-label="View full-size source photograph App Store screenshot">
-            <img src={sourceScreen} alt="Published Portrait App Store screen: Laurie's original photograph above the real Choose Photo and Take Photo controls" width={1284} height={2778} loading="lazy" decoding="async" />
-          </a>
-        </figure>
-        <figure className="portrait-story-screen portrait-story-screen-transformation">
-          <figcaption><span>02</span> Transformation</figcaption>
-          <a href={transformationScreen} target="_blank" rel="noreferrer" aria-label="View full-size transformation App Store screenshot">
-            <img src={transformationScreen} alt="Published Portrait App Store screen: the same photograph compared with its editorial portrait" width={1284} height={2778} loading="lazy" decoding="async" />
-          </a>
-        </figure>
-        <figure className="portrait-story-screen portrait-story-screen-finished">
-          <figcaption><span>03</span> Finished portrait</figcaption>
-          <a href={finishedScreen} target="_blank" rel="noreferrer" aria-label="View full-size finished portrait and Save and Share App Store screenshot">
-            <img src={finishedScreen} alt="Published Portrait App Store screen: the complete finished portrait with actual Save to Photos, Share, and Portrait Tools controls" width={1284} height={2778} loading="lazy" decoding="async" />
-          </a>
-        </figure>
-      </div>
-      <figcaption className="portrait-story-caption">App Store screenshots · Laurie · Studio example</figcaption>
-    </figure>
-  );
+// Port of Portrait WorkflowStorySection / PortraitImage / PortraitPack / CropPreview.
+// Uses the original Sloane export family, not reconstructed App Store screenshots.
+export default function PortraitStory({ variant = 'homepage' }: { variant?: 'homepage' | 'case-study' }) {
+  return <div className={`portrait-story portrait-story-${variant}`} data-subject="sloane">
+    <div className="portrait-story-panels">
+      <section className="portrait-workflow-panel">
+        <div className="portrait-workflow-heading"><span>01</span><h3>Start with one clear photo.</h3></div>
+        <div className="portrait-native-plate"><img src={source} width="1122" height="1402" alt="Sloane, original photograph from Portrait’s approved studio gallery" loading="lazy" decoding="async" style={{transform:'translate(0.339%, 9.223%) rotate(0.278deg) scale(1.2674)'}} /></div>
+      </section>
+      <section className="portrait-workflow-panel">
+        <div className="portrait-workflow-heading"><span>02</span><h3>Portrait redraws it as an editorial portrait.</h3></div>
+        <PortraitComparison subject="sloane" className="portrait-workflow-comparison" />
+      </section>
+      <section className="portrait-workflow-panel portrait-pack-panel">
+        <div className="portrait-workflow-heading"><span>03</span><h3>Download profile-ready images.</h3></div>
+        <div className="portrait-pack-master"><img src={square} width="1024" height="1024" alt="Sloane, finished editorial portrait" loading="lazy" decoding="async" /></div>
+        <div className="portrait-native-formats">
+          {[{src:profile,label:'Profile',width:640,height:800},{src:circle,label:'Circle',width:640,height:640},{src:story,label:'Story',width:540,height:960}].map(item=><figure key={item.label} className={`portrait-format portrait-format-${item.label.toLowerCase()}`}><img src={item.src} width={item.width} height={item.height} alt={`Sloane’s original Portrait ${item.label.toLowerCase()} export`} loading="lazy" decoding="async"/><figcaption>{item.label}</figcaption></figure>)}
+        </div>
+        <div className="portrait-platforms">{(['linkedin','instagram','tiktok','x'] as const).map(platform=><PlatformIconBadge key={platform} platform={platform} />)}</div>
+      </section>
+    </div>
+    <p className="portrait-story-caption">Sloane · Studio example <a href="https://getportrait.ai/gallery" target="_blank" rel="noreferrer">View gallery ↗</a></p>
+  </div>;
 }
