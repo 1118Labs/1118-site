@@ -1,0 +1,66 @@
+{
+  "created": "2026-09-11",
+  "subject": "Sloane — approved seeded studio example, not customer submission",
+  "records": [
+    {
+      "source": "/Users/stevehole/.codex/.chatgpt-projects/g-p-69f328f7768c819180128324b15b15f4/portrait-build23-payment-forensics/public/etchr/demo-portraits/female-artist-09/source-lossless.webp",
+      "sourceSha256": "35f355ce7b8669b632a390b7f37e16cfd8b595fa9bdb275c7cc61f0e50c23c5c",
+      "sourceWidth": 1122,
+      "sourceHeight": 1402,
+      "target": "src/assets/showcase/portrait/sloane-source.webp",
+      "width": 900,
+      "height": 1125,
+      "bytes": 93656,
+      "sha256": "e41da7a1c53fcb8a7b2ac0f4bbf0b4429ea9b89836393d02b877f824ebf5b09a",
+      "transformation": "Proportional resize only where noted; WebP quality94; no cropping, compositing, face edits or generation."
+    },
+    {
+      "source": "/Users/stevehole/.codex/.chatgpt-projects/g-p-69f328f7768c819180128324b15b15f4/portrait-build23-payment-forensics/public/etchr/demo-portraits/female-artist-09/etchr-lossless.webp",
+      "sourceSha256": "2f623b23b5f32da796ba7ab016c2998cdb2f1bfa7e85bae1a365538442156eeb",
+      "sourceWidth": 1024,
+      "sourceHeight": 1024,
+      "target": "src/assets/showcase/portrait/sloane-result.webp",
+      "width": 1024,
+      "height": 1024,
+      "bytes": 400688,
+      "sha256": "69eb183d61a1ca681762e95a9980064b67a9e88a43bd9c92786cb4561cd522a2",
+      "transformation": "Proportional resize only where noted; WebP quality94; no cropping, compositing, face edits or generation."
+    },
+    {
+      "source": "/Users/stevehole/.codex/.chatgpt-projects/g-p-69f328f7768c819180128324b15b15f4/portrait-build23-payment-forensics/public/etchr/home/export-examples/sloane-profile-640x800.png",
+      "sourceSha256": "cb8cb7ccfee4d4a3e14d8ad4177691ad05d8e7ed2fba9bd2d71dafe1ebc5cf21",
+      "sourceWidth": 640,
+      "sourceHeight": 800,
+      "target": "src/assets/showcase/portrait/sloane-profile.webp",
+      "width": 360,
+      "height": 450,
+      "bytes": 64182,
+      "sha256": "87f4c50da6dfd66d0dd4430baaf37093855a5ff259aa73c39d09086b3ba89a4f",
+      "transformation": "Proportional resize; WebP quality92; no cropping, compositing, face edits or generation."
+    },
+    {
+      "source": "/Users/stevehole/.codex/.chatgpt-projects/g-p-69f328f7768c819180128324b15b15f4/portrait-build23-payment-forensics/public/etchr/home/export-examples/sloane-circle-640.png",
+      "sourceSha256": "4e62c1d31c7e575cdfae7f1721711b3d80c9d8ede5b0ed1a9736ea7b992c620f",
+      "sourceWidth": 640,
+      "sourceHeight": 640,
+      "target": "src/assets/showcase/portrait/sloane-circle.webp",
+      "width": 320,
+      "height": 320,
+      "bytes": 31564,
+      "sha256": "70860729076fca54301df13656f82d8ac2747459c04e22158c261a4d942d6c6a",
+      "transformation": "Proportional resize; WebP quality92; no cropping, compositing, face edits or generation."
+    },
+    {
+      "source": "/Users/stevehole/.codex/.chatgpt-projects/g-p-69f328f7768c819180128324b15b15f4/portrait-build23-payment-forensics/public/etchr/home/export-examples/sloane-story-540x960.png",
+      "sourceSha256": "9deecfe9fc60bdcddabab61d2d08d5d638665a2ffcf22ff32a0b384edae498cd",
+      "sourceWidth": 540,
+      "sourceHeight": 960,
+      "target": "src/assets/showcase/portrait/sloane-story.webp",
+      "width": 270,
+      "height": 480,
+      "bytes": 63240,
+      "sha256": "27f03eb79ea73b27df0457c5a18061647e5eaf73e5b9e4903373b697d477bfaa",
+      "transformation": "Proportional resize; WebP quality92; no cropping, compositing, face edits or generation."
+    }
+  ]
+}

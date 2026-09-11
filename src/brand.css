@@ -1,0 +1,16 @@
+:root {
+  --paper:#FFFFFF;
+  --mist:#F6F8FA;
+  --navy:#192E43;
+  --blue:#2A6F9E;
+  --ink:var(--navy);
+  --ink-soft:#526475;
+  --line:#D6DEE5;
+  --editorial:Didot,Georgia,serif;
+  --body-font:Manrope,system-ui,sans-serif;
+  --display-product:clamp(52px,4.4vw,64px);
+  --display-section:clamp(52px,4.4vw,64px);
+  --shell:min(1480px,calc(100% - 96px));
+  --radius:18px;
+  --field-radius:8px;
+}

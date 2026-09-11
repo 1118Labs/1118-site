@@ -1,0 +1,20 @@
+# 1118
+
+> 1118 creates original software from problems we understand firsthand and ideas we believe should exist. Most of what we build is our own. We partner selectively when the problem is meaningful and the fit is right.
+
+Canonical website: https://1118.io/
+
+## Products and work
+- [Portrait](https://1118.io/work/portrait): A 1118 product that turns a clear photograph into an editorial portrait, ready for profiles, websites, social media, and print.
+- [Reviews Engine](https://1118.io/#reviews-engine): Software for collecting, moderating, and publishing customer reviews.
+- [Property Insights](https://1118.io/#property-insights): Property context, risk, and recommendations assembled before an estimate begins.
+- [Signal](https://1118.io/work/signal): Commodities analytics software designed and built by 1118, used in live markets, licensed commercially, and later acquired.
+- [Selected work](https://1118.io/work): Portrait and Signal case studies.
+
+## Contact and policies
+- [Contact](https://1118.io/#contact): Company inquiries through the contact form.
+- [Support](https://1118.io/support)
+- [Privacy](https://1118.io/privacy)
+- [Security](https://1118.io/security)
+
+This is a plain-language index of the public website, not an additional source of product claims.
