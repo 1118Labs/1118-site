@@ -1,39 +1,41 @@
-# Content and media provenance
+# Content and media provenance — final launch continuation
 
-Internal record for the V1 launch candidate.
+Reviewed September 11, 2026. This site is a protected founder-review candidate. Product repositories and systems were inspected read-only; no product behavior, database, OAuth, hosting or releases changed.
 
-| Product | Public framing | Media basis | Boundary |
-| --- | --- | --- | --- |
-| Etchr | Live; available on the App Store | Steve-supplied Laurie comparison plus Elise and Avery seeded Etchr demo portraits | Confirm spokesmodel release and cross-site publication scope before Production |
-| Reviews Engine | Live | Interactive carousel using the four configured SkyPups demonstration review cards | Confirm permission for the exact photographs and demonstration testimonials to appear on the 1118 company site before Production |
-| Property Insights | In development | Authentic current product interface populated with a local simulation fixture and visibly labeled as demonstration data | Do not imply a real customer, property, Jobber request, or live operational result |
-| Signal | Built, licensed, and acquired | Authentic Steve-supplied archival Signal interface from 2019 | Confirm transaction-publicity, screenshot rights, and publishability of visible structure and metric identifiers before Production; do not disclose acquirer, terms, client data, or exact trading configuration |
-| Playbook | First post-launch historical case study; not public in V1 | Authentic sizzle reel and approved stills only | Do not call launched, acquired, commercially operating, or a speculative mood board; clear third-party media rights first |
+| Product | Public status | Authentic evidence | Limits |
+|---|---|---|---|
+| Portrait | Live | Current getportrait.ai Laurie V. pair and registered comparison transforms; current black P icon; Elise gallery result and Avery export | Apple URL retains its factual historical slug/listing identity. Public 1118 text uses Portrait. Existing cross-site rights review remains part of founder Production authorization. |
+| Reviews Engine | Live | Four exact currently public SkyPups testimonials and associated photographs: Ernestine/Jennifer, Lola/AJ, Griffey/Skyler, Pippin/Bill | Quotes/ratings copied without fabrication or truncation. Public source provenance is not a new customer release. |
+| Property Insights | Early access | Native crop of the August 25 actual synthetic Riley Test HOLD interface: request, recommendation, next action, missing facts | The source screenshot's exact SHA was not recorded. It is explicitly a synthetic example, not a fresh September 11 capture or customer result. Current read-only live review corroborated withholding a quote when scope requires verification. |
+| Signal | Built · Licensed · Acquired | Steve-supplied 2019 interface, unchanged | Historical authorized story only; no invented performance, acquirer, terms, or device UI. |
 
-The protected Preview uses Steve’s approved product wording. This record is evidence of editorial discipline, not legal clearance.
+## Portrait
 
-## Asset record
+Source assets copied from the current product worktree `portrait-build23-payment-forensics/public`. Hero uses current live Laurie source/result registered to the same 4:5 stage, with exact source transform `translate(-0.837%, 3.078%) rotate(0.215deg) scale(1.0339)` and identity result. Elise is a separate current public studio example. Output WebPs were re-encoded at quality 90 with original dimensions; factual image content and geometry unchanged. Full original/output hashes are in the founder evidence package.
 
-### Etchr
+Official current public domain: https://getportrait.ai/. Verified Apple link: https://apps.apple.com/us/app/etchr-portraits/id6785615752. Apple still displayed its legacy title during this audit; the company site does not claim that the listing has been renamed.
 
-- Laurie comparison: `hero-source-1118.png` SHA-256 `15fc0d34…3481`; `hero-result-1118.png` SHA-256 `3df68513…783b`. The same Laurie subject appears on the current live Etchr homepage. That observation is product-provenance evidence, not a release or cross-site publication clearance.
-- Elise: `portrait-elise.webp` SHA-256 `39982fd8…084a`. The Etchr repository records the source entry as `female-older-studio-demo`, `seeded_demo`, consent status `seed`, approved in-product, and not a customer submission.
-- Avery: `export-avery.webp` SHA-256 `9a8b6da6…6a67`. The Etchr repository records the source entry as `windowlight-female-studio-demo`, `seeded_demo`, consent status `seed`, approved in-product, and not a customer submission.
-- The Etchr repository’s approval fields do not by themselves establish permission for publication on 1118.io. The Production rights gate remains open.
+## Reviews Engine
 
-### Reviews Engine
+Exact quotes, names, locations and ratings are recorded in `src/content/reviews.ts`. Verified from the actual live https://www.skypupstreats.com/reviews widget on September 11. Source photo object keys under the public SkyPups review-image collection:
 
-- The carousel uses `mochi-erin.jpg`, `juniper-luis.jpg`, `scout-priya.jpg`, and `bear-chelsea.jpg`, with SHA-256 prefixes `9559d528`, `18d002b2`, `85883653`, and `919d4684`.
-- The cards are publicly labeled as demonstration reviews. Reviews Engine’s live product status was verified against its public product site and a live SkyPups installation; that does not clear republication rights for these exact 1118 carousel assets.
+- Ernestine: `1780962286561-img_3670.jpeg`
+- Lola: `1779247752230-img_3723.jpeg`
+- Griffey: `1779248044601-img_3667.jpeg`
+- Pippin: `1780961924422-img_3671.jpeg`
 
-### Property Insights
+Photographs were copied or proportionally resized; original EXIF orientation retained where applicable. No GPS metadata was present in copied files. The prior seed daycare/grooming examples remain in Git history but are not presented on the new homepage.
 
-- Source product state: exact read-only archive of Property Insights commit `4da04853f9199607f5f9dcfb98f17712726b2307`, rendered locally with the repository’s `phase9Demo=1` simulation fixture. No live Jobber or customer data was used.
-- Desktop decision crop: `operator-decision-current-head.jpg` SHA-256 `2afb8f89…613a`; mobile decision crop: `operator-decision-current-head-mobile.jpg` SHA-256 `0a993cb5…721f`.
-- Desktop facts crop: `property-facts-current-head.jpg` SHA-256 `e5f7f151…adb0`; mobile facts crop: `property-facts-current-head-mobile.jpg` SHA-256 `feb0f6b6…65f7`.
-- The interface itself visibly says `Local demo` and `Local demo data only. Not a live Jobber request.` The public caption uses the shorter `Demonstration data` disclosure.
+## Property Insights
 
-### Signal
+`actual-synthetic-hold-decision.png` is the top 1024×630 native crop of the actual synthetic `tmp-hold-full.png` source (x1536, y0), captured August 25. It excludes the real queue and contains synthetic request details only. No diagram or product UI was reconstructed, stretched, generated, or edited. Current live EARLY ACCESS positioning and Jobber final-quote boundary were read directly from https://insights.1118.io. The site provides an explicit synthetic caption and full-image link.
 
-- `signal-archival-interface.png` SHA-256 `64fc6ea1…2968` is byte-identical to Steve’s supplied `Screen Shot 2019-05-24 at 10.27.00 AM.png`.
-- The homepage does not reconstruct the interface or make a trading-performance claim. Publication and transaction-publicity clearance remain open Production gates.
+## Signal
+
+`signal-archival-interface.png` remains byte-identical to Steve's `Screen Shot 2019-05-24 at 10.27.00 AM.png`, SHA-256 beginning `64fc6ea1` and ending `2968`. Original interface presented at large desktop scale, scrollable on mobile, with an original-image link. Source archive was not modified.
+
+## Company and deployment
+
+Existing 1118 mark retained. Light/dark exports preserve its exact silhouette; no logo redesign. Social card is company typography and the existing mark, with no generated product proof. Manrope is self-hosted with its OFL license. No paid services or image generation used.
+
+Contact prepares a local mailto draft. It never sends or stores a website submission. Production, 1118.io, Duda, DNS, and backend activation require separate founder authorization. Playbook stays in the preserved historical roadmap, excluded from V1.

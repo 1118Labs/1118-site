@@ -4,11 +4,11 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "rewrites": [
-    { "source": "/privacy", "destination": "/index.html" },
-    { "source": "/terms", "destination": "/index.html" },
-    { "source": "/accessibility", "destination": "/index.html" },
-    { "source": "/support", "destination": "/index.html" },
-    { "source": "/security", "destination": "/index.html" }
+    { "source": "/privacy", "destination": "/privacy/index.html" },
+    { "source": "/terms", "destination": "/terms/index.html" },
+    { "source": "/accessibility", "destination": "/accessibility/index.html" },
+    { "source": "/support", "destination": "/support/index.html" },
+    { "source": "/security", "destination": "/security/index.html" }
   ],
   "headers": [
     {

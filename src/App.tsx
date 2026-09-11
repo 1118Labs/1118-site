@@ -7,27 +7,21 @@ import {
   useMemo,
   useRef,
   useState,
+  useSyncExternalStore,
 } from "react";
 import "./App.css";
 import brandMark from "./assets/brand/1118-mark-blue.png";
 import appStoreBadge from "./assets/showcase/etchr/download-on-the-app-store.svg";
-import etchrAppIcon from "./assets/showcase/etchr/etchr-app-icon-512.png";
-import etchrExport from "./assets/showcase/etchr/export-avery.webp";
-import etchrResult from "./assets/showcase/etchr/hero-result-1118.png";
-import etchrSource from "./assets/showcase/etchr/hero-source-1118.png";
-import etchrPortrait from "./assets/showcase/etchr/portrait-elise.webp";
-import propertyDecision from "./assets/showcase/property-insights/operator-decision-current-head.jpg";
-import propertyDecisionMobile from "./assets/showcase/property-insights/operator-decision-current-head-mobile.jpg";
-import propertyFacts from "./assets/showcase/property-insights/property-facts-current-head.jpg";
-import propertyFactsMobile from "./assets/showcase/property-insights/property-facts-current-head-mobile.jpg";
-import bearChelsea from "./assets/showcase/reviews-engine/cards/bear-chelsea.jpg";
-import juniperLuis from "./assets/showcase/reviews-engine/cards/juniper-luis.jpg";
-import mochiErin from "./assets/showcase/reviews-engine/cards/mochi-erin.jpg";
-import scoutPriya from "./assets/showcase/reviews-engine/cards/scout-priya.jpg";
+import etchrAppIcon from "./assets/showcase/portrait/portrait-app-icon.png";
+import etchrExport from "./assets/showcase/portrait/avery-export.webp";
+import PortraitComparison from "./components/PortraitComparison";
+import etchrPortrait from "./assets/showcase/portrait/elise-result.webp";
+import propertyDecision from "./assets/showcase/property-insights/actual-synthetic-hold-decision.png";
+import { currentSkyPupsReviews } from "./content/reviews";
 import signalInterface from "./assets/showcase/signal/signal-archival-interface.png";
 
 const APP_STORE_URL = "https://apps.apple.com/us/app/etchr-portraits/id6785615752";
-const ETCHR_URL = "https://etchr.ai";
+const PORTRAIT_URL = "https://getportrait.ai";
 const REVIEWS_ENGINE_PUBLIC_PROOF_URL = "https://www.skypupstreats.com/reviews";
 const COMPANY_EMAIL = "hello@1118.io";
 
@@ -37,14 +31,14 @@ type Product = {
   link?: { href: string; label: string };
   name: string;
   note?: string;
-  slug: "etchr" | "reviews-engine" | "property-insights" | "signal";
+  slug: "portrait" | "reviews-engine" | "property-insights" | "signal";
   status: string;
 };
 
 const products: Product[] = [
   {
-    slug: "etchr",
-    name: "Etchr",
+    slug: "portrait",
+    name: "Portrait",
     status: "LIVE",
     headline: "Editorial portraits\nfrom real photographs.",
     description: "One clear photograph becomes a finished editorial portrait pack.",
@@ -57,14 +51,15 @@ const products: Product[] = [
     headline: "Collect, moderate,\nand publish customer reviews.",
     description: "A live system for keeping customer proof current across client sites.",
     link: { href: REVIEWS_ENGINE_PUBLIC_PROOF_URL, label: "See Reviews Engine in use" },
-    note: "Live product shown with demonstration reviews.",
+    note: "Reviews from the live SkyPups installation.",
   },
   {
     slug: "property-insights",
     name: "Property Insights",
-    status: "IN DEVELOPMENT",
+    status: "EARLY ACCESS",
+    link: { href: "https://insights.1118.io", label: "Explore Property Insights" },
     headline: "Turn service requests\ninto quote-ready property intelligence.",
-    description: "An incoming service request, property context, risk, and a recommendation assembled before the estimate begins.",
+    description: "Property facts, scope risks, and a recommended next step—before the team finishes the quote in Jobber.",
   },
   {
     slug: "signal",
@@ -77,48 +72,7 @@ const products: Product[] = [
   },
 ];
 
-const skyPupsReviews = [
-  {
-    id: "skypups-1",
-    image: mochiErin,
-    imagePosition: "50% 30%",
-    name: "Mochi & Erin",
-    location: "Austin, TX",
-    paws: 5,
-    quote:
-      "SkyPups made our shy rescue pup feel like the guest of honor. The staff sent polished updates, the yard was spotless, and Mochi came home calm, tired, and grinning.",
-  },
-  {
-    id: "skypups-2",
-    image: juniperLuis,
-    imagePosition: "50% 42%",
-    name: "Juniper & Luis",
-    location: "Nashville, TN",
-    paws: 5,
-    quote:
-      "We booked one stay and never looked back. Juniper sprinted through the doors on visit two. Around here, pups do not leave star reviews — they leave elite paw reviews.",
-  },
-  {
-    id: "skypups-3",
-    image: scoutPriya,
-    imagePosition: "50% 36%",
-    name: "Scout & Priya",
-    location: "Denver, CO",
-    paws: 5,
-    quote:
-      "Scout came home brushed, calm, and clearly cared for. The team handled pickup, playtime, and the final freshen-up with the kind of consistency that makes you trust them fast.",
-  },
-  {
-    id: "skypups-4",
-    image: bearChelsea,
-    imagePosition: "50% 32%",
-    name: "Bear & Chelsea",
-    location: "Seattle, WA",
-    paws: 4,
-    quote:
-      "You can feel the standard the minute you walk in. Bear had a full play day, a warm bath, and a handwritten note waiting when I picked him up.",
-  },
-] as const;
+const skyPupsReviews = currentSkyPupsReviews;
 
 const reviewCarouselItems = [...skyPupsReviews, ...skyPupsReviews.slice(0, 3)];
 
@@ -126,12 +80,12 @@ const buildSteps = [
   {
     step: "01",
     title: "Direction",
-    body: "Product priorities, standards, and final decisions remain with 1118.",
+    body: "Product priorities, standards, and final decisions remain founder-led.",
   },
   {
     step: "02",
     title: "Execution",
-    body: "AI accelerates research, design, and production while 1118 owns the product decisions.",
+    body: "AI systems and specialist tools help turn clear briefs into visible work.",
   },
   {
     step: "03",
@@ -189,164 +143,6 @@ function BrandLockup({ compact = false }: { compact?: boolean }) {
   );
 }
 
-type EtchrDragState = {
-  active: boolean;
-  pointerId: number;
-  pointerType: string;
-  startX: number;
-  startY: number;
-};
-
-function EtchrComparison({
-  className = "",
-  interactive = true,
-  priority = false,
-}: {
-  className?: string;
-  interactive?: boolean;
-  priority?: boolean;
-}) {
-  const frameRef = useRef<HTMLDivElement>(null);
-  const dragRef = useRef<EtchrDragState | null>(null);
-  const [position, setPosition] = useState(50);
-
-  const updateFromClientX = (clientX: number) => {
-    const bounds = frameRef.current?.getBoundingClientRect();
-    if (!bounds?.width) return;
-    const nextPosition = ((clientX - bounds.left) / bounds.width) * 100;
-    setPosition(Math.min(100, Math.max(0, nextPosition)));
-  };
-
-  const releasePointer = () => {
-    const state = dragRef.current;
-    const node = frameRef.current;
-    if (state && node?.hasPointerCapture(state.pointerId)) node.releasePointerCapture(state.pointerId);
-    dragRef.current = null;
-  };
-
-  useEffect(() => {
-    if (!interactive) return;
-    const stopOnBlur = () => releasePointer();
-    window.addEventListener("blur", stopOnBlur);
-    return () => {
-      window.removeEventListener("blur", stopOnBlur);
-      releasePointer();
-    };
-  }, [interactive]);
-
-  const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (!interactive || (event.pointerType === "mouse" && event.button !== 0)) return;
-    const active = event.pointerType !== "touch";
-    dragRef.current = {
-      active,
-      pointerId: event.pointerId,
-      pointerType: event.pointerType,
-      startX: event.clientX,
-      startY: event.clientY,
-    };
-    if (active) {
-      capturePointer(event.currentTarget, event.pointerId);
-      updateFromClientX(event.clientX);
-      event.preventDefault();
-    }
-  };
-
-  const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
-    const state = dragRef.current;
-    if (!interactive || !state || state.pointerId !== event.pointerId) return;
-
-    if (!state.active && state.pointerType === "touch") {
-      const deltaX = event.clientX - state.startX;
-      const deltaY = event.clientY - state.startY;
-      if (Math.max(Math.abs(deltaX), Math.abs(deltaY)) < 8) return;
-      if (Math.abs(deltaY) >= Math.abs(deltaX)) {
-        dragRef.current = null;
-        return;
-      }
-      state.active = true;
-      capturePointer(event.currentTarget, event.pointerId);
-    }
-
-    if (!state.active) return;
-    event.preventDefault();
-    updateFromClientX(event.clientX);
-  };
-
-  const handlePointerEnd = (event: ReactPointerEvent<HTMLDivElement>) => {
-    const state = dragRef.current;
-    if (!interactive || !state || state.pointerId !== event.pointerId) return;
-    if (!state.active && state.pointerType === "touch") updateFromClientX(event.clientX);
-    releasePointer();
-  };
-
-  const handleKeyboard = (event: ReactKeyboardEvent<HTMLDivElement>) => {
-    const increment = event.shiftKey ? 10 : 2;
-    if (event.key === "ArrowLeft") setPosition((value) => Math.max(0, value - increment));
-    else if (event.key === "ArrowRight") setPosition((value) => Math.min(100, value + increment));
-    else if (event.key === "Home") setPosition(0);
-    else if (event.key === "End") setPosition(100);
-    else return;
-    event.preventDefault();
-  };
-
-  const roundedPosition = Math.round(position);
-
-  return (
-    <div
-      className={`etchr-comparison hero-media-slot-frame is-ready ${interactive ? "is-interactive" : "is-static"} ${className}`}
-      onPointerCancel={handlePointerEnd}
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerEnd}
-      ref={frameRef}
-      style={{ "--etchr-position": `${position}%` } as React.CSSProperties}
-    >
-      <img
-        alt="Original photograph used for an Etchr portrait"
-        className="etchr-comparison-image etchr-comparison-original"
-        decoding={priority ? "sync" : "async"}
-        fetchPriority={priority ? "high" : "auto"}
-        height="1024"
-        loading={priority ? "eager" : "lazy"}
-        src={etchrSource}
-        width="768"
-      />
-      <div aria-hidden="true" className="etchr-comparison-result">
-        <img
-          alt=""
-          className="etchr-comparison-image"
-          decoding={priority ? "sync" : "async"}
-          fetchPriority={priority ? "high" : "auto"}
-          height="1024"
-          loading={priority ? "eager" : "lazy"}
-          src={etchrResult}
-          width="768"
-        />
-      </div>
-      <div aria-hidden="true" className="etchr-comparison-labels">
-        <span>Finished portrait</span>
-        <span>Original photo</span>
-      </div>
-      <div aria-hidden={!interactive} className="etchr-comparison-divider">
-        <div
-          aria-label="Etchr portrait comparison"
-          aria-valuemax={100}
-          aria-valuemin={0}
-          aria-valuenow={roundedPosition}
-          aria-valuetext={`${roundedPosition}% Etchr, ${100 - roundedPosition}% Original`}
-          className="etchr-comparison-handle"
-          onBlur={releasePointer}
-          onKeyDown={handleKeyboard}
-          role={interactive ? "slider" : undefined}
-          tabIndex={interactive ? 0 : -1}
-        >
-          <span aria-hidden="true"><i /> <i /></span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function FloatingNav({ activeHash, pathname }: { activeHash: string; pathname: string }) {
   const [isCompressed, setIsCompressed] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -385,15 +181,10 @@ function FloatingNav({ activeHash, pathname }: { activeHash: string; pathname: s
         menuButtonRef.current,
       ].filter(Boolean) as HTMLElement[];
       if (!focusable.length) return;
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
+      const current = focusable.indexOf(document.activeElement as HTMLElement);
+      const next = (current + (event.shiftKey ? -1 : 1) + focusable.length) % focusable.length;
+      event.preventDefault();
+      focusable[next].focus();
     };
 
     document.addEventListener("keydown", onKeyDown);
@@ -461,10 +252,10 @@ function Hero({ reduceMotion }: { reduceMotion: boolean }) {
         <motion.div
           animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
           className="hero-copy"
-          initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+          initial={false}
           transition={{ duration: 0.58, ease: [0.22, 1, 0.36, 1] }}
         >
-          <Eyebrow>1118 is an AI-first product studio.</Eyebrow>
+          <Eyebrow>AI-first product studio</Eyebrow>
           <h1>We build the software we keep looking for.</h1>
           <p className="hero-copy-body">1118 designs, builds, launches, and operates original software.</p>
           <p className="hero-copy-secondary">Most of what we build is our own.</p>
@@ -479,15 +270,15 @@ function Hero({ reduceMotion }: { reduceMotion: boolean }) {
         <motion.div
           animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
           className="hero-visual-stage"
-          initial={reduceMotion ? false : { opacity: 0, y: 28 }}
+          initial={false}
           transition={{ duration: 0.64, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className="hero-visual-card">
             <div className="hero-visual-media media-frame">
-              <EtchrComparison className="hero-media-slot" priority />
+              <PortraitComparison className="hero-media-slot" priority />
             </div>
-            <a aria-label="See Etchr, a live product built by 1118" className="hero-product-label" href="#etchr">
-              Etchr <span aria-hidden="true">·</span> Built by 1118
+            <a aria-label="See Portrait, a live product built by 1118" className="hero-product-label" href="#portrait">
+              Portrait <span aria-hidden="true">·</span> Built by 1118
             </a>
           </div>
         </motion.div>
@@ -503,7 +294,7 @@ function ReviewsProof({ reduceMotion }: { reduceMotion: boolean }) {
   const [focusPaused, setFocusPaused] = useState(false);
   const [hoverPaused, setHoverPaused] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [pageHidden, setPageHidden] = useState(document.hidden);
+  const [pageHidden, setPageHidden] = useState(false);
   const [userPaused, setUserPaused] = useState(false);
   const [userAnnouncement, setUserAnnouncement] = useState("");
 
@@ -517,6 +308,7 @@ function ReviewsProof({ reduceMotion }: { reduceMotion: boolean }) {
 
   useEffect(() => {
     const onVisibilityChange = () => setPageHidden(document.hidden);
+    onVisibilityChange();
     document.addEventListener("visibilitychange", onVisibilityChange);
     return () => document.removeEventListener("visibilitychange", onVisibilityChange);
   }, []);
@@ -587,7 +379,7 @@ function ReviewsProof({ reduceMotion }: { reduceMotion: boolean }) {
 
   return (
     <figure
-      aria-label="Reviews Engine demonstration review carousel"
+      aria-label="Reviews Engine customer review carousel"
       aria-roledescription="carousel"
       className="reviews-proof"
       onBlurCapture={(event) => {
@@ -622,7 +414,7 @@ function ReviewsProof({ reduceMotion }: { reduceMotion: boolean }) {
               key={`${review.id}-${index}`}
             >
               <img
-                alt={`${review.name} demonstration review`}
+                alt={`${review.name} from the live SkyPups review collection`}
                 decoding="async"
                 height="720"
                 loading="lazy"
@@ -658,10 +450,7 @@ function ReviewsProof({ reduceMotion }: { reduceMotion: boolean }) {
           <button
             aria-label={userPaused ? "Resume reviews" : "Pause reviews"}
             className="reviews-proof-pause"
-            onClick={(event) => {
-              setUserPaused((value) => !value);
-              event.currentTarget.blur();
-            }}
+            onClick={() => setUserPaused((value) => !value)}
             type="button"
           >
             {userPaused ? "Resume" : "Pause"} · {activeView + 1}/{skyPupsReviews.length}
@@ -677,23 +466,23 @@ function ReviewsProof({ reduceMotion }: { reduceMotion: boolean }) {
 }
 
 function ProductVisual({ product, reduceMotion }: { product: Product; reduceMotion: boolean }) {
-  if (product.slug === "etchr") {
+  if (product.slug === "portrait") {
     return (
       <figure className="etchr-product-proof">
         <div className="etchr-product-portrait">
           <img
-            alt="Elise shown as an Etchr editorial portrait"
+            alt="Elise shown as a Portrait editorial portrait"
             decoding="async"
             height="1024"
             loading="lazy"
             src={etchrPortrait}
             width="1024"
           />
-          <span>Etchr portrait</span>
+          <span>Editorial portrait</span>
         </div>
         <div className="etchr-export-proof">
           <img
-            alt="Avery shown as an Etchr profile-ready export"
+            alt="Avery shown as a Portrait profile-ready export"
             decoding="async"
             height="1024"
             loading="lazy"
@@ -716,34 +505,10 @@ function ProductVisual({ product, reduceMotion }: { product: Product; reduceMoti
         aria-label="Authentic Property Insights interface showing an incoming request, property facts, risk, recommendation, quote readiness, and next action"
         className="product-proof-figure property-proof"
       >
-        <div className="property-proof-overview">
-          <picture>
-            <source media="(max-width: 760px)" srcSet={propertyDecisionMobile} />
-            <img
-              alt="Property Insights local demo request with a quote-ready $281 recommendation, draft-quote action, labor plan, risk, and high confidence"
-              decoding="async"
-              height="700"
-              loading="lazy"
-              src={propertyDecision}
-              width="1024"
-            />
-          </picture>
+        <div className="property-proof-current" tabIndex={0} role="region" aria-label="Property Insights demonstration screenshot; scroll horizontally for detail on small screens">
+          <img alt="Property Insights synthetic service request: Hold, do not quote yet. Get missing facts about bedrooms, bathrooms, square footage, occupancy, and preferred timing before quoting." src={propertyDecision} width={1024} height={630} loading="lazy" decoding="async" />
         </div>
-        <div className="property-proof-detail">
-          <picture>
-            <source media="(max-width: 760px)" srcSet={propertyFactsMobile} />
-            <img
-              alt="Property Insights local demo property facts for a Southold single-family home"
-              decoding="async"
-              height="600"
-              loading="lazy"
-              src={propertyFacts}
-              width="1024"
-            />
-          </picture>
-          <span aria-hidden="true">Property facts</span>
-        </div>
-        <figcaption>Authentic product interface <span aria-hidden="true">· Demonstration data</span></figcaption>
+        <figcaption><span>Actual product interface · Synthetic example</span><span className="proof-mobile-hint">Swipe image to inspect details.</span><a href={propertyDecision} target="_blank" rel="noreferrer">View full image ↗</a></figcaption>
       </figure>
     );
   }
@@ -751,7 +516,7 @@ function ProductVisual({ product, reduceMotion }: { product: Product; reduceMoti
   return (
     <figure className="product-proof-figure signal-proof">
       <div className="signal-display-stage">
-        <div className="signal-display-screen">
+        <div className="signal-display-screen" tabIndex={0} role="region" aria-label="Signal archival interface; scroll horizontally for detail on small screens">
           <img
             alt="Authentic 2019 Signal interface showing seasonal and correlation analytics"
             decoding="async"
@@ -762,6 +527,7 @@ function ProductVisual({ product, reduceMotion }: { product: Product; reduceMoti
           />
         </div>
       </div>
+      <figcaption><span className="proof-mobile-hint">Swipe image to inspect details.</span><a className="signal-detail-link" href={signalInterface} target="_blank" rel="noreferrer">View the original Signal screen <span aria-hidden="true">↗</span></a></figcaption>
     </figure>
   );
 }
@@ -777,7 +543,7 @@ function ProductSection({ reduceMotion }: { reduceMotion: boolean }) {
                 <div className="fleet-launch-meta">
                   <span className="eyebrow-pill">{product.status}</span>
                 </div>
-                {product.slug === "etchr" ? (
+                {product.slug === "portrait" ? (
                   <div className="etchr-product-lockup">
                     <img alt="" height="512" src={etchrAppIcon} width="512" />
                     <p className="fleet-showcase-name">{product.name}</p>
@@ -797,13 +563,13 @@ function ProductSection({ reduceMotion }: { reduceMotion: boolean }) {
                 {product.note ? <p className="fleet-showcase-why">{product.note}</p> : null}
                 {product.link ? (
                   <div className="fleet-launch-actions">
-                    {product.slug === "etchr" ? (
+                    {product.slug === "portrait" ? (
                       <>
                         <a className="app-store-badge-link" href={product.link.href} rel="noreferrer" target="_blank">
-                          <img alt="Download Etchr Portraits on the App Store" height="40" src={appStoreBadge} width="120" />
+                          <img alt="Download Portrait on the App Store" height="40" src={appStoreBadge} width="120" />
                         </a>
-                        <a className="text-link fleet-showcase-link" href={ETCHR_URL} rel="noreferrer" target="_blank">
-                          Visit Etchr <span aria-hidden="true">↗</span>
+                        <a className="text-link fleet-showcase-link" href={PORTRAIT_URL} rel="noreferrer" target="_blank">
+                          Visit Portrait <span aria-hidden="true">↗</span>
                         </a>
                       </>
                     ) : (
@@ -839,7 +605,7 @@ function AboutSection() {
           <h2>An AI-first<br />product studio.</h2>
           <div className="studio-intro-copy">
             <p>1118 creates and operates original software—from public consumer products to specialized systems built around hard-won expertise.</p>
-            <p>The portfolio includes live products, systems in development, and completed software with a commercial history.</p>
+            <p>Most of what we build is our own. We partner selectively when the idea, problem, and fit are unusually strong.</p>
           </div>
         </div>
 
@@ -852,29 +618,35 @@ function AboutSection() {
           ))}
         </div>
 
-        <p className="studio-closing">We translate specialized knowledge into products people can actually use.</p>
       </div>
     </section>
   );
 }
 
 function ContactSection() {
+  const [draft, setDraft] = useState({ name: "", email: "", stage: "", message: "" });
+  const body = `Name: ${draft.name}\nEmail: ${draft.email}\nStage: ${draft.stage}\n\n${draft.message}`;
+  const emailHref = `mailto:${COMPANY_EMAIL}?subject=${encodeURIComponent("A conversation with 1118")}&body=${encodeURIComponent(body)}`;
   return (
     <section className="contact-section" id="contact">
       <div className="section-shell contact-shell">
         <div className="contact-copy">
           <Eyebrow>Contact</Eyebrow>
           <h2>Start a conversation.</h2>
-          <p>We partner selectively when the idea, problem, and fit are unusually strong.</p>
+          <p>Most of what we build is our own.</p>
+          <p>We partner selectively—when the idea is strong, the problem is meaningful, and the fit is right.</p>
           <a className="contact-email" href={`mailto:${COMPANY_EMAIL}`}>{COMPANY_EMAIL}</a>
         </div>
-
-        <div className="contact-direct">
-          <Eyebrow>Direct contact</Eyebrow>
-          <h3>Tell us what you’re building.</h3>
-          <p>Share the problem, what exists today, and why it matters.</p>
-          <a className="contact-direct-action" href={`mailto:${COMPANY_EMAIL}`}>Email 1118 <span aria-hidden="true">→</span></a>
-        </div>
+        <form className="pitch-form" aria-label="Prepare a conversation" onSubmit={(event) => event.preventDefault()}>
+          <p className="form-instructions" id="contact-instructions">Prepare a note below, then open it in your email app. This website does not send or save your message.</p>
+          <div className="pitch-form-grid">
+            <label className="field"><span>Name</span><input autoComplete="name" name="name" value={draft.name} onChange={(event) => setDraft({ ...draft, name: event.target.value })} /></label>
+            <label className="field"><span>Email</span><input autoComplete="email" type="email" name="email" value={draft.email} onChange={(event) => setDraft({ ...draft, email: event.target.value })} /></label>
+            <label className="field field-full"><span>Stage</span><select name="stage" value={draft.stage} onChange={(event) => setDraft({ ...draft, stage: event.target.value })}><option value="">Select stage</option>{["Idea", "Prototype", "Launching", "Scaling"].map((stage) => <option key={stage}>{stage}</option>)}</select></label>
+            <label className="field field-full"><span>What are you building?</span><textarea name="message" rows={4} value={draft.message} onChange={(event) => setDraft({ ...draft, message: event.target.value })} /></label>
+          </div>
+          <a className="primary-button email-draft-action" aria-describedby="contact-instructions" href={emailHref}>Open email draft <span aria-hidden="true">↗</span></a>
+        </form>
       </div>
     </section>
   );
@@ -886,7 +658,7 @@ function PolicyLayout({ children, eyebrow, title }: { children: ReactNode; eyebr
       <div className="policy-page-shell">
         <Eyebrow>{eyebrow}</Eyebrow>
         <h1>{title}</h1>
-        <p className="policy-reviewed">Last reviewed August 1, 2026</p>
+        <p className="policy-reviewed">Last reviewed September 11, 2026</p>
         <div className="policy-content">{children}</div>
       </div>
     </article>
@@ -898,8 +670,8 @@ function PolicyPage({ pathname }: { pathname: string }) {
     return (
       <PolicyLayout eyebrow="Policy" title="Privacy">
         <section><h2>What this site collects</h2><p>1118 does not intentionally use advertising cookies or analytics on this website. Our hosting provider may process standard request information—such as IP address, browser details, requested URL, and time of access—to deliver and protect the site.</p></section>
-        <section><h2>Contact</h2><p>This website does not currently offer a contact form. If you email {COMPANY_EMAIL}, your message is handled by the email services used by 1118 and retained as needed to respond and maintain business records.</p></section>
-        <section><h2>External services</h2><p>Links to Etchr, the App Store, and other websites are governed by those services’ own privacy practices.</p></section>
+        <section><h2>Contact</h2><p>The contact fields prepare an email on your device. They do not submit or store your message on this website. If you email {COMPANY_EMAIL}, your message is handled by the email services used by 1118 and retained as needed to respond and maintain business records.</p></section>
+        <section><h2>External services</h2><p>Links to Portrait, the App Store, and other websites are governed by those services’ own privacy practices.</p></section>
         <section><h2>Your questions</h2><p>To ask about privacy or request access, correction, or deletion of information you sent directly to 1118, email <a href={`mailto:${COMPANY_EMAIL}`}>{COMPANY_EMAIL}</a>.</p></section>
       </PolicyLayout>
     );
@@ -932,8 +704,8 @@ function PolicyPage({ pathname }: { pathname: string }) {
     return (
       <PolicyLayout eyebrow="Help" title="Support">
         <section><h2>1118 inquiries</h2><p>For company, partnership, press, or website questions, email <a href={`mailto:${COMPANY_EMAIL}`}>{COMPANY_EMAIL}</a>.</p></section>
-        <section><h2>Etchr</h2><p>For Etchr product information and current support options, visit <a href={ETCHR_URL} rel="noreferrer" target="_blank">etchr.ai</a> or the verified <a href={APP_STORE_URL} rel="noreferrer" target="_blank">App Store listing</a>.</p></section>
-        <section><h2>Other products</h2><p>Reviews Engine is live. Property Insights is in development. They do not currently offer public company-site support channels.</p></section>
+        <section><h2>Portrait</h2><p>For Portrait product information and current support options, visit <a href={PORTRAIT_URL} rel="noreferrer" target="_blank">getportrait.ai</a> or the verified <a href={APP_STORE_URL} rel="noreferrer" target="_blank">App Store listing</a>.</p></section>
+        <section><h2>Other products</h2><p>Reviews Engine is live. Property Insights is in early access. They do not currently offer public company-site support channels.</p></section>
       </PolicyLayout>
     );
   }
@@ -1000,10 +772,14 @@ function updateMetadata(pathname: string) {
   canonical?.setAttribute("href", `https://1118.io${pathname === "/" ? "" : pathname}`);
 }
 
-export default function App() {
-  const [pathname, setPathname] = useState(window.location.pathname.replace(/\/$/, "") || "/");
-  const [activeHash, setActiveHash] = useState(window.location.hash.slice(1));
-  const reduceMotion = Boolean(useReducedMotion());
+const subscribeToHydration = () => () => {};
+
+export default function App({ initialPathname = "/" }: { initialPathname?: string }) {
+  const [pathname, setPathname] = useState(initialPathname.replace(/\/$/, "") || "/");
+  const [activeHash, setActiveHash] = useState("");
+  const hydrated = useSyncExternalStore(subscribeToHydration, () => true, () => false);
+  const motionPreference = useReducedMotion();
+  const reduceMotion = hydrated && Boolean(motionPreference);
   const isPublicPolicy = Object.hasOwn(policyMeta, pathname) && pathname !== "/";
 
   useEffect(() => {
@@ -1011,6 +787,7 @@ export default function App() {
       setPathname(window.location.pathname.replace(/\/$/, "") || "/");
       setActiveHash(window.location.hash.slice(1));
     };
+    onLocationChange();
     window.addEventListener("hashchange", onLocationChange);
     window.addEventListener("popstate", onLocationChange);
     return () => {
@@ -1051,7 +828,7 @@ export default function App() {
     <div className="page-shell">
       <a className="skip-link" href="#main-content">Skip to content</a>
       <FloatingNav activeHash={activeHash} pathname={pathname} />
-      <main id="main-content">{mainContent}</main>
+      <main id="main-content" tabIndex={-1}>{mainContent}</main>
       <Footer />
     </div>
   );
