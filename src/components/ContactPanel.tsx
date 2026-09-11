@@ -1,3 +1,4 @@
+import { CONTACT_FORM_ENABLED, CONTACT_UNAVAILABLE_MESSAGE } from '../../shared/contact-release.mjs';
 import ContactTurnstile from './ContactTurnstile';
 import { useCallback, useRef, useState, type FormEvent } from 'react';
 import './ContactPanel.css';
@@ -7,6 +8,11 @@ type Errors = Partial<Record<keyof ContactDraft, string>>;
 const emptyDraft: ContactDraft = { name: '', email: '', company: '', stage: '', message: '', website: '' };
 
 export default function ContactPanel() {
+  if (!CONTACT_FORM_ENABLED) return <div className="contact-panel contact-panel-unavailable"><p role="status">{CONTACT_UNAVAILABLE_MESSAGE}</p></div>;
+  return <ActiveContactPanel />;
+}
+
+function ActiveContactPanel() {
   const [draft, setDraft] = useState<ContactDraft>(emptyDraft);
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<'idle' | 'sending' | 'error' | 'sent'>('idle');

@@ -30,3 +30,6 @@
 .contact-security-status { max-width: 54ch; margin: 10px 0 0; font-size: 14px; line-height: 1.5; }
 .contact-security-retry { margin-top: 12px; min-height: 44px; padding: 10px 14px; border: 1px solid currentColor; border-radius: 6px; color: #fff; background: transparent; font: inherit; cursor: pointer; }
 .contact-security-retry:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
+
+.contact-panel-unavailable { border-top: 1px solid var(--line); padding-top: 24px; }
+.contact-panel-unavailable p { margin: 0; color: var(--ink-soft); font-size: 18px; line-height: 1.6; }
