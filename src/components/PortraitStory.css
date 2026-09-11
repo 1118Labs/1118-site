@@ -12,7 +12,7 @@
  .portrait-story-screens { grid-template-columns: 1fr 1fr; gap: 30px 20px; }
  .portrait-story-screen-source, .portrait-story-screen-transformation { padding-top: 0; }
  .portrait-story-screen-finished { grid-column: 1 / -1; width: min(100%, 440px); justify-self: center; }
- .portrait-story .portrait-story-screen figcaption { flex-wrap: wrap; gap: 4px 10px; margin-bottom: 14px; }
+ .portrait-story .portrait-story-screen figcaption { display: grid; grid-template-columns: 1fr; gap: 4px; margin-bottom: 14px; }
  .portrait-story .portrait-story-caption { margin-top: 24px; font-size: 14px; }
 }
 @media (forced-colors: active) { .portrait-story-screen img { outline: 1px solid CanvasText; } }
