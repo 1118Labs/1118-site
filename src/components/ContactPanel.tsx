@@ -49,7 +49,7 @@ export default function ContactPanel() {
     requestAnimationFrame(() => noticeRef.current?.focus());
   };
   return <div className="contact-panel">
-    <form ref={formRef} onSubmit={submit} noValidate aria-label="Start a conversation" aria-busy={status === 'sending'}>
+    <form id="contact-form" ref={formRef} onSubmit={submit} noValidate aria-label="Start a conversation" aria-busy={status === 'sending'}>
       <div className="contact-panel-grid">
         <div className="contact-panel-field"><label htmlFor="contact-name">Name</label><input id="contact-name" name="name" autoComplete="name" maxLength={100} required value={draft.name} onChange={event => update('name', event.target.value)} disabled={status === 'sending' || status === 'sent'} aria-invalid={Boolean(errors.name)} aria-describedby={errors.name ? 'contact-name-error' : undefined} />{errors.name && <span id="contact-name-error" className="contact-field-error">{errors.name}</span>}</div>
         <div className="contact-panel-field"><label htmlFor="contact-email">Email</label><input id="contact-email" name="email" type="email" inputMode="email" autoComplete="email" maxLength={254} required value={draft.email} onChange={event => update('email', event.target.value)} disabled={status === 'sending' || status === 'sent'} aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? 'contact-email-error' : undefined} />{errors.email && <span id="contact-email-error" className="contact-field-error">{errors.email}</span>}</div>

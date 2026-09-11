@@ -14,6 +14,7 @@ import PropertyProof from "./components/PropertyProof";
 import SignalWorkstation from "./components/SignalWorkstation";
 import CaseStudies from "./components/CaseStudies";
 import ContactPanel from "./components/ContactPanel";
+import { productStatus } from "./content/product-status";
 import { caseMeta } from "./content/case-studies";
 import "./premium.css";
 
@@ -40,7 +41,7 @@ const products: Product[] = [
   {
     slug: "portrait",
     name: "Portrait",
-    status: "",
+    status: productStatus.portrait,
     headline: "One photo.\nA portrait for everywhere.",
     description: "Your photograph, reimagined as an editorial portrait. Made for the profiles, places, and people that know you.",
     link: { href: APP_STORE_URL, label: "View on the App Store" },
@@ -48,7 +49,7 @@ const products: Product[] = [
   {
     slug: "reviews-engine",
     name: "Reviews Engine",
-    status: "LIVE",
+    status: productStatus["reviews-engine"],
     headline: "A great reputation.\nOut in the open.",
     description: "For businesses built on trust. Collect customer stories, review what goes live, and put real experiences where the next customer can see them.",
     link: { href: REVIEWS_ENGINE_PUBLIC_PROOF_URL, label: "See Reviews Engine in use" },
@@ -57,7 +58,7 @@ const products: Product[] = [
   {
     slug: "property-insights",
     name: "Property Insights",
-    status: "EARLY ACCESS",
+    status: productStatus["property-insights"],
     link: { href: "https://insights.1118.io", label: "Explore Property Insights" },
     headline: "Know the property.\nWin the job.",
     description: "AI-powered property intelligence for home-service businesses. Arrive prepared, make better-informed estimates, and move from request to quote with a clearer picture of the job.",
@@ -65,7 +66,7 @@ const products: Product[] = [
   {
     slug: "signal",
     name: "Signal",
-    status: "BUILT · LICENSED · ACQUIRED",
+    status: productStatus.signal,
     headline: "See the market\ndifferently.",
     description:
       "A quantitative commodities platform for traders working with complex markets. 1118 designed, built, and launched Signal to turn data and machine learning into a clearer view of trading opportunities. Used in live markets, licensed commercially, and later acquired.",

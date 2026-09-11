@@ -7,6 +7,7 @@ import signalOverview from '../assets/showcase/signal/signal-archival-interface.
 import signalHistory from '../assets/showcase/signal/signal-historical-data-2019.png';
 import signalStructures from '../assets/showcase/signal/signal-manage-structures-2019.png';
 import appStoreBadge from '../assets/showcase/etchr/download-on-the-app-store.svg';
+import { productStatus } from '../content/product-status';
 import { signalStory } from '../content/case-studies';
 import './CaseStudies.css';
 
@@ -44,7 +45,7 @@ function WorkIndex() {
       <article className="work-feature work-feature-portrait">
         <a className="work-feature-link case-shell" href="/work/portrait">
           <div className="work-feature-copy">
-            <p className="case-kicker">Portrait / Live</p>
+            <p className="case-kicker">Portrait / {productStatus.portrait}</p>
             <h2>From a photograph<br />to an editorial portrait.</h2>
             <p>A product built around the transformation—and the finished image you take with you.</p>
             <span className="case-text-link">Explore Portrait <span aria-hidden="true">→</span></span>
@@ -55,7 +56,7 @@ function WorkIndex() {
       <article className="work-feature work-feature-signal">
         <a className="work-feature-link case-shell" href="/work/signal">
           <div className="work-feature-copy">
-            <p className="case-kicker">Signal / Built · Licensed · Acquired</p>
+            <p className="case-kicker">Signal / {productStatus.signal}</p>
             <h2>Quantitative workflows,<br />made visual.</h2>
             <p>Domain expertise translated into an analytics platform used in live markets.</p>
             <span className="case-text-link">Explore Signal <span aria-hidden="true">→</span></span>
@@ -66,8 +67,8 @@ function WorkIndex() {
     </div>
     <section className="work-more case-shell" aria-labelledby="work-more-title">
       <h2 id="work-more-title">More from 1118.</h2>
-      <div><a href="/#reviews-engine">Reviews Engine <span aria-hidden="true">↗</span></a><p>Live review collection, moderation, and publishing.</p></div>
-      <div><a href="/#property-insights">Property Insights <span aria-hidden="true">↗</span></a><p>Property context and operator decision support.</p></div>
+      <div><p className="case-product-status">{productStatus["reviews-engine"]}</p><a href="/#reviews-engine">Reviews Engine <span aria-hidden="true">↗</span></a><p>Live review collection, moderation, and publishing.</p></div>
+      <div><p className="case-product-status">{productStatus["property-insights"]}</p><a href="/#property-insights">Property Insights <span aria-hidden="true">↗</span></a><p>Property context and operator decision support.</p></div>
     </section>
   </article>;
 }
@@ -76,7 +77,7 @@ function PortraitCase() {
   return <article className="case-page case-portrait">
     <header className="case-hero case-shell">
       <a className="case-back" href="/work">← Selected work</a>
-      <p className="case-kicker">01 / Project</p>
+      <p className="case-kicker">01 / {productStatus.portrait}</p>
       <div className="case-product-name"><img src={portraitIcon} width="64" height="64" alt="" /><span>Portrait</span></div>
       <h1>Editorial portraits<br />from real photographs.</h1>
       <p className="case-intro">A photograph is the starting point. The product brings together the transformation, the app experience, and the finished portrait you can save and use.</p>
@@ -105,11 +106,11 @@ function PortraitCase() {
       <PortraitStory variant="case-study" />
     </section>
     <div className="case-shell">
-      <CaseSection number="06" label="Outcome" title="A live consumer product.">
+      <CaseSection number="06" label="Outcome" title="Available on the App Store.">
         <p>Portrait is available through the App Store, with a public product experience at getportrait.ai.</p>
         <p>The result is software people can use, with a complete experience around creating and keeping their portraits.</p>
       </CaseSection>
-      <CaseSection number="07" label="Status" title="Live.">
+      <CaseSection number="07" label="Status" title="App Store.">
         <p>Explore the current product and its App Store listing.</p>
         <div className="case-actions"><a className="case-button" href="https://getportrait.ai" target="_blank" rel="noreferrer">Visit Portrait <span aria-hidden="true">↗</span></a><a className="case-store-link" href={appStoreUrl} target="_blank" rel="noreferrer"><img src={appStoreBadge} alt="Download Portrait on the App Store" width="150" height="50" /></a></div>
       </CaseSection>
@@ -122,7 +123,7 @@ function SignalCase() {
   return <article className="case-page case-signal">
     <header className="case-hero case-shell">
       <a className="case-back" href="/work">← Selected work</a>
-      <p className="case-kicker">01 / Project · Signal</p>
+      <p className="case-kicker">01 / Signal · {productStatus.signal}</p>
       <h1>Quantitative workflows,<br />made visual.</h1>
       <p className="case-intro">{signalStory}</p>
     </header>

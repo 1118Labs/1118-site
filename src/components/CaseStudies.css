@@ -51,6 +51,7 @@
 .work-more { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 48px; padding-block: 88px; }
 .work-more h2 { font-weight: 600; font-size: 28px; line-height: 1.25; letter-spacing: -.04em; margin: 0; }
 .work-more a { display: inline-flex; align-items: center; gap: 22px; min-height: 44px; font-size: 20px; text-decoration: none; }
+.work-more .case-product-status { font-size: 11px; letter-spacing: .09em; text-transform: uppercase; margin: 0 0 12px; }
 .work-more p { color: #555f65; font-size: 17px; line-height: 1.65; }
 .case-page a:focus-visible, .work-index a:focus-visible { outline: 3px solid #247dba; outline-offset: 6px; }
 @media (hover: hover) { .case-text-link:hover, .case-next a:hover, .case-back:hover, .work-more a:hover { text-decoration: underline; text-underline-offset: 5px; } .work-feature-link:hover .work-feature-image img { transform: scale(1.015); } }

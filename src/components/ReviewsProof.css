@@ -5,8 +5,8 @@
 .re-proof-track { display: flex; width: max-content; }
 .re-proof-cycle { display: flex; align-items: flex-start; gap: var(--re-gap); flex: none; margin: 0; padding: 0 var(--re-gap) 0 0; list-style: none; }
 .re-card-card { flex: 0 0 var(--re-column); width: var(--re-column); min-width: 0; display: flex; flex-direction: column; color: #121b29; }
-.re-card-card > img { display: block; width: 100%; height: 410px; border-radius: 4px; object-fit: cover; }
-.re-card-copy { padding: 25px 2px 0; }
+.re-card-card > img { display: block; width: 100%; height: 360px; border-radius: 4px; object-fit: cover; }
+.re-card-copy { padding: 22px 2px 0; }
 .re-paw-rating { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 0 0 17px; color: #3d7bf7; }
 .re-paws { display: flex; gap: 3px; }
 .re-paws svg { display: block; width: 26px; height: 26px; }
@@ -22,7 +22,7 @@
 .re-proof-controls button:focus-visible { outline: 3px solid #3d7bf7; outline-offset: 4px; }
 @media (max-width: 760px) {
   .re-proof { --re-column: 280px; --re-gap: 24px; }
-  .re-card-card > img { height: 330px; }
+  .re-card-card > img { height: 290px; }
   .re-card-copy { padding: 22px 2px 0; }
   .re-card-copy blockquote { font-size: 18px; line-height: 1.55; }
   .re-card-copy footer { margin-top: 22px; }

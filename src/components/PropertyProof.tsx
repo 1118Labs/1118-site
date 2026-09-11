@@ -7,8 +7,8 @@ export default function PropertyProof() {
     <div className="pi-property-composition">
       <div className="pi-property-photo"><img src={house} width="1800" height="1800" alt="Illustrative modern white house with mature trees and a landscaped front lawn" loading="lazy" decoding="async" /><span>Property intelligence starts here.</span></div>
       <div className="pi-decision-layer">
-        <div className="pi-decision-caption"><span>From property to decision</span><span aria-hidden="true">↘</span></div>
-        <div className="pi-proof-window"><img src={decision} width="1024" height="934" alt="Actual Property Insights interface: approved synthetic request ready to quote, with a $150 manual starting point and supporting house facts." loading="lazy" decoding="async" /></div>
+        <div className="pi-decision-caption"><span>Ready to quote. Operator in control.</span><span aria-hidden="true">↘</span></div>
+        <div className="pi-proof-window"><div className="pi-proof-crop"><img src={decision} width="1024" height="934" alt="Enlarged excerpt from the actual Property Insights interface: approved synthetic request ready to quote, with a $150 manual starting point and supporting house facts." loading="lazy" decoding="async" /></div></div>
       </div>
     </div>
     <div className="pi-outcomes"><p><span>01 / Context</span>Know what you’re walking into.</p><p><span>02 / Preparation</span>Build a better-informed estimate.</p><p><span>03 / Decision</span>Move the work forward.</p></div>
