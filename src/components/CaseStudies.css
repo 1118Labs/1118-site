@@ -1,4 +1,4 @@
-.case-page, .work-index { color: #1b242b; background: #f8f7f3; }
+.case-page, .work-index { color: #1b242b; background: #fff; }
 .case-shell { width: min(1280px, calc(100% - 112px)); margin-inline: auto; }
 .case-kicker { margin: 0 0 24px; font-size: 14px; line-height: 1.5; font-weight: 750; text-transform: uppercase; letter-spacing: .13em; color: #535b60; }
 .case-hero, .work-index-header { padding-block: 96px 72px; }
@@ -6,12 +6,12 @@
 .case-intro { max-width: 790px; margin: 32px 0 0; font-size: 21px; line-height: 1.65; letter-spacing: -.018em; color: #515960; }
 .case-back { display: inline-flex; min-height: 44px; align-items: center; margin-bottom: 46px; font-size: 14px; text-decoration: none; }
 .case-product-name { display: flex; align-items: center; gap: 13px; margin-bottom: 24px; font-size: 22px; font-weight: 650; }
-.case-product-name img { width: 44px; height: 44px; border-radius: 11px; }
-.case-portrait-hero { margin-block: 0 96px; padding: 56px; background: #eceae4; text-align: center; }
+.case-product-name img { width: 96px; height: 96px; border-radius: 22px; }
+.case-portrait-hero { margin-block: 0 96px; padding: 56px; background: #f1f5f7; text-align: center; }
 .case-portrait-hero > img { display: block; width: min(690px, 100%); height: auto; margin: auto; }
 .case-page figcaption { margin-top: 20px; font-size: 14px; line-height: 1.65; color: #5c6266; }
-.case-section { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(48px, 7vw, 112px); padding-block: 72px; border-top: 1px solid #d7d8d4; }
-.case-section h2, .case-experience > h2 { margin: 0; max-width: 730px; font-size: clamp(38px, 3.5vw, 54px); line-height: 1.12; letter-spacing: -.047em; font-weight: 550; text-wrap: balance; }
+.case-section { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(48px, 7vw, 112px); padding-block: 72px; border-top: 1px solid #dbe2e7; }
+.case-section h2, .case-experience > h2 { margin: 0; max-width: 730px; font-size: clamp(38px, 3.5vw, 54px); line-height: 1.12; letter-spacing: -.047em; font-weight: 600; text-wrap: balance; }
 .case-section-body { padding-top: 39px; }
 .case-section-body p, .case-archive-detail p { margin: 0 0 22px; color: #515960; font-size: 20px; line-height: 1.7; letter-spacing: -.014em; }
 .case-section-body p:last-child { margin-bottom: 0; }
@@ -23,14 +23,14 @@
 .case-store-link { display: inline-flex; min-height: 50px; align-items: center; }
 .case-store-link img { display: block; width: 150px; height: auto; }
 .case-text-link { display: inline-flex; min-height: 44px; align-items: center; gap: 22px; color: inherit; font-size: 16px; font-weight: 600; text-decoration: none; }
-.case-next { display: flex; justify-content: space-between; gap: 24px; padding-block: 54px 96px; border-top: 1px solid #d7d8d4; }
+.case-next { display: flex; justify-content: space-between; gap: 24px; padding-block: 54px 96px; border-top: 1px solid #dbe2e7; }
 .case-next a { display: flex; align-items: center; justify-content: space-between; gap: 35px; min-height: 44px; font-size: 20px; text-decoration: none; }
 .case-signal-hero { margin-bottom: 90px; }
 .case-signal .case-hero .case-intro { max-width: 880px; }
 .case-workflow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 42px; margin-block: 56px 64px; }
 .case-workflow > div { border-top: 1px solid #cfd3d3; padding-top: 26px; }
 .case-workflow span { display: block; margin-bottom: 24px; font-size: 14px; color: #657077; }
-.case-workflow h3, .case-archive-detail h3 { margin: 0 0 18px; font-size: 25px; font-weight: 550; letter-spacing: -.035em; line-height: 1.3; }
+.case-workflow h3, .case-archive-detail h3 { margin: 0 0 18px; font-size: 25px; font-weight: 600; letter-spacing: -.035em; line-height: 1.3; }
 .case-workflow p { margin: 0; font-size: 18px; line-height: 1.65; color: #515960; }
 .case-archive-figure { margin: 0; }
 .case-archive-figure img { display: block; width: 100%; height: auto; background: #172632; }
@@ -39,17 +39,17 @@
 .case-archive-detail { display: grid; grid-template-columns: 1.4fr 1fr; gap: 64px; align-items: center; margin-top: 72px; }
 .work-index-header .case-intro { max-width: 650px; }
 .work-feature-link { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 80px; padding-block: 88px; text-decoration: none; color: inherit; }
-.work-feature-copy h2 { margin: 0 0 24px; font-size: clamp(38px, 3.6vw, 54px); font-weight: 550; letter-spacing: -.05em; line-height: 1.13; text-wrap: balance; }
+.work-feature-copy h2 { margin: 0 0 24px; font-size: clamp(38px, 3.6vw, 54px); font-weight: 600; letter-spacing: -.05em; line-height: 1.13; text-wrap: balance; }
 .work-feature-copy > p:not(.case-kicker) { max-width: 480px; color: #555f65; font-size: 20px; line-height: 1.65; margin: 0 0 25px; }
 .work-feature-image { min-width: 0; }
 .work-feature-image img { display: block; width: 100%; height: auto; transition: transform .3s ease; }
-.work-feature-portrait { background: #ebe9e2; }
-.work-feature-portrait .work-feature-image { padding: 32px; background: #e1ded5; }
-.work-feature-signal { background: #e6ebed; }
+.work-feature-portrait { background: #f3f6f8; }
+.work-feature-portrait .work-feature-image { padding: 32px; background: #e6edf2; }
+.work-feature-signal { background: #fff; }
 .work-feature-signal .work-feature-link { grid-template-columns: 1fr 1.25fr; }
-.work-feature-signal .work-feature-image { padding: 20px; background: #cdd6db; }
+.work-feature-signal .work-feature-image { padding: 20px; background: #e6edf2; }
 .work-more { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 48px; padding-block: 88px; }
-.work-more h2 { font-weight: 550; font-size: 28px; line-height: 1.25; letter-spacing: -.04em; margin: 0; }
+.work-more h2 { font-weight: 600; font-size: 28px; line-height: 1.25; letter-spacing: -.04em; margin: 0; }
 .work-more a { display: inline-flex; align-items: center; gap: 22px; min-height: 44px; font-size: 20px; text-decoration: none; }
 .work-more p { color: #555f65; font-size: 17px; line-height: 1.65; }
 .case-page a:focus-visible, .work-index a:focus-visible { outline: 3px solid #247dba; outline-offset: 6px; }

@@ -9,8 +9,8 @@ const serverOutput = await mkdtemp(join(root, '.1118-prerender-'));
 const origin = 'https://1118.io';
 const organization = { '@id': `${origin}/#organization` };
 const routes = {
-  '/': ['1118 — AI-First Product Studio', '1118 designs, builds, launches, and operates original software.'],
-  '/work': ['Selected Work | 1118', 'Explore Portrait and Signal: original software designed, built, and launched by 1118.'],
+  '/': ['1118 — AI-First Product Studio', '1118 is an AI-first product studio turning ideas into products people actually use.'],
+  '/work': ['Selected Work | 1118', 'Explore Portrait and Signal: products designed, built, and launched by 1118.'],
   '/work/portrait': ['Portrait — From Photograph to Editorial Portrait | 1118', 'How 1118 built Portrait: an image-to-portrait experience, finished outputs, and an app distributed through the App Store.'],
   '/work/signal': ['Signal — Quantitative Commodities Analytics | 1118', 'Signal was designed, built, and launched by 1118, used in live markets, licensed commercially, and later acquired.'],
   '/privacy': ['Privacy | 1118', 'How 1118 handles information on this website.'],
@@ -53,8 +53,8 @@ function schema(pathname, title, description) {
     '@graph': [
       {
         '@type': 'Organization', ...organization, name: '1118', legalName: '1118, LLC',
-        url: `${origin}/`, email: 'hello@1118.io', logo: `${origin}/icons/apple-touch-icon.png`,
-        description: '1118 is an AI-first product studio that designs, builds, launches, and operates original software.',
+        url: `${origin}/`, logo: `${origin}/icons/apple-touch-icon.png`,
+        description: '1118 is an AI-first product studio that designs, builds, launches, and operates products.',
       },
       {
         '@type': 'WebSite', '@id': `${origin}/#website`, name: '1118', url: `${origin}/`,

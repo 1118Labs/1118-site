@@ -4,8 +4,10 @@ import { useReducedMotion } from 'framer-motion';
 import { currentSkyPupsReviews as skyPupsReviews } from '../content/reviews';
 import './ReviewsProof.css';
 
-// A second full cycle keeps the longest exact review present during every transition.
-const reviewCarouselItems = [...skyPupsReviews, ...skyPupsReviews];
+// Three cycles allow the visible sequence to wrap without sweeping backward.
+// Every cycle includes the longest quote, so movement cannot change track height.
+const reviewCount = skyPupsReviews.length;
+const reviewCarouselItems = [...skyPupsReviews, ...skyPupsReviews, ...skyPupsReviews];
 function capturePointer(node: HTMLElement, pointerId: number) {
   try { node.setPointerCapture(pointerId); } catch { /* Pointer may have already ended. */ }
 }
@@ -26,9 +28,12 @@ export default function ReviewsProof() {
   const hydrated = useSyncExternalStore(subscribeToHydration, () => true, () => false);
   const motionPreference = useReducedMotion();
   const reduceMotion = hydrated && Boolean(motionPreference);
-  const frameRef = useRef<HTMLElement>(null);
+  const visibilityRef = useRef<HTMLSpanElement>(null);
   const swipeRef = useRef<{ active: boolean; pointerId: number; startX: number; startY: number } | null>(null);
-  const [activeView, setActiveView] = useState(0);
+  const [trackPosition, setTrackPosition] = useState<number>(reviewCount);
+  const activeView = trackPosition % reviewCount;
+  const [isRebasing, setIsRebasing] = useState(false);
+  const [autoAdvanceCount, setAutoAdvanceCount] = useState(0);
   const [focusPaused, setFocusPaused] = useState(false);
   const [hoverPaused, setHoverPaused] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -37,9 +42,12 @@ export default function ReviewsProof() {
   const [userAnnouncement, setUserAnnouncement] = useState("");
 
   useEffect(() => {
-    const node = frameRef.current;
+    const node = visibilityRef.current;
     if (!node) return;
-    const observer = new IntersectionObserver(([entry]) => setIsVisible(entry.isIntersecting), { threshold: 0.25 });
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting && entry.intersectionRatio >= 0.15),
+      { threshold: [0, 0.15], rootMargin: '-80px 0px 0px 0px' },
+    );
     observer.observe(node);
     return () => observer.disconnect();
   }, []);
@@ -52,23 +60,46 @@ export default function ReviewsProof() {
   }, []);
 
   useEffect(() => {
-    if (reduceMotion || !isVisible || focusPaused || hoverPaused || pageHidden || userPaused) return;
-    const interval = window.setInterval(
-      () => setActiveView((view) => (view + 1) % skyPupsReviews.length),
-      5200,
-    );
-    return () => window.clearInterval(interval);
-  }, [focusPaused, hoverPaused, isVisible, pageHidden, reduceMotion, userPaused]);
+    if (!hydrated || reduceMotion || !isVisible || focusPaused || hoverPaused || pageHidden || userPaused) return;
+    const timeout = window.setTimeout(() => {
+      setTrackPosition((position) => position + 1);
+      setAutoAdvanceCount((count) => count + 1);
+    }, autoAdvanceCount === 0 ? 1800 : 4000);
+    return () => window.clearTimeout(timeout);
+  }, [autoAdvanceCount, focusPaused, hoverPaused, hydrated, isVisible, pageHidden, reduceMotion, userPaused]);
+
+  useEffect(() => {
+    if (!isRebasing) return;
+    let secondFrame = 0;
+    const firstFrame = requestAnimationFrame(() => {
+      secondFrame = requestAnimationFrame(() => setIsRebasing(false));
+    });
+    return () => { cancelAnimationFrame(firstFrame); cancelAnimationFrame(secondFrame); };
+  }, [isRebasing]);
+
+  const settleLoop = () => {
+    if (trackPosition >= reviewCount && trackPosition < reviewCount * 2) return;
+    setIsRebasing(true);
+    setTrackPosition(reviewCount + ((trackPosition % reviewCount) + reviewCount) % reviewCount);
+  };
 
   const selectReview = (nextView: number) => {
-    const wrappedView = (nextView + skyPupsReviews.length) % skyPupsReviews.length;
+    const wrappedView = ((nextView % reviewCount) + reviewCount) % reviewCount;
     setUserPaused(true);
-    setActiveView(wrappedView);
-    setUserAnnouncement(`Review ${wrappedView + 1} of ${skyPupsReviews.length}: ${skyPupsReviews[wrappedView].name}`);
+    setTrackPosition(reviewCount + wrappedView);
+    setUserAnnouncement(`Review ${wrappedView + 1} of ${reviewCount}: ${skyPupsReviews[wrappedView].name}`);
   };
 
   const move = (direction: -1 | 1) => {
-    selectReview(activeView + direction);
+    const wrappedView = (activeView + direction + reviewCount) % reviewCount;
+    setUserPaused(true);
+    setTrackPosition((position) => {
+      const nextPosition = position + direction;
+      return reduceMotion || nextPosition < 1 || nextPosition > reviewCount * 3 - 3
+        ? reviewCount + wrappedView
+        : nextPosition;
+    });
+    setUserAnnouncement(`Review ${wrappedView + 1} of ${reviewCount}: ${skyPupsReviews[wrappedView].name}`);
   };
 
   const handleKeyboard = (event: ReactKeyboardEvent<HTMLElement>) => {
@@ -125,9 +156,6 @@ export default function ReviewsProof() {
       }}
       onFocusCapture={() => setFocusPaused(true)}
       onKeyDown={handleKeyboard}
-      onMouseEnter={() => setHoverPaused(true)}
-      onMouseLeave={() => setHoverPaused(false)}
-      ref={frameRef}
       role="region"
     >
       <div
@@ -138,18 +166,27 @@ export default function ReviewsProof() {
         onPointerUp={handlePointerEnd}
         tabIndex={0}
       >
+        <span aria-hidden="true" className="re-proof-visibility" ref={visibilityRef} />
         <ul
-          className="re-proof-track"
-          style={{ "--re-position": activeView } as React.CSSProperties}
+          className={`re-proof-track ${isRebasing ? 'is-rebasing' : ''}`}
+          onTransitionEnd={(event) => {
+            if (event.target === event.currentTarget && event.propertyName === 'transform') settleLoop();
+          }}
+          style={{ "--re-position": trackPosition } as React.CSSProperties}
         >
           {reviewCarouselItems.map((review, index) => {
-            const duplicate = index >= skyPupsReviews.length;
+            const duplicate = index < reviewCount || index >= reviewCount * 2;
             return (
             <li
               aria-hidden={duplicate || undefined}
-              aria-label={duplicate ? undefined : `Review ${index + 1} of ${skyPupsReviews.length}`}
-              className={`re-card-card ${index === activeView ? "is-primary" : ""} ${duplicate ? "is-duplicate" : ""}`}
+              aria-label={duplicate ? undefined : `Review ${index % reviewCount + 1} of ${reviewCount}`}
+              className={`re-card-card ${index === trackPosition ? "is-primary" : ""} ${duplicate ? "is-duplicate" : ""}`}
               key={`${review.id}-${index}`}
+              onPointerMove={(event) => {
+                // Scrolling a card beneath a stationary pointer is not reading intent.
+                if (event.pointerType === 'mouse' && (event.movementX || event.movementY)) setHoverPaused(true);
+              }}
+              onPointerLeave={() => setHoverPaused(false)}
             >
               <img
                 alt={`${review.name} from the live SkyPups review collection`}
@@ -188,7 +225,10 @@ export default function ReviewsProof() {
           <button
             aria-label={userPaused ? "Resume reviews" : "Pause reviews"}
             className="re-proof-pause"
-            onClick={() => setUserPaused((value) => !value)}
+            onClick={() => {
+              setUserPaused((value) => !value);
+              if (userPaused) { setFocusPaused(false); setHoverPaused(false); }
+            }}
             type="button"
           >
             {userPaused ? "Resume" : "Pause"} · {activeView + 1}/{skyPupsReviews.length}

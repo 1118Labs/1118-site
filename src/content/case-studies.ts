@@ -1,7 +1,7 @@
 export const caseMeta: Record<string, { title: string; description: string }> = {
   '/work': {
     title: 'Selected Work | 1118',
-    description: 'Explore Portrait and Signal: original software designed, built, and launched by 1118.',
+    description: 'Explore Portrait and Signal: products designed, built, and launched by 1118.',
   },
   '/work/portrait': {
     title: 'Portrait — From Photograph to Editorial Portrait | 1118',

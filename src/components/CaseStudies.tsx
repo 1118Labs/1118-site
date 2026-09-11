@@ -38,7 +38,7 @@ function WorkIndex() {
     <header className="work-index-header case-shell">
       <p className="case-kicker">1118 / Selected work</p>
       <h1>The product<br />is the proof.</h1>
-      <p className="case-intro">Original software, from consumer products to specialized systems. A closer look at what we built—and why.</p>
+      <p className="case-intro">From consumer products to specialized systems. A closer look at what we built—and why.</p>
     </header>
     <div className="work-features">
       <article className="work-feature work-feature-portrait">
