@@ -1,16 +1,7 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
-import type { KeyboardEvent as ReactKeyboardEvent, PointerEvent as ReactPointerEvent } from 'react';
 import { useReducedMotion } from 'framer-motion';
-import { currentSkyPupsReviews as skyPupsReviews } from '../content/reviews';
+import { currentSkyPupsReviews as reviews } from '../content/reviews';
 import './ReviewsProof.css';
-
-// Three cycles allow the visible sequence to wrap without sweeping backward.
-// Every cycle includes the longest quote, so movement cannot change track height.
-const reviewCount = skyPupsReviews.length;
-const reviewCarouselItems = [...skyPupsReviews, ...skyPupsReviews, ...skyPupsReviews];
-function capturePointer(node: HTMLElement, pointerId: number) {
-  try { node.setPointerCapture(pointerId); } catch { /* Pointer may have already ended. */ }
-}
 
 // Native Reviews Engine PawGlyph: ReviewCard.tsx, verified 2026-09-11.
 function NativePaw() {
@@ -23,222 +14,115 @@ function NativePaw() {
 }
 
 const subscribeToHydration = () => () => {};
+const pixelsPerSecond = 32;
 
 export default function ReviewsProof() {
   const hydrated = useSyncExternalStore(subscribeToHydration, () => true, () => false);
   const motionPreference = useReducedMotion();
   const reduceMotion = hydrated && Boolean(motionPreference);
-  const visibilityRef = useRef<HTMLSpanElement>(null);
-  const swipeRef = useRef<{ active: boolean; pointerId: number; startX: number; startY: number } | null>(null);
-  const [trackPosition, setTrackPosition] = useState<number>(reviewCount);
-  const activeView = trackPosition % reviewCount;
-  const [isRebasing, setIsRebasing] = useState(false);
-  const [autoAdvanceCount, setAutoAdvanceCount] = useState(0);
-  const [focusPaused, setFocusPaused] = useState(false);
-  const [hoverPaused, setHoverPaused] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-  const [pageHidden, setPageHidden] = useState(false);
+  const windowRef = useRef<HTMLDivElement>(null);
+  const cycleRef = useRef<HTMLUListElement>(null);
   const [userPaused, setUserPaused] = useState(false);
-  const [userAnnouncement, setUserAnnouncement] = useState("");
+  const [hoverPaused, setHoverPaused] = useState(false);
+  const [focusPaused, setFocusPaused] = useState(false);
 
   useEffect(() => {
-    const node = visibilityRef.current;
-    if (!node) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => setIsVisible(entry.isIntersecting && entry.intersectionRatio >= 0.15),
-      { threshold: [0, 0.15], rootMargin: '-80px 0px 0px 0px' },
-    );
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const onVisibilityChange = () => setPageHidden(document.hidden);
-    onVisibilityChange();
-    document.addEventListener("visibilitychange", onVisibilityChange);
-    return () => document.removeEventListener("visibilitychange", onVisibilityChange);
-  }, []);
-
-  useEffect(() => {
-    if (!hydrated || reduceMotion || !isVisible || focusPaused || hoverPaused || pageHidden || userPaused) return;
-    const timeout = window.setTimeout(() => {
-      setTrackPosition((position) => position + 1);
-      setAutoAdvanceCount((count) => count + 1);
-    }, autoAdvanceCount === 0 ? 1800 : 4000);
-    return () => window.clearTimeout(timeout);
-  }, [autoAdvanceCount, focusPaused, hoverPaused, hydrated, isVisible, pageHidden, reduceMotion, userPaused]);
-
-  useEffect(() => {
-    if (!isRebasing) return;
-    let secondFrame = 0;
-    const firstFrame = requestAnimationFrame(() => {
-      secondFrame = requestAnimationFrame(() => setIsRebasing(false));
+    const viewport = windowRef.current;
+    const cycle = cycleRef.current;
+    if (!hydrated || reduceMotion || userPaused || hoverPaused || focusPaused || !viewport || !cycle) return;
+    let frame = 0;
+    let previousTime = 0;
+    let position = viewport.scrollLeft;
+    let cycleWidth = cycle.getBoundingClientRect().width;
+    const observer = new ResizeObserver(() => {
+      cycleWidth = cycle.getBoundingClientRect().width;
+      position = viewport.scrollLeft;
     });
-    return () => { cancelAnimationFrame(firstFrame); cancelAnimationFrame(secondFrame); };
-  }, [isRebasing]);
-
-  const settleLoop = () => {
-    if (trackPosition >= reviewCount && trackPosition < reviewCount * 2) return;
-    setIsRebasing(true);
-    setTrackPosition(reviewCount + ((trackPosition % reviewCount) + reviewCount) % reviewCount);
-  };
-
-  const selectReview = (nextView: number) => {
-    const wrappedView = ((nextView % reviewCount) + reviewCount) % reviewCount;
-    setUserPaused(true);
-    setTrackPosition(reviewCount + wrappedView);
-    setUserAnnouncement(`Review ${wrappedView + 1} of ${reviewCount}: ${skyPupsReviews[wrappedView].name}`);
-  };
-
-  const move = (direction: -1 | 1) => {
-    const wrappedView = (activeView + direction + reviewCount) % reviewCount;
-    setUserPaused(true);
-    setTrackPosition((position) => {
-      const nextPosition = position + direction;
-      return reduceMotion || nextPosition < 1 || nextPosition > reviewCount * 3 - 3
-        ? reviewCount + wrappedView
-        : nextPosition;
-    });
-    setUserAnnouncement(`Review ${wrappedView + 1} of ${reviewCount}: ${skyPupsReviews[wrappedView].name}`);
-  };
-
-  const handleKeyboard = (event: ReactKeyboardEvent<HTMLElement>) => {
-    if (event.key === "ArrowLeft") move(-1);
-    else if (event.key === "ArrowRight") move(1);
-    else if (event.key === "Home") selectReview(0);
-    else if (event.key === "End") selectReview(skyPupsReviews.length - 1);
-    else return;
-    event.preventDefault();
-  };
-
-  const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (event.pointerType !== "touch") return;
-    swipeRef.current = {
-      active: false,
-      pointerId: event.pointerId,
-      startX: event.clientX,
-      startY: event.clientY,
-    };
-  };
-
-  const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
-    const swipe = swipeRef.current;
-    if (!swipe || swipe.pointerId !== event.pointerId) return;
-    const deltaX = event.clientX - swipe.startX;
-    const deltaY = event.clientY - swipe.startY;
-    if (!swipe.active && Math.max(Math.abs(deltaX), Math.abs(deltaY)) >= 8) {
-      if (Math.abs(deltaY) >= Math.abs(deltaX)) {
-        swipeRef.current = null;
-        return;
+    observer.observe(cycle);
+    const advance = (time: number) => {
+      if (previousTime && cycleWidth > 0) {
+        // Bound elapsed time so a background tab cannot jump when it returns.
+        position = (position + Math.min(time - previousTime, 64) * pixelsPerSecond / 1000) % cycleWidth;
+        viewport.scrollLeft = position;
       }
-      swipe.active = true;
-      capturePointer(event.currentTarget, event.pointerId);
-    }
-    if (swipe.active) event.preventDefault();
-  };
-
-  const handlePointerEnd = (event: ReactPointerEvent<HTMLDivElement>) => {
-    const swipe = swipeRef.current;
-    if (!swipe || swipe.pointerId !== event.pointerId) return;
-    const deltaX = event.clientX - swipe.startX;
-    if (event.type !== "pointercancel" && swipe.active && Math.abs(deltaX) >= 42) move(deltaX < 0 ? 1 : -1);
-    if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
-    swipeRef.current = null;
-  };
+      previousTime = time;
+      frame = requestAnimationFrame(advance);
+    };
+    frame = requestAnimationFrame(advance);
+    return () => { cancelAnimationFrame(frame); observer.disconnect(); };
+  }, [hydrated, reduceMotion, userPaused, hoverPaused, focusPaused]);
 
   return (
-    <figure
-      aria-label="Reviews Engine customer review carousel"
-      aria-roledescription="carousel"
-      className="re-proof"
-      onBlurCapture={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget)) setFocusPaused(false);
-      }}
-      onFocusCapture={() => setFocusPaused(true)}
-      onKeyDown={handleKeyboard}
-      role="region"
-    >
+    <figure className="re-proof" aria-label="Reviews Engine customer stories">
       <div
         className="re-proof-window"
-        onPointerCancel={handlePointerEnd}
-        onPointerDown={handlePointerDown}
-        onPointerMove={handlePointerMove}
-        onPointerUp={handlePointerEnd}
+        ref={windowRef}
         tabIndex={0}
+        aria-label="Customer review strip. Scroll horizontally to explore the reviews."
+        onFocus={() => setFocusPaused(true)}
+        onBlur={() => setFocusPaused(false)}
+        onPointerDown={(event) => {
+          if (event.pointerType === 'touch' || event.pointerType === 'pen') setUserPaused(true);
+        }}
       >
-        <span aria-hidden="true" className="re-proof-visibility" ref={visibilityRef} />
-        <ul
-          className={`re-proof-track ${isRebasing ? 'is-rebasing' : ''}`}
-          onTransitionEnd={(event) => {
-            if (event.target === event.currentTarget && event.propertyName === 'transform') settleLoop();
-          }}
-          style={{ "--re-position": trackPosition } as React.CSSProperties}
-        >
-          {reviewCarouselItems.map((review, index) => {
-            const duplicate = index < reviewCount || index >= reviewCount * 2;
-            return (
-            <li
-              aria-hidden={duplicate || undefined}
-              aria-label={duplicate ? undefined : `Review ${index % reviewCount + 1} of ${reviewCount}`}
-              className={`re-card-card ${index === trackPosition ? "is-primary" : ""} ${duplicate ? "is-duplicate" : ""}`}
-              key={`${review.id}-${index}`}
-              onPointerMove={(event) => {
-                // Scrolling a card beneath a stationary pointer is not reading intent.
-                if (event.pointerType === 'mouse' && (event.movementX || event.movementY)) setHoverPaused(true);
-              }}
-              onPointerLeave={() => setHoverPaused(false)}
+        <div className="re-proof-track">
+          {[0, 1, 2].map((copy) => (
+            <ul
+              className={`re-proof-cycle ${copy ? 'is-duplicate' : ''}`}
+              aria-hidden={copy ? true : undefined}
+              aria-label={copy ? undefined : 'Customer reviews'}
+              key={copy}
+              ref={copy === 0 ? cycleRef : undefined}
             >
-              <img
-                alt={`${review.name} from the live SkyPups review collection`}
-                decoding="async"
-                height="1200"
-                loading="lazy"
-                src={review.image}
-                style={{ objectPosition: review.imagePosition }}
-                width="900"
-              />
-              <div className="re-card-copy">
-                <p aria-label={`${review.paws} out of 5 paws`} className="re-paw-rating" role="img">
-                  <span aria-hidden="true" className="re-paws">
-                    {Array.from({ length: review.paws }, (_, paw) => <NativePaw key={paw} />)}
-                  </span>
-                  <span aria-hidden="true"> {review.paws}.0 PAWS</span>
-                </p>
-                <blockquote>“{review.quote}”</blockquote>
-                <footer>
-                  <strong>{review.name}</strong>
-                  <span>{review.location}</span>
-                </footer>
-              </div>
-            </li>
-            );
-          })}
-        </ul>
+              {reviews.map((review) => (
+                <li
+                  className="re-card-card"
+                  key={review.id}
+                  onPointerMove={(event) => {
+                    // A stationary pointer over a moving strip is not reading intent.
+                    if (event.pointerType === 'mouse') setHoverPaused(true);
+                  }}
+                  onPointerLeave={() => setHoverPaused(false)}
+                >
+                  <img
+                    alt={`${review.name} from the live SkyPups review collection`}
+                    decoding="async"
+                    height="1200"
+                    loading={copy === 0 ? 'eager' : 'lazy'}
+                    src={review.image}
+                    style={{ objectPosition: review.imagePosition }}
+                    width="900"
+                  />
+                  <div className="re-card-copy">
+                    <p aria-label={`${review.paws} out of 5 paws`} className="re-paw-rating" role="img">
+                      <span aria-hidden="true" className="re-paws">
+                        {Array.from({ length: review.paws }, (_, paw) => <NativePaw key={paw} />)}
+                      </span>
+                      <span aria-hidden="true">{review.paws}.0 PAWS</span>
+                    </p>
+                    <blockquote>“{review.quote}”</blockquote>
+                    <footer><strong>{review.name}</strong><span>{review.location}</span></footer>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          ))}
+        </div>
       </div>
-      <div className="re-proof-controls" aria-label="Review sequence controls">
-        <button aria-label="Show previous review" onClick={() => move(-1)} type="button">
-          <span aria-hidden="true">←</span>
-        </button>
-        {reduceMotion ? (
-          <span className="re-proof-status">Review {activeView + 1} of {skyPupsReviews.length}</span>
-        ) : (
+      <div className="re-proof-controls">
+        <span className="re-proof-hint">{reduceMotion ? 'Scroll to explore customer stories.' : 'Real stories, in their own words.'}</span>
+        {!reduceMotion && (
           <button
-            aria-label={userPaused ? "Resume reviews" : "Pause reviews"}
+            aria-label={userPaused ? 'Resume reviews' : 'Pause reviews'}
             className="re-proof-pause"
             onClick={() => {
-              setUserPaused((value) => !value);
+              setUserPaused((paused) => !paused);
               if (userPaused) { setFocusPaused(false); setHoverPaused(false); }
             }}
             type="button"
-          >
-            {userPaused ? "Resume" : "Pause"} · {activeView + 1}/{skyPupsReviews.length}
-          </button>
+          >{userPaused ? 'Resume motion' : 'Pause motion'}</button>
         )}
-        <button aria-label="Show next review" onClick={() => move(1)} type="button">
-          <span aria-hidden="true">→</span>
-        </button>
       </div>
-      <span aria-live="polite" className="visually-hidden">{userAnnouncement}</span>
     </figure>
   );
 }

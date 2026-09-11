@@ -2,7 +2,7 @@
 .case-shell { width: min(1280px, calc(100% - 112px)); margin-inline: auto; }
 .case-kicker { margin: 0 0 24px; font-size: 14px; line-height: 1.5; font-weight: 750; text-transform: uppercase; letter-spacing: .13em; color: #535b60; }
 .case-hero, .work-index-header { padding-block: 96px 72px; }
-.case-hero h1, .work-index-header h1 { margin: 0; max-width: 1160px; font-size: clamp(72px, 6.3vw, 96px); font-weight: 600; line-height: 1.045; letter-spacing: -.065em; text-wrap: balance; }
+.case-hero h1, .work-index-header h1 { margin: 0; max-width: 1160px; font-size: clamp(72px, 6.3vw, 96px); font-weight: 600; line-height: 1.045; letter-spacing: -.045em; text-wrap: balance; }
 .case-intro { max-width: 790px; margin: 32px 0 0; font-size: 21px; line-height: 1.65; letter-spacing: -.018em; color: #515960; }
 .case-back { display: inline-flex; min-height: 44px; align-items: center; margin-bottom: 46px; font-size: 14px; text-decoration: none; }
 .case-product-name { display: flex; align-items: center; gap: 13px; margin-bottom: 24px; font-size: 22px; font-weight: 650; }
@@ -39,7 +39,7 @@
 .case-archive-detail { display: grid; grid-template-columns: 1.4fr 1fr; gap: 64px; align-items: center; margin-top: 72px; }
 .work-index-header .case-intro { max-width: 650px; }
 .work-feature-link { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 80px; padding-block: 88px; text-decoration: none; color: inherit; }
-.work-feature-copy h2 { margin: 0 0 24px; font-size: clamp(38px, 3.6vw, 54px); font-weight: 600; letter-spacing: -.05em; line-height: 1.13; text-wrap: balance; }
+.work-feature-copy h2 { margin: 0 0 24px; font-size: clamp(38px, 3.6vw, 54px); font-weight: 600; letter-spacing: -.04em; line-height: 1.13; text-wrap: balance; }
 .work-feature-copy > p:not(.case-kicker) { max-width: 480px; color: #555f65; font-size: 20px; line-height: 1.65; margin: 0 0 25px; }
 .work-feature-image { min-width: 0; }
 .work-feature-image img { display: block; width: 100%; height: auto; transition: transform .3s ease; }
@@ -65,7 +65,7 @@
 @media (max-width: 700px) {
  .case-shell { width: calc(100% - 40px); }
  .case-hero, .work-index-header { padding-block: 64px 48px; }
- .case-hero h1, .work-index-header h1 { font-size: clamp(44px, 11.7vw, 58px); line-height: 1.08; letter-spacing: -.057em; overflow-wrap: normal; }
+ .case-hero h1, .work-index-header h1 { font-size: clamp(44px, 11.7vw, 58px); line-height: 1.08; letter-spacing: -.04em; overflow-wrap: normal; }
  .case-back { margin-bottom: 26px; }
  .case-kicker { font-size: 14px; margin-bottom: 18px; }
  .case-intro { font-size: 18px; line-height: 1.65; margin-top: 25px; }

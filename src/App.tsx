@@ -1,4 +1,4 @@
-import { motion, useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "framer-motion";
 import {
   type ReactNode,
   useEffect,
@@ -16,7 +16,7 @@ import CaseStudies from "./components/CaseStudies";
 import ContactPanel from "./components/ContactPanel";
 import { caseMeta } from "./content/case-studies";
 import "./premium.css";
-import brandMark from "./assets/brand/1118-mark-blue.png";
+
 import appStoreBadge from "./assets/showcase/etchr/download-on-the-app-store.svg";
 import etchrAppIcon from "./assets/showcase/portrait/portrait-app-icon.png";
 import PortraitComparison from "./components/PortraitComparison";
@@ -123,12 +123,12 @@ function Eyebrow({ children }: { children: string }) {
 }
 
 function BrandLockup({ compact = false }: { compact?: boolean }) {
-  return (
-    <span className={`logo ${compact ? "is-compact" : ""}`}>
-      <img className="logo-mark logo-mark-1118" src={brandMark} alt="" width="272" height="175" />
-      <span className="visually-hidden">1118</span>
-    </span>
-  );
+  return <span className={`logo ${compact ? "is-compact" : ""}`}>
+    <svg className="logo-mark" viewBox="0 0 204 80" aria-hidden="true">
+      <path fill="currentColor" d="M4 18 24 4h10v72H20V24L4 34Zm48 0L72 4h10v72H68V24L52 34Zm48 0 20-14h10v72h-14V24l-16 10Z" />
+      <path fill="currentColor" fillRule="evenodd" d="M174 2c17 0 27 8 27 21 0 8-4 14-11 17 9 4 14 10 14 18 0 13-12 21-30 21s-30-8-30-21c0-8 5-14 14-18-7-3-11-9-11-17 0-13 10-21 27-21Zm0 12c-8 0-13 4-13 10s5 10 13 10 13-4 13-10-5-10-13-10Zm0 32c-9 0-16 4-16 11s7 11 16 11 16-4 16-11-7-11-16-11Z" />
+    </svg><span className="visually-hidden">1118</span>
+  </span>;
 }
 
 function FloatingNav({ activeHash, pathname }: { activeHash: string; pathname: string }) {
@@ -181,7 +181,7 @@ function FloatingNav({ activeHash, pathname }: { activeHash: string; pathname: s
     <header className={`floating-nav-shell ${isCompressed ? "is-compressed" : ""}`}>
       <div className={`floating-nav ${isCompressed ? "is-compressed" : ""}`}>
         <a className="brand-link" href={pathname === "/" ? "#top" : "/"} aria-label="1118 home">
-          <BrandLockup />
+          <BrandLockup /><span className="brand-descriptor">Independent<br />product studio</span>
         </a>
 
         <nav className="site-nav desktop-nav" aria-label="Primary navigation">
@@ -233,45 +233,19 @@ function FloatingNav({ activeHash, pathname }: { activeHash: string; pathname: s
 }
 
 function Hero({ reduceMotion }: { reduceMotion: boolean }) {
-  return (
-    <section className="hero-section" id="top">
-      <div className="hero-shell">
-        <motion.div
-          animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-          className="hero-copy"
-          initial={false}
-          transition={{ duration: 0.58, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <Eyebrow>AI-first product studio</Eyebrow>
-          <h1>We build companies<br />and products<br /><span>with AI.</span></h1>
-          <p className="hero-copy-body">From first idea to everyday use.</p>
-
-          <div className="hero-actions">
-            <a className="primary-button" href="#work">
-              Explore our work <span aria-hidden="true">↓</span>
-            </a>
-            <a className="hero-secondary-link" href="#contact">Work with us <span aria-hidden="true">↗</span></a>
-          </div>
-        </motion.div>
-
-        <motion.div
-          animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-          className="hero-visual-stage"
-          initial={false}
-          transition={{ duration: 0.64, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <div className="hero-visual-card">
-            <div className="hero-visual-media media-frame">
-              <PortraitComparison className="hero-media-slot" priority />
-            </div>
-            <a aria-label="See Portrait, a live product built by 1118" className="hero-product-label" href="#portrait">
-              <span>01 / Portrait</span><span>Photo → portrait ↗</span>
-            </a>
-          </div>
-        </motion.div>
+  return <section className={`hero-section ${reduceMotion ? 'motion-reduced' : ''}`} id="top">
+    <div className="hero-shell">
+      <div className="hero-topline"><Eyebrow>1118 / AI-first product studio</Eyebrow><span className="hero-signal" aria-hidden="true"><i />Ideas into the world</span></div>
+      <div className="hero-copy">
+        <h1><span className="hero-line"><span>We build companies</span></span><span className="hero-line"><span>and products with <em>AI.</em></span></span></h1>
+        <div className="hero-baseline">
+          <p className="hero-copy-body">1118 is an AI-first product studio.<br />We build, launch, and operate products we believe should exist.</p>
+          <div className="hero-actions"><a className="primary-button" href="#work">Explore our work <span aria-hidden="true">↓</span></a><a className="hero-secondary-link" href="#contact">Work with us <span aria-hidden="true">↗</span></a></div>
+        </div>
       </div>
-    </section>
-  );
+      <div className="hero-bottom"><span>Built with conviction. Made for real use.</span><a href="#work" aria-label="Scroll to selected products"><span aria-hidden="true">↓</span></a></div>
+    </div>
+  </section>;
 }
 
 function ProductVisual({ product }: { product: Product }) {
@@ -289,7 +263,7 @@ function ProductSection() {
         {products.map((product, index) => (
           <article className="fleet-launch" data-product={product.slug} id={product.slug} key={product.slug}>
             <div className={`fleet-launch-shell ${index === 0 ? "is-lead" : ""} ${index % 2 === 1 ? "is-reversed" : ""}`}>
-              <div className="fleet-launch-copy">
+              <div className="fleet-launch-copy" data-reveal="rise">
                 <div className="fleet-launch-meta"><span className="product-index">0{index + 1}</span>{product.status && <span className="eyebrow-pill">{product.status}</span>}</div>
                 {product.slug === "portrait" ? (
                   <div className="etchr-product-lockup">
@@ -330,7 +304,8 @@ function ProductSection() {
                 {(product.slug === "portrait" || product.slug === "signal") && <a className="case-study-link" href={`/work/${product.slug}`}>Explore the {product.name} case study <span aria-hidden="true">→</span></a>}
               </div>
 
-              <div className="fleet-launch-stage">
+              {product.slug === "portrait" && <div className="portrait-intro-comparison" data-reveal="rise"><PortraitComparison className="portrait-lead-comparison" /><div className="portrait-lead-caption"><span>A photograph. A new perspective.</span><span>Drag to compare ↔</span></div></div>}
+              <div className="fleet-launch-stage" data-reveal="rise">
                 <div className="fleet-showcase-media-shell">
                   <div className="fleet-showcase-media media-frame">
                     <ProductVisual product={product} />
@@ -349,9 +324,9 @@ function AboutSection() {
   return (
     <section className="studio-section" id="about">
       <div className="section-shell studio-shell">
-        <div className="studio-intro">
+        <div className="studio-intro" data-reveal="rise">
           <Eyebrow>The studio</Eyebrow>
-          <h2>We build what we<br />believe should exist.</h2>
+          <h2>From conviction<br />to company.</h2>
           <div className="studio-intro-copy"><p>From a personal portrait to a complex trading decision, our products turn a clear point of view into something useful. AI is part of how we build—and, where it belongs, part of the product itself.</p></div>
         </div>
         <div className="operating-model" id="process">
@@ -368,7 +343,7 @@ function AboutSection() {
 
 function ContactSection() {
   return <section className="contact-section" id="contact"><div className="section-shell contact-shell">
-    <div className="contact-copy"><Eyebrow>Work with us</Eyebrow><h2>Have something<br />worth building?</h2><p>We work selectively with founders and companies on ideas that deserve to become products.</p><a className="contact-start" href="#contact-form">Start a conversation <span aria-hidden="true">↘</span></a></div>
+    <div className="contact-copy" data-reveal="rise"><Eyebrow>Work with us</Eyebrow><h2>Have something<br />worth building?</h2><p>We work selectively with founders and companies on ideas that deserve to become products.</p><a className="contact-start" href="#contact-form">Start a conversation <span aria-hidden="true">↘</span></a></div>
     <ContactPanel />
   </div></section>;
 }
@@ -451,6 +426,7 @@ function NotFoundPage() {
 function Footer() {
   return (
     <footer className="site-footer">
+      <div className="site-footer-top section-shell"><p>New ventures. Selected collaborations.</p><a className="footer-conversation" href="/#contact">Let’s talk <span aria-hidden="true">↗</span></a></div>
       <div className="site-footer-shell">
         <div className="site-footer-copy">
           <BrandLockup compact />
@@ -528,6 +504,15 @@ export default function App({ initialPathname = "/" }: { initialPathname?: strin
     });
     return () => window.cancelAnimationFrame(frame);
   }, [activeHash, pathname]);
+
+  useEffect(() => {
+    if (reduceMotion) return;
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('has-entered'); observer.unobserve(entry.target); } });
+    }, { threshold: 0.08, rootMargin: '0px 0px -35px 0px' });
+    document.querySelectorAll('[data-reveal]').forEach(element => observer.observe(element));
+    return () => observer.disconnect();
+  }, [pathname, reduceMotion]);
 
   const mainContent = useMemo(() => {
     if (pathname === "/") {

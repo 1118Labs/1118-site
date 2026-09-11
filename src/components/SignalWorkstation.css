@@ -1,10 +1,15 @@
-.signal-workstation { width:100%; margin:0; }
-.signal-workstation-scene { position:relative; aspect-ratio:16 / 9; overflow:hidden; background:#edf0f2; }
-/* Crop the environment and its registered screen as one composition. */
-.signal-workstation-stage { position:absolute; inset-inline:0; top:-4%; aspect-ratio:3 / 2; }
-.signal-workstation-environment { display:block; width:100%; height:auto; }
-.signal-workstation-plane { position:absolute; left:10.03%; top:11.23%; width:80.08%; height:53.12%; background:#11161a; display:flex; align-items:center; justify-content:center; overflow:hidden; }
-.signal-workstation-plane img { display:block; width:100%; height:100%; object-fit:contain; }
-.signal-workstation figcaption { display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px 24px; margin-top:20px; color:inherit; font-size:14px; line-height:1.6; }
-.signal-workstation figcaption a { color:inherit; text-decoration:underline; text-underline-offset:4px; }
-@media(max-width:600px) { .signal-workstation-scene { aspect-ratio:16 / 10; } .signal-workstation-stage { top:0; } }
+.signal-workstation { width: 100%; max-width: none; margin: 0; }
+.signal-workstation-scene { position: relative; width: 100%; aspect-ratio: 1.9; overflow: hidden; background: #070d14; }
+/* The original interface and environment share one registered stage. */
+.signal-workstation-stage { position: absolute; width: 109%; left: -4.5%; top: -5%; aspect-ratio: 3 / 2; }
+.signal-workstation-environment { display: block; width: 100%; height: auto; filter: brightness(.72) saturate(.7); }
+.signal-workstation-plane { position: absolute; left: 10.03%; top: 11.23%; width: 80.08%; height: 53.12%; background: #10151c; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.signal-workstation-plane img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.signal-workstation figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px 32px; margin: 0; padding: 28px clamp(20px, 4vw, 72px); color: inherit; font-size: 14px; line-height: 1.6; }
+.signal-workstation figcaption a { color: inherit; text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px; }
+.signal-workstation figcaption a:hover { text-underline-offset: 7px; }
+@media (max-width: 700px) {
+  .signal-workstation-scene { aspect-ratio: 1.6; }
+  .signal-workstation-stage { width: 109%; left: -4.5%; top: 0; }
+  .signal-workstation figcaption { padding-block: 24px; }
+}

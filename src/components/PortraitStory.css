@@ -3,111 +3,66 @@
   width: 100%;
   min-width: 0;
   margin: 0;
-  color: #15191f;
+  color: #141a22;
 }
 
-.portrait-story-steps {
+.portrait-story-transformation {
   display: grid;
-  grid-template-columns: .7fr 1.6fr .82fr;
+  grid-template-columns: .82fr 1.18fr;
   align-items: center;
-  gap: clamp(20px, 3cqi, 44px);
-  margin: 0;
-  padding: 0;
-  list-style: none;
+  gap: clamp(48px, 8cqi, 120px);
 }
-
-.portrait-story-step { min-width: 0; }
-
+.portrait-story-input, .portrait-story-result { min-width: 0; margin: 0; }
+.portrait-story-input { width: 100%; max-width: 460px; justify-self: center; }
 .portrait-story-step-label {
   display: flex;
   align-items: baseline;
-  gap: 8px;
-  margin-bottom: 16px;
-  font-size: 18px;
-  font-weight: 650;
-  line-height: 1.5;
-  letter-spacing: -.02em;
+  gap: 16px;
+  margin-bottom: 24px;
+  font-size: clamp(18px, 2cqi, 24px);
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -.025em;
 }
-
-.portrait-story-step-label > span {
-  color: #646b76;
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: .02em;
-}
-
-.portrait-story-source-frame {
-  overflow: hidden;
-  background: #edf0f3;
-}
-
-.portrait-story-source-frame img,
-.portrait-story-result-frame img,
-.portrait-story-format img {
+.portrait-story-step-label > span { color: #5d6977; font-size: 14px; font-weight: 500; letter-spacing: .04em; }
+.portrait-story-source-frame, .portrait-story-result-frame { width: 100%; }
+.portrait-story-source-frame img, .portrait-story-result-frame img {
   display: block;
   width: 100%;
-  max-width: 100%;
   height: auto;
+  max-width: 100%;
+  object-fit: contain;
 }
+.portrait-story-note { margin: 20px 0 0; color: #4d5a69; font-size: 16px; line-height: 1.6; }
+.portrait-story-outputs { margin-top: clamp(76px, 10cqi, 144px); padding-top: clamp(36px, 5cqi, 64px); border-top: 1px solid #dbe2ea; }
+.portrait-story-output-intro { display: flex; justify-content: space-between; align-items: end; gap: 32px; margin-bottom: 64px; }
+.portrait-story-output-intro h3 { margin: 0; font-size: clamp(36px, 4.6cqi, 64px); font-weight: 500; line-height: 1.06; letter-spacing: -.05em; }
+.portrait-story-output-intro h3 > span { display: block; margin-bottom: 20px; color: #526477; font-size: 14px; font-weight: 500; line-height: 1.5; letter-spacing: .06em; }
+.portrait-story-output-intro p { max-width: 340px; margin: 0; color: #4d5a69; font-size: 18px; line-height: 1.65; }
+.portrait-story-formats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(40px, 7cqi, 100px); max-width: 1000px; margin-inline: auto; align-items: center; }
+.portrait-story-format { min-width: 0; margin: 0; text-align: center; }
+.portrait-story-format img { display: block; width: auto; max-width: 100%; height: auto; max-height: 380px; object-fit: contain; margin-inline: auto; }
+.portrait-story-format-circle img { max-width: min(100%, 260px); }
+.portrait-story .portrait-story-format figcaption { margin: 24px 0 0; color: #4d5a69; font-size: 16px; line-height: 1.5; }
+.portrait-story .portrait-story-caption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 32px; margin-top: 64px; padding-top: 24px; border-top: 1px solid #dbe2ea; color: #586575; font-size: 14px; line-height: 1.6; }
 
-.portrait-story-result-frame {
-  background: #fff;
-  overflow: hidden;
+@container (max-width: 760px) {
+  .portrait-story-transformation { gap: 36px; }
+  .portrait-story-output-intro { display: block; margin-bottom: 44px; }
+  .portrait-story-output-intro p { max-width: 440px; margin-top: 24px; }
+  .portrait-story-formats { gap: 32px; }
 }
-
-.portrait-story-note {
-  margin: 13px 0 0;
-  font-size: 16px;
-  line-height: 1.55;
-  color: #535c69;
+@container (max-width: 520px) {
+  .portrait-story-transformation { grid-template-columns: 1fr; gap: 56px; }
+  .portrait-story-input { width: 76%; justify-self: start; }
+  .portrait-story-step-label { margin-bottom: 20px; font-size: 20px; }
+  .portrait-story-note { margin-top: 16px; }
+  .portrait-story-formats { grid-template-columns: 1fr 1fr; gap: 44px 32px; max-width: 380px; }
+  .portrait-story-format img { max-height: 260px; }
+  .portrait-story-format-story { grid-column: 1 / -1; width: 48%; justify-self: center; }
+  .portrait-story .portrait-story-format figcaption { margin-top: 18px; }
+  .portrait-story .portrait-story-caption { margin-top: 48px; }
 }
-
-.portrait-story-formats {
-  display: grid;
-  grid-template-columns: 1fr .78fr;
-  align-items: start;
-  gap: 16px 14px;
-}
-
-.portrait-story-format { min-width: 0; margin: 0; }
-.portrait-story-format img { background: #fff; }
-.portrait-story-format-circle img { border-radius: 50%; }
-.portrait-story-format-story { grid-column: 2; grid-row: 1 / span 2; margin-top: 42px; }
-.portrait-story .portrait-story-format figcaption { margin-top: 9px; color: #535c69; font-size: 14px; line-height: 1.4; }
-
-.portrait-story .portrait-story-caption {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px 24px;
-  margin-top: 28px;
-  padding-top: 15px;
-  border-top: 1px solid #dbe0e6;
-  color: #535c69;
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-@container (max-width: 660px) {
-  .portrait-story-steps { grid-template-columns: .68fr 1.32fr; gap: 32px 18px; align-items: center; }
-  .portrait-story-step-label { font-size: 16px; }
-  .portrait-story-outputs { grid-column: 1 / -1; border-top: 1px solid #dbe0e6; padding-top: 24px; }
-  .portrait-story-formats { grid-template-columns: 1fr 1fr .78fr; align-items: center; gap: 20px; max-width: 430px; }
-  .portrait-story-format { grid-column: auto; grid-row: auto; margin: 0; }
-  .portrait-story-format-profile { max-width: 120px; }
-  .portrait-story-format-circle { max-width: 106px; }
-  .portrait-story-format-story { max-width: 78px; }
-  .portrait-story-outputs .portrait-story-note { margin-top: 16px; }
-}
-
-@container (max-width: 380px) {
-  .portrait-story-steps { gap: 24px 14px; }
-  .portrait-story-step-label { flex-direction: column; gap: 3px; font-size: 16px; margin-bottom: 12px; }
-  .portrait-story-formats { gap: 18px; }
-  .portrait-story-note { font-size: 15px; }
-  .portrait-story .portrait-story-caption { margin-top: 22px; }
-}
-
 @media (forced-colors: active) {
-  .portrait-story-result-frame, .portrait-story-format img, .portrait-story-source-frame { border: 1px solid CanvasText; }
+  .portrait-story-source-frame, .portrait-story-result-frame, .portrait-story-format img { outline: 1px solid CanvasText; }
 }

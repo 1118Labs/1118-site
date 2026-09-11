@@ -1,23 +1,17 @@
+import house from '../assets/showcase/property-insights/illustrative-house-pixasquare.jpg';
 import decision from '../assets/showcase/property-insights/current-synthetic-ready-decision.png';
-import recommendation from '../assets/showcase/property-insights/current-synthetic-ready-recommendation.png';
 import './PropertyProof.css';
 
 export default function PropertyProof() {
   return <figure className="pi-proof">
-    <div className="pi-proof-composition">
-      <div className="pi-proof-explainer">
-        <p className="pi-proof-kicker">Inside the operator workflow</p>
-        <h3>From request<br />to ready.</h3>
-        <p className="pi-proof-intro">The property, the scope, and a starting point—before the estimate is finished in Jobber.</p>
-        <ol>
-          <li><span>01</span><div><strong>Know the context.</strong><p>A biweekly cleaning request. Three beds, two baths, 1,800 square feet.</p></div></li>
-          <li><span>02</span><div><strong>See what needs review.</strong><p>Core facts support an estimate. Year built and lot size remain unavailable.</p></div></li>
-          <li><span>03</span><div><strong>Make the next decision.</strong><p>A $150 manual starting point, with the operator in control of the final quote.</p></div></li>
-        </ol>
+    <div className="pi-property-composition">
+      <div className="pi-property-photo"><img src={house} width="1800" height="1800" alt="Illustrative modern white house with mature trees and a landscaped front lawn" loading="lazy" decoding="async" /><span>Property intelligence starts here.</span></div>
+      <div className="pi-decision-layer">
+        <div className="pi-decision-caption"><span>From property to decision</span><span aria-hidden="true">↘</span></div>
+        <div className="pi-proof-window"><img src={decision} width="1024" height="934" alt="Actual Property Insights interface: approved synthetic request ready to quote, with a $150 manual starting point and supporting house facts." loading="lazy" decoding="async" /></div>
       </div>
-      <div className="pi-proof-window"><img src={decision} width="1024" height="934" alt="Actual Property Insights interface: approved synthetic request ready to quote, with a $150 manual starting point, 2.3 to 2.9 hours with two people, and supporting house facts." loading="lazy" decoding="async" /></div>
     </div>
-    <div className="pi-proof-recommendation"><p>The recommendation, <br /><strong>ready for operator review.</strong></p><img src={recommendation} width="975" height="295" alt="Enlarged detail from the actual approved synthetic example: Ready, start at $150." loading="lazy" decoding="async" /></div>
-    <figcaption><span>Actual product interface · Approved synthetic example · Captured September 11, 2026</span><a href={decision} target="_blank" rel="noreferrer">Inspect the product view <span aria-hidden="true">↗</span></a></figcaption>
+    <div className="pi-outcomes"><p><span>01 / Context</span>Know what you’re walking into.</p><p><span>02 / Preparation</span>Build a better-informed estimate.</p><p><span>03 / Decision</span>Move the work forward.</p></div>
+    <figcaption><span>Illustrative property photograph. The actual product screen shows a separate, approved synthetic example.</span><a href={decision} target="_blank" rel="noreferrer">Inspect the product view <span aria-hidden="true">↗</span></a></figcaption>
   </figure>;
 }
