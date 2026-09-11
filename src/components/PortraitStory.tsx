@@ -1,56 +1,38 @@
-import sourcePhoto from "../assets/showcase/portrait/sloane-source.webp";
-import finishedPortrait from "../assets/showcase/portrait/sloane-result.webp";
-import profilePortrait from "../assets/showcase/portrait/sloane-profile.webp";
-import circlePortrait from "../assets/showcase/portrait/sloane-circle.webp";
-import storyPortrait from "../assets/showcase/portrait/sloane-story.webp";
-import "./PortraitStory.css";
+import sourceScreen from '../assets/showcase/portrait/app-store-source.webp';
+import transformationScreen from '../assets/showcase/portrait/app-store-transformation.webp';
+import finishedScreen from '../assets/showcase/portrait/app-store-finished.webp';
+import './PortraitStory.css';
 
 type PortraitStoryProps = {
   className?: string;
-  variant?: "chapter" | "case-study";
+  variant?: 'chapter' | 'case-study';
 };
 
-/** Authentic studio source, result and exports from one approved subject. */
-export default function PortraitStory({ className = "", variant = "chapter" }: PortraitStoryProps) {
+/** Published App Store screenshots, preserved in full without simulated controls. */
+export default function PortraitStory({ className = '', variant = 'chapter' }: PortraitStoryProps) {
   return (
     <figure className={`portrait-story portrait-story--${variant} ${className}`}>
-      <div className="portrait-story-transformation">
-        <figure className="portrait-story-input">
-          <div className="portrait-story-step-label"><span>01</span> Your photo</div>
-          <div className="portrait-story-source-frame">
-            <img src={sourcePhoto} alt="Sloane's original color studio photograph" width={900} height={1125} loading="lazy" decoding="async" />
-          </div>
-          <p className="portrait-story-note">Start with one clear photo.</p>
+      <div className="portrait-story-screens">
+        <figure className="portrait-story-screen portrait-story-screen-source">
+          <figcaption><span>01</span> Source photograph</figcaption>
+          <a href={sourceScreen} target="_blank" rel="noreferrer" aria-label="View full-size source photograph App Store screenshot">
+            <img src={sourceScreen} alt="Published Portrait App Store screen: Laurie's original photograph above the real Choose Photo and Take Photo controls" width={1284} height={2778} loading="lazy" decoding="async" />
+          </a>
         </figure>
-        <figure className="portrait-story-result">
-          <div className="portrait-story-step-label"><span>02</span> Editorial portrait</div>
-          <div className="portrait-story-result-frame">
-            <img src={finishedPortrait} alt="The same Sloane photograph transformed into a finished black-and-white editorial portrait" width={1024} height={1024} loading="lazy" decoding="async" />
-          </div>
-          <p className="portrait-story-note">A finished portrait, ready to use.</p>
+        <figure className="portrait-story-screen portrait-story-screen-transformation">
+          <figcaption><span>02</span> Transformation</figcaption>
+          <a href={transformationScreen} target="_blank" rel="noreferrer" aria-label="View full-size transformation App Store screenshot">
+            <img src={transformationScreen} alt="Published Portrait App Store screen: the same photograph compared with its editorial portrait" width={1284} height={2778} loading="lazy" decoding="async" />
+          </a>
+        </figure>
+        <figure className="portrait-story-screen portrait-story-screen-finished">
+          <figcaption><span>03</span> Finished portrait</figcaption>
+          <a href={finishedScreen} target="_blank" rel="noreferrer" aria-label="View full-size finished portrait and Save and Share App Store screenshot">
+            <img src={finishedScreen} alt="Published Portrait App Store screen: the complete finished portrait with actual Save to Photos, Share, and Portrait Tools controls" width={1284} height={2778} loading="lazy" decoding="async" />
+          </a>
         </figure>
       </div>
-      <div className="portrait-story-outputs">
-        <div className="portrait-story-output-intro">
-          <h3><span>03 / THE FINISHED FORMATS</span>Save. Share. Use.</h3>
-          <p>For profiles, bios and social posts. Your portrait, ready for wherever you take it.</p>
-        </div>
-        <div className="portrait-story-formats">
-          <figure className="portrait-story-format portrait-story-format-profile">
-            <img src={profilePortrait} alt="Sloane's finished portrait in a vertical profile format" width={360} height={450} loading="lazy" decoding="async" />
-            <figcaption>Profile</figcaption>
-          </figure>
-          <figure className="portrait-story-format portrait-story-format-circle">
-            <img src={circlePortrait} alt="Sloane's finished portrait in an avatar format" width={320} height={320} loading="lazy" decoding="async" />
-            <figcaption>Avatar</figcaption>
-          </figure>
-          <figure className="portrait-story-format portrait-story-format-story">
-            <img src={storyPortrait} alt="Sloane's finished portrait in a tall story format" width={270} height={480} loading="lazy" decoding="async" />
-            <figcaption>Story</figcaption>
-          </figure>
-        </div>
-      </div>
-      <figcaption className="portrait-story-caption">Sloane · Studio example <span>One photo, one portrait, multiple formats.</span></figcaption>
+      <figcaption className="portrait-story-caption">App Store screenshots · Laurie · Studio example</figcaption>
     </figure>
   );
 }

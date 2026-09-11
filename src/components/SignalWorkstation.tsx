@@ -1,5 +1,5 @@
 import signalInterface from '../assets/showcase/signal/signal-archival-interface.png';
-import environment from '../assets/showcase/signal/signal-workstation-environment.webp';
+import environment from '../assets/showcase/signal/signal-workstation-environment-v2.webp';
 import './SignalWorkstation.css';
 
 export default function SignalWorkstation() {
@@ -13,7 +13,7 @@ export default function SignalWorkstation() {
           </div>
         </div>
       </div>
-      <figcaption><span>Original 2019 interface · Composed workstation environment</span><a href={signalInterface} target="_blank" rel="noreferrer">Explore the original screen ↗</a></figcaption>
+      <figcaption><span>Original 2019 interface · Generated workstation environment</span><a href={signalInterface} target="_blank" rel="noreferrer">Explore the original screen ↗</a></figcaption>
     </figure>
   );
 }

@@ -42,16 +42,16 @@ const products: Product[] = [
     slug: "portrait",
     name: "Portrait",
     status: productStatus.portrait,
-    headline: "One photo.\nA portrait for everywhere.",
-    description: "Your photograph, reimagined as an editorial portrait. Made for the profiles, places, and people that know you.",
+    headline: "Look like you\nbelong in print.",
+    description: "Turn one clear photograph into a refined editorial portrait made for profiles, websites, social media, and print.",
     link: { href: APP_STORE_URL, label: "View on the App Store" },
   },
   {
     slug: "reviews-engine",
     name: "Reviews Engine",
     status: productStatus["reviews-engine"],
-    headline: "A great reputation.\nOut in the open.",
-    description: "For businesses built on trust. Collect customer stories, review what goes live, and put real experiences where the next customer can see them.",
+    headline: "Turn great customer experiences\ninto a reputation people can see.",
+    description: "A live platform for collecting, moderating, and publishing customer reviews.",
     link: { href: REVIEWS_ENGINE_PUBLIC_PROOF_URL, label: "See Reviews Engine in use" },
     note: "Reviews from the live SkyPups installation.",
   },
@@ -60,42 +60,42 @@ const products: Product[] = [
     name: "Property Insights",
     status: productStatus["property-insights"],
     link: { href: "https://insights.1118.io", label: "Explore Property Insights" },
-    headline: "Know the property.\nWin the job.",
-    description: "AI-powered property intelligence for home-service businesses. Arrive prepared, make better-informed estimates, and move from request to quote with a clearer picture of the job.",
+    headline: "Know the property.\nQuote with context.",
+    description: "Property intelligence for service businesses—turning incoming requests into clearer estimates and better operating decisions.",
   },
   {
     slug: "signal",
     name: "Signal",
     status: productStatus.signal,
-    headline: "See the market\ndifferently.",
+    headline: "Finding the trade\nbefore the market does.",
     description:
-      "A quantitative commodities platform for traders working with complex markets. 1118 designed, built, and launched Signal to turn data and machine learning into a clearer view of trading opportunities. Used in live markets, licensed commercially, and later acquired.",
-    note: "Authentic product screen · 2019",
+      "1118 built Signal to surface compelling commodities trade ideas through quantitative analysis, visualization, and machine learning.",
+    note: "Signal was used in live markets, licensed commercially, and later acquired.",
   },
 ];
 
 const buildSteps = [
   {
     step: "01",
-    title: "Find the opportunity.",
-    body: "Start with a real problem and a point of view about what could be better.",
+    title: "DIRECTION",
+    body: "Product priorities, standards, and final decisions remain founder-led.",
   },
   {
     step: "02",
-    title: "Build the product.",
-    body: "Bring product judgment, design, engineering, and AI into the same working process.",
+    title: "EXECUTION",
+    body: "AI systems and specialist tools help turn clear briefs into visible work.",
   },
   {
     step: "03",
-    title: "Put it to work.",
-    body: "Launch, operate, and learn from real use. The work continues after the release.",
+    title: "REVIEW",
+    body: "Evidence is checked, releases are gated, and responsibility remains with us.",
   },
 ] as const;
 
 const policyMeta: Record<string, { description: string; title: string }> = {
   "/": {
     title: "1118 — AI-First Product Studio",
-    description: "1118 is an AI-first product studio turning ideas into products people actually use.",
+    description: "1118 designs, builds, launches, and operates original software.",
   },
   "/privacy": {
     title: "Privacy | 1118",
@@ -124,12 +124,7 @@ function Eyebrow({ children }: { children: string }) {
 }
 
 function BrandLockup({ compact = false }: { compact?: boolean }) {
-  return <span className={`logo ${compact ? "is-compact" : ""}`}>
-    <svg className="logo-mark" viewBox="0 0 204 80" aria-hidden="true">
-      <path fill="currentColor" d="M4 18 24 4h10v72H20V24L4 34Zm48 0L72 4h10v72H68V24L52 34Zm48 0 20-14h10v72h-14V24l-16 10Z" />
-      <path fill="currentColor" fillRule="evenodd" d="M174 2c17 0 27 8 27 21 0 8-4 14-11 17 9 4 14 10 14 18 0 13-12 21-30 21s-30-8-30-21c0-8 5-14 14-18-7-3-11-9-11-17 0-13 10-21 27-21Zm0 12c-8 0-13 4-13 10s5 10 13 10 13-4 13-10-5-10-13-10Zm0 32c-9 0-16 4-16 11s7 11 16 11 16-4 16-11-7-11-16-11Z" />
-    </svg><span className="visually-hidden">1118</span>
-  </span>;
+  return <span className={`logo ${compact ? "is-compact" : ""}`}><img className="logo-mark" src={compact ? "/brand/1118-restored-light.svg" : "/brand/1118-restored-dark.svg"} alt="1118" width="819" height="525" /></span>;
 }
 
 function FloatingNav({ activeHash, pathname }: { activeHash: string; pathname: string }) {
@@ -182,7 +177,7 @@ function FloatingNav({ activeHash, pathname }: { activeHash: string; pathname: s
     <header className={`floating-nav-shell ${isCompressed ? "is-compressed" : ""}`}>
       <div className={`floating-nav ${isCompressed ? "is-compressed" : ""}`}>
         <a className="brand-link" href={pathname === "/" ? "#top" : "/"} aria-label="1118 home">
-          <BrandLockup /><span className="brand-descriptor">Independent<br />product studio</span>
+          <BrandLockup />
         </a>
 
         <nav className="site-nav desktop-nav" aria-label="Primary navigation">
@@ -236,15 +231,14 @@ function FloatingNav({ activeHash, pathname }: { activeHash: string; pathname: s
 function Hero({ reduceMotion }: { reduceMotion: boolean }) {
   return <section className={`hero-section ${reduceMotion ? 'motion-reduced' : ''}`} id="top">
     <div className="hero-shell">
-      <div className="hero-topline"><Eyebrow>1118 / AI-first product studio</Eyebrow><span className="hero-signal" aria-hidden="true"><i />Ideas into the world</span></div>
       <div className="hero-copy">
-        <h1><span className="hero-line"><span>We build companies</span></span><span className="hero-line"><span>and products with <em>AI.</em></span></span></h1>
-        <div className="hero-baseline">
-          <p className="hero-copy-body">1118 is an AI-first product studio.<br />We build, launch, and operate products we believe should exist.</p>
-          <div className="hero-actions"><a className="primary-button" href="#work">Explore our work <span aria-hidden="true">↓</span></a><a className="hero-secondary-link" href="#contact">Work with us <span aria-hidden="true">↗</span></a></div>
-        </div>
+        <Eyebrow>1118 — AI-FIRST PRODUCT STUDIO</Eyebrow>
+        <h1>We build the software<br />{" "}we keep looking for.</h1>
+        <p className="hero-copy-body">1118 designs, builds, launches, and operates original software.</p>
+        <p className="hero-philosophy">Most of what we build is our own.</p>
+        <a className="primary-button" href="#work">Explore our work <span aria-hidden="true">→</span></a>
       </div>
-      <div className="hero-bottom"><span>Built with conviction. Made for real use.</span><a href="#work" aria-label="Scroll to selected products"><span aria-hidden="true">↓</span></a></div>
+      <div className="hero-portrait"><PortraitComparison className="portrait-lead-comparison" priority /><p className="portrait-lead-caption"><span>Portrait</span><span>Drag to compare ↔</span></p></div>
     </div>
   </section>;
 }
@@ -259,7 +253,7 @@ function ProductVisual({ product }: { product: Product }) {
 function ProductSection() {
   return (
     <section className="fleet-section" id="work">
-      <div className="portfolio-heading section-shell"><p>Selected products</p><span>Built. Launched. In the world.</span></div>
+
       <div className="fleet-launch-list">
         {products.map((product, index) => (
           <article className="fleet-launch" data-product={product.slug} id={product.slug} key={product.slug}>
@@ -305,7 +299,7 @@ function ProductSection() {
                 {(product.slug === "portrait" || product.slug === "signal") && <a className="case-study-link" href={`/work/${product.slug}`}>Explore the {product.name} case study <span aria-hidden="true">→</span></a>}
               </div>
 
-              {product.slug === "portrait" && <div className="portrait-intro-comparison" data-reveal="rise"><PortraitComparison className="portrait-lead-comparison" /><div className="portrait-lead-caption"><span>A photograph. A new perspective.</span><span>Drag to compare ↔</span></div></div>}
+
               <div className="fleet-launch-stage" data-reveal="rise">
                 <div className="fleet-showcase-media-shell">
                   <div className="fleet-showcase-media media-frame">
@@ -326,9 +320,9 @@ function AboutSection() {
     <section className="studio-section" id="about">
       <div className="section-shell studio-shell">
         <div className="studio-intro" data-reveal="rise">
-          <Eyebrow>The studio</Eyebrow>
-          <h2>From conviction<br />to company.</h2>
-          <div className="studio-intro-copy"><p>From a personal portrait to a complex trading decision, our products turn a clear point of view into something useful. AI is part of how we build—and, where it belongs, part of the product itself.</p></div>
+          <Eyebrow>AI-first product studio</Eyebrow>
+          <h2>An AI-first<br />product studio.</h2>
+          <div className="studio-intro-copy"><p>1118 creates and operates original software—from public consumer products to specialized systems built around hard-won expertise.</p><p>Most of what we build is our own. We partner selectively when the idea, problem, and fit are unusually strong.</p></div>
         </div>
         <div className="operating-model" id="process">
           {buildSteps.map((item) => (
@@ -344,7 +338,7 @@ function AboutSection() {
 
 function ContactSection() {
   return <section className="contact-section" id="contact"><div className="section-shell contact-shell">
-    <div className="contact-copy" data-reveal="rise"><Eyebrow>Work with us</Eyebrow><h2>Have something<br />worth building?</h2><p>We work selectively with founders and companies on ideas that deserve to become products.</p><a className="contact-start" href="#contact-form">Start a conversation <span aria-hidden="true">↘</span></a></div>
+    <div className="contact-copy" data-reveal="rise"><h2>Start a conversation.</h2><p>Most of what we build is our own.</p><p>We partner selectively—when the idea is strong, the problem is meaningful, and the fit is right.</p><a className="contact-start" href="mailto:hello@1118.io">hello@1118.io <span aria-hidden="true">↗</span></a></div>
     <ContactPanel />
   </div></section>;
 }
@@ -427,7 +421,7 @@ function NotFoundPage() {
 function Footer() {
   return (
     <footer className="site-footer">
-      <div className="site-footer-top section-shell"><p>New ventures. Selected collaborations.</p><a className="footer-conversation" href="/#contact">Let’s talk <span aria-hidden="true">↗</span></a></div>
+      <div className="site-footer-top section-shell"><p>Most of what we build is our own.</p><a className="footer-conversation" href="/#contact">Let’s talk <span aria-hidden="true">↗</span></a></div>
       <div className="site-footer-shell">
         <div className="site-footer-copy">
           <BrandLockup compact />

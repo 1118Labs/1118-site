@@ -99,3 +99,49 @@
  .work-more p { margin-block: 6px 0; }
 }
 @media (prefers-reduced-motion: reduce) { .work-feature-image img { transition: none; } .work-feature-link:hover .work-feature-image img { transform: none; } }
+
+/* Brand-director override: quiet editorial scale and expansive authentic proof. */
+.case-shell { width: min(1440px, calc(100% - 96px)); }
+.case-hero, .work-index-header { padding-block: 80px 64px; }
+.case-hero h1, .work-index-header h1 { max-width: 1120px; font-size: clamp(64px, 5.3vw, 80px); font-weight: 500; line-height: 1.08; letter-spacing: -.045em; text-wrap: initial; }
+.case-intro { max-width: 780px; font-size: 20px; line-height: 1.65; }
+.case-product-name { gap: 20px; font-size: 32px; font-weight: 500; }
+.case-product-name img { width: 88px; height: 88px; }
+.case-portrait-hero { width: min(1120px, calc(100% - 96px)); padding: 0; background: #fff; margin-bottom: 80px; }
+.case-portrait-hero > img { width: min(840px, 100%); }
+.case-section { grid-template-columns: .9fr 1.1fr; gap: clamp(48px, 6vw, 96px); padding-block: 64px; }
+.case-section h2, .case-experience > h2 { font-size: clamp(36px, 3.6vw, 52px); font-weight: 500; line-height: 1.15; }
+.case-section-body p, .case-archive-detail p { font-size: 19px; }
+.case-signal-hero { width: 100%; margin: 0 0 80px; }
+.case-signal-hero .signal-workstation { width: 100%; }
+.work-feature-link, .work-feature-signal .work-feature-link { grid-template-columns: .8fr 1.2fr; gap: 64px; padding-block: 72px; }
+.work-feature-copy h2 { font-size: clamp(42px, 3.6vw, 56px); font-weight: 500; line-height: 1.12; text-wrap: initial; }
+.work-feature-portrait, .work-feature-signal { background: #fff; border-top: 1px solid #dbe2e7; }
+.work-feature-portrait .work-feature-image, .work-feature-signal .work-feature-image { padding: 0; background: #fff; }
+.work-feature-signal .work-feature-link { grid-template-columns: .65fr 1.35fr; }
+.work-more .case-product-status { font-size: 13px; }
+.case-page a:focus-visible, .work-index a:focus-visible { outline-color: #17212b; }
+@media (max-width: 1000px) {
+ .case-shell { width: calc(100% - 64px); }
+ .case-hero h1, .work-index-header h1 { font-size: clamp(52px, 7.2vw, 72px); }
+ .work-feature-link, .work-feature-signal .work-feature-link { grid-template-columns: 1fr 1.2fr; gap: 40px; }
+ .work-feature-copy h2 { font-size: 42px; }
+}
+@media (max-width: 700px) {
+ .case-shell { width: calc(100% - 40px); }
+ .case-hero, .work-index-header { padding-block: 48px 40px; }
+ .case-hero h1, .work-index-header h1 { font-size: clamp(42px, 11.5vw, 50px); line-height: 1.1; }
+ .case-intro { font-size: 18px; }
+ .case-product-name { font-size: 28px; }
+ .case-product-name img { width: 72px; height: 72px; border-radius: 17px; }
+ .case-portrait-hero { width: calc(100% - 40px); padding: 0; margin-bottom: 48px; }
+ .case-section { grid-template-columns: 1fr; gap: 22px; padding-block: 40px; }
+ .case-section h2, .case-experience > h2 { font-size: 36px; }
+ .case-section-body p, .case-archive-detail p { font-size: 18px; }
+ .case-signal-hero { margin-bottom: 48px; }
+ .work-feature-link, .work-feature-signal .work-feature-link { grid-template-columns: 1fr; gap: 28px; padding-block: 48px; }
+ .work-feature-copy h2 { font-size: 38px; }
+ .work-feature-portrait .work-feature-image, .work-feature-signal .work-feature-image { padding: 0; }
+ .case-page figcaption, .work-index .case-intro, .work-feature-copy > p:not(.case-kicker) { font-size: 16px; }
+ .case-page .portrait-story-screen figcaption, .case-page .portrait-story-caption { font-size: 14px; }
+}

@@ -8,7 +8,6 @@ import signalHistory from '../assets/showcase/signal/signal-historical-data-2019
 import signalStructures from '../assets/showcase/signal/signal-manage-structures-2019.png';
 import appStoreBadge from '../assets/showcase/etchr/download-on-the-app-store.svg';
 import { productStatus } from '../content/product-status';
-import { signalStory } from '../content/case-studies';
 import './CaseStudies.css';
 
 const appStoreUrl = 'https://apps.apple.com/us/app/etchr-portraits/id6785615752';
@@ -38,16 +37,16 @@ function WorkIndex() {
   return <article className="work-index">
     <header className="work-index-header case-shell">
       <p className="case-kicker">1118 / Selected work</p>
-      <h1>The product<br />is the proof.</h1>
-      <p className="case-intro">From consumer products to specialized systems. A closer look at what we built—and why.</p>
+      <h1>Selected work.</h1>
+      <p className="case-intro">1118 designs, builds, launches, and operates original software.</p>
     </header>
     <div className="work-features">
       <article className="work-feature work-feature-portrait">
         <a className="work-feature-link case-shell" href="/work/portrait">
           <div className="work-feature-copy">
             <p className="case-kicker">Portrait / {productStatus.portrait}</p>
-            <h2>From a photograph<br />to an editorial portrait.</h2>
-            <p>A product built around the transformation—and the finished image you take with you.</p>
+            <h2>Look like you<br />belong in print.</h2>
+            <p>Turn one clear photograph into a refined editorial portrait made for profiles, websites, social media, and print.</p>
             <span className="case-text-link">Explore Portrait <span aria-hidden="true">→</span></span>
           </div>
           <div className="work-feature-image"><img src={portraitResult} width="1024" height="1024" alt="Elise shown as a finished Portrait editorial illustration" loading="lazy" decoding="async" /></div>
@@ -57,8 +56,8 @@ function WorkIndex() {
         <a className="work-feature-link case-shell" href="/work/signal">
           <div className="work-feature-copy">
             <p className="case-kicker">Signal / {productStatus.signal}</p>
-            <h2>Quantitative workflows,<br />made visual.</h2>
-            <p>Domain expertise translated into an analytics platform used in live markets.</p>
+            <h2>Finding the trade<br />before the market does.</h2>
+            <p>1118 built Signal to surface compelling commodities trade ideas through quantitative analysis, visualization, and machine learning.</p>
             <span className="case-text-link">Explore Signal <span aria-hidden="true">→</span></span>
           </div>
           <div className="work-feature-image"><img src={signalOverview} width="2167" height="1046" alt="Authentic Signal seasonal and correlation analysis interface from 2019" loading="lazy" decoding="async" /></div>
@@ -79,36 +78,36 @@ function PortraitCase() {
       <a className="case-back" href="/work">← Selected work</a>
       <p className="case-kicker">01 / {productStatus.portrait}</p>
       <div className="case-product-name"><img src={portraitIcon} width="64" height="64" alt="" /><span>Portrait</span></div>
-      <h1>Editorial portraits<br />from real photographs.</h1>
-      <p className="case-intro">A photograph is the starting point. The product brings together the transformation, the app experience, and the finished portrait you can save and use.</p>
+      <h1>Look like you<br />belong in print.</h1>
+      <p className="case-intro">Turn one clear photograph into a refined editorial portrait made for profiles, websites, social media, and print.</p>
     </header>
     <figure className="case-portrait-hero case-shell">
       <img src={portraitResult} alt="A finished Portrait of Elise, with detailed editorial line work" width="1024" height="1024" decoding="async" fetchPriority="high" />
       <figcaption>Finished Portrait output · Elise · Studio example</figcaption>
     </figure>
     <div className="case-shell">
-      <CaseSection number="02" label="Problem" title="A photograph is only the beginning.">
+      <CaseSection number="02" label="Problem" title="Product idea.">
         <p>A portrait needs to work beyond the moment it is made: in a profile, on a website, or wherever someone chooses to represent themselves.</p>
         <p>The product challenge was to make an editorial transformation feel approachable, then make the result easy to keep and use.</p>
       </CaseSection>
-      <CaseSection number="03" label="Product idea" title="Make the transformation the experience.">
+      <CaseSection number="03" label="Product idea" title="Transformation experience.">
         <p>Start with a clear photograph. Turn it into a finished editorial portrait. Keep the journey focused on the image, from the first comparison to the final output.</p>
       </CaseSection>
-      <CaseSection number="04" label="What 1118 built" title="The portrait, and the product around it.">
+      <CaseSection number="04" label="What 1118 built" title="Product design and AI image pipeline.">
         <p>1118 brought product design, an AI image-generation workflow, and the app experience together in Portrait.</p>
-        <p>The work extends beyond producing an image: it includes how someone starts, understands the result, and takes a finished portrait into their own world.</p>
+        <p>The published App Store experience includes photo selection, a before-and-after comparison, and a completed portrait with Save to Photos and Share controls.</p>
       </CaseSection>
     </div>
     <section className="case-experience case-shell" aria-labelledby="portrait-experience-title">
       <p className="case-kicker">05 / Product experience</p>
-      <h2 id="portrait-experience-title">Photo. Portrait.<br />Ready to use.</h2>
-      <p className="case-intro">The original photograph, the editorial result, and the finished formats—shown with actual Portrait assets.</p>
+      <h2 id="portrait-experience-title">Product experience.</h2>
+      <p className="case-intro">The source photograph, transformation, and completed portrait, shown in the current published App Store screenshots.</p>
       <PortraitStory variant="case-study" />
     </section>
     <div className="case-shell">
       <CaseSection number="06" label="Outcome" title="Available on the App Store.">
         <p>Portrait is available through the App Store, with a public product experience at getportrait.ai.</p>
-        <p>The result is software people can use, with a complete experience around creating and keeping their portraits.</p>
+        <p>The public App Store listing currently retains the legacy name Etchr Portraits. The current product website uses Portrait.</p>
       </CaseSection>
       <CaseSection number="07" label="Status" title="App Store.">
         <p>Explore the current product and its App Store listing.</p>
@@ -124,33 +123,33 @@ function SignalCase() {
     <header className="case-hero case-shell">
       <a className="case-back" href="/work">← Selected work</a>
       <p className="case-kicker">01 / Signal · {productStatus.signal}</p>
-      <h1>Quantitative workflows,<br />made visual.</h1>
-      <p className="case-intro">{signalStory}</p>
+      <h1>Finding the trade<br />before the market does.</h1>
+      <p className="case-intro">1118 built Signal to surface compelling commodities trade ideas through quantitative analysis, visualization, and machine learning.</p><p className="case-intro">Signal was used in live markets, licensed commercially, and later acquired.</p>
     </header>
-    <div className="case-signal-hero case-shell"><SignalWorkstation /></div>
+    <div className="case-signal-hero"><SignalWorkstation /></div>
     <div className="case-shell">
-      <CaseSection number="02" label="Problem" title="Make complex relationships easier to explore.">
+      <CaseSection number="02" label="Problem" title="The problem and domain.">
         <p>Commodities analysis brings together different contracts, time periods, and market relationships. Signal was built to make those quantitative workflows visual.</p>
         <p>The opportunity was to translate domain expertise into a workspace for exploring the data behind a trade idea.</p>
       </CaseSection>
-      <CaseSection number="03" label="Product idea" title="Data as a starting point for investigation.">
+      <CaseSection number="03" label="Product idea" title="Translating quantitative expertise into software.">
         <p>Signal combined data, quantitative analysis, and machine learning to help uncover compelling trade ideas.</p>
         <p>Historical, seasonal, and correlation views gave different perspectives on the same analytical question.</p>
       </CaseSection>
-      <CaseSection number="04" label="What 1118 built" title="A visual workspace for quantitative analysis.">
+      <CaseSection number="04" label="What 1118 built" title="Product experience.">
         <p>1118 designed, built, and launched the platform. The interface brought analytical structures, time-window selection, charting, and detailed comparisons into one product.</p>
         <p>The original screens show how a user could define contracts and metrics, adjust expirations and time shifts, and explore the resulting relationships.</p>
       </CaseSection>
     </div>
     <section className="case-experience case-shell" aria-labelledby="signal-experience-title">
       <p className="case-kicker">05 / Product experience</p>
-      <h2 id="signal-experience-title">From a structure<br />to a clearer view.</h2>
+      <h2 id="signal-experience-title">Authentic archival UI.</h2>
       <div className="case-workflow"><div><span>01</span><h3>Define the structure.</h3><p>Choose the contract, metric, expiration, and time shift.</p></div><div><span>02</span><h3>Explore the history.</h3><p>Set a time window and examine changes across the selected series.</p></div><div><span>03</span><h3>Compare relationships.</h3><p>Move between historical, seasonal, and correlation views.</p></div></div>
       <figure className="case-archive-figure"><a href={signalHistory} target="_blank" rel="noreferrer" aria-label="Open full-size Signal historical data screenshot"><img src={signalHistory} alt="Authentic Signal historical-data screen with selectable analytical structures, time-series charts, and a time-range navigator" width="2329" height="984" loading="lazy" decoding="async" /></a><figcaption>Historical data and time-window exploration · Authentic Signal interface, August 2019 <a href={signalHistory} target="_blank" rel="noreferrer">View full image ↗</a></figcaption></figure>
       <div className="case-archive-detail"><figure className="case-archive-figure"><a href={signalStructures} target="_blank" rel="noreferrer" aria-label="Open full-size Signal Manage Structures screenshot"><img src={signalStructures} alt="Authentic Signal Manage Structures dialog showing contract, expiration, skew, time-shift, and metric controls" width="1211" height="843" loading="lazy" decoding="async" /></a><figcaption>Manage Structures · Authentic Signal interface, August 2019 <a href={signalStructures} target="_blank" rel="noreferrer">View full image ↗</a></figcaption></figure><div><h3>The analytical choices stay visible.</h3><p>The structure editor makes the ingredients of an analysis explicit. Its controls connect the market question to the data shown in the workspace.</p></div></div>
     </section>
     <div className="case-shell">
-      <CaseSection number="06" label="Outcome" title="Used. Licensed. Acquired.">
+      <CaseSection number="06" label="Outcome" title="Commercialization and acquisition.">
         <p>The platform was used in live markets, licensed commercially, and later acquired.</p>
         <p>Signal is part of 1118's history of turning specialized expertise into working software and bringing it into commercial use.</p>
       </CaseSection>
