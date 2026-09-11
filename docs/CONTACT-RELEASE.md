@@ -1,12 +1,12 @@
 # 1118 contact release configuration
 
-Production is not activated by this candidate. Cloudflare account changes require the founder's explicit authorization.
+Production is not activated by this candidate. The founder authorized and this pass completed the dedicated widget and Production credential configuration. Deployment still requires separate authorization.
 
 ## Required widget
 
-Create `1118 Contact Form — Production` in Managed mode, restricted to `1118.io` and `www.1118.io`. No wildcard hosts, neighboring products, localhost, or Vercel hosts. Pre-clearance is unnecessary. The client supplies action `contact`; the server checks that action and the exact request-origin hostname against Siteverify. Production additionally permits only the two canonical hosts.
+Created `1118 Contact Form — Production` (widget ID `0x4AAAAAAEwryKbnGCgAmtV5`) in Managed mode, with configured entries `1118.io` and `www.1118.io`. No wildcard entries, neighboring product entries, localhost, or Vercel host entries. Cloudflare automatically includes subdomains of configured hostnames; the server enforces the exact two allowed Production hostnames. Pre-clearance is unnecessary. The client supplies action `contact`; the server checks that action and the exact request-origin hostname against Siteverify. Production additionally permits only the two canonical hosts.
 
-Set server environment variables `TURNSTILE_SITE_KEY` (public widget sitekey), `TURNSTILE_SECRET_KEY` (secret), and the existing approved `FORMSPREE_FORM_ID`. Never use `VITE_`/`NEXT_PUBLIC_` for any server configuration. The destination is held in the provider's private email workflow; no inbox appears in client code, HTML, schema, or mailto links. There is no client-selected recipient.
+Production-only sensitive server environment variables are configured: `TURNSTILE_SITE_KEY` (public widget sitekey), `TURNSTILE_SECRET_KEY` (secret), and the existing approved `FORMSPREE_FORM_ID`. Never use `VITE_`/`NEXT_PUBLIC_` for any server configuration. The destination is held in the provider's private email workflow; no inbox appears in client code, HTML, schema, or mailto links. There is no client-selected recipient.
 
 The review branch alone uses official always-pass test keys and `CONTACT_TURNSTILE_TEST_MODE=true` with `VERCEL_ENV=preview`. Production and unknown environments reject this mode and all official test keys. Official dummy responses do not reliably echo hostname/action; only explicit non-Production QA mode permits that difference and requires Cloudflare's `result_with_testing_key` marker. These keys do not provide bot protection. Keep this Preview protected. A separate real Preview widget with exact approved Preview hostnames can be created later with authorization.
 

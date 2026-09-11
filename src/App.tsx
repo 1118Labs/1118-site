@@ -424,7 +424,7 @@ function Footer() {
       <div className="site-footer-shell">
         <div className="site-footer-copy">
           <BrandLockup compact />
-
+          <p className="footer-legal">© 2026 1118, LLC</p>
         </div>
 
         <div className="site-footer-links">
@@ -447,7 +447,6 @@ function Footer() {
             </nav>
           </div>
         </div>
-        <p className="footer-legal">© 2026 1118, LLC</p>
       </div>
     </footer>
   );
