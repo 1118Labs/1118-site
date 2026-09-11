@@ -70,7 +70,7 @@ const products: Product[] = [
     status: productStatus.signal,
     headline: "Quantitative intelligence\nfor commodities trading.",
     description:
-      "1118 designed, built, and launched Signal, a quantitative commodities analytics platform created to uncover compelling trade ideas using data, quantitative analysis, and machine learning.",
+      "1118 designed and built Signal to help commodities traders uncover compelling trade ideas through data, quantitative analysis, and machine learning.",
     note: "Signal was used in live markets, licensed commercially, and later acquired.",
   },
 ];
@@ -79,24 +79,24 @@ const buildSteps = [
   {
     step: "01",
     title: "DIRECTION",
-    body: "Product priorities, standards, and final decisions remain founder-led.",
+    body: "We decide what deserves to be built and what good looks like.",
   },
   {
     step: "02",
     title: "EXECUTION",
-    body: "AI systems and specialist tools help turn clear briefs into visible work.",
+    body: "AI and specialist tools help us move from idea to working product quickly.",
   },
   {
     step: "03",
     title: "REVIEW",
-    body: "Evidence is checked, releases are gated, and responsibility remains with us.",
+    body: "We test the work, challenge the assumptions, and decide what ships.",
   },
 ] as const;
 
 const policyMeta: Record<string, { description: string; title: string }> = {
   "/": {
     title: "1118 — AI-First Product Studio",
-    description: "1118 designs, builds, launches, and operates original software.",
+    description: "Original products, built from problems we understand and ideas we believe should exist.",
   },
   "/privacy": {
     title: "Privacy | 1118",
@@ -125,7 +125,7 @@ function Eyebrow({ children }: { children: string }) {
 }
 
 function BrandLockup({ compact = false }: { compact?: boolean }) {
-  return <span className={`logo ${compact ? "is-compact" : ""}`}><img className="logo-mark" src={compact ? "/brand/1118-restored-light.svg" : "/brand/1118-restored-dark.svg"} alt="1118" width="819" height="525" /></span>;
+  return <span className={`logo ${compact ? "is-compact" : ""}`}><img className="logo-mark" src="/brand/1118-restored-dark.svg" alt="1118" width="819" height="525" /></span>;
 }
 
 function FloatingNav({ activeHash, pathname }: { activeHash: string; pathname: string }) {
@@ -233,9 +233,9 @@ function Hero({ reduceMotion }: { reduceMotion: boolean }) {
   return <section className={`hero-section ${reduceMotion ? 'motion-reduced' : ''}`} id="top">
     <div className="hero-shell">
       <div className="hero-copy">
-        <Eyebrow>1118 — AI-FIRST PRODUCT STUDIO</Eyebrow>
+        <span className="hero-blue-rule" aria-hidden="true" />
         <h1>We build the software<br />{" "}we keep looking for.</h1>
-        <p className="hero-copy-body">1118 designs, builds, launches, and operates original software.</p>
+        <p className="hero-copy-body">Original products, built from problems we understand and ideas we believe should exist.</p>
         <p className="hero-philosophy">Most of what we build is our own.</p>
         <a className="primary-button" href="#work">Explore our work <span aria-hidden="true">→</span></a>
       </div>
@@ -260,7 +260,7 @@ function ProductSection() {
           <article className="fleet-launch" data-product={product.slug} id={product.slug} key={product.slug}>
             <div className={`fleet-launch-shell ${index === 0 ? "is-lead" : ""} ${index % 2 === 1 ? "is-reversed" : ""}`}>
               <div className="fleet-launch-copy" data-reveal="rise">
-                <div className="fleet-launch-meta"><span className="product-index">0{index + 1}</span>{product.status && <span className="eyebrow-pill">{product.status}</span>}</div>
+
                 {product.slug === "portrait" ? (
                   <div className="etchr-product-lockup">
                     <img alt="" height="512" src={etchrAppIcon} width="512" />
@@ -273,6 +273,7 @@ function ProductSection() {
                 ) : (
                   <p className="fleet-showcase-name">{product.name}</p>
                 )}
+                <div className="fleet-launch-meta"><span className="eyebrow-pill">{product.status}</span></div>
                 <h2>
                   {product.headline.split("\n").map((line, lineIndex) => (
                     <span key={line}>
@@ -325,14 +326,14 @@ function AboutSection() {
     <section className="studio-section" id="about">
       <div className="section-shell studio-shell">
         <div className="studio-intro" data-reveal="rise">
-          <Eyebrow>AI-first product studio</Eyebrow>
-          <h2>An AI-first<br />product studio.</h2>
-          <div className="studio-intro-copy"><p>1118 creates and operates original software—from public consumer products to specialized systems built around hard-won expertise.</p><p>Most of what we build is our own. We partner selectively when the idea, problem, and fit are unusually strong.</p></div>
+
+          <h2>We build our own<br />software.</h2>
+          <div className="studio-intro-copy"><p>1118 is an AI-first product studio creating original software from problems we understand firsthand.</p><p>Most of what we build is our own. We partner selectively when the problem is meaningful and the fit is right.</p></div>
         </div>
         <div className="operating-model" id="process">
           {buildSteps.map((item) => (
             <article className="operating-principle" key={item.step}>
-              <span className="operating-number">{item.step}</span><h3>{item.title}</h3><p>{item.body}</p>
+              <h3>{item.title}</h3><p>{item.body}</p>
             </article>
           ))}
         </div>
@@ -343,7 +344,7 @@ function AboutSection() {
 
 function ContactSection() {
   return <section className="contact-section" id="contact"><div className="section-shell contact-shell">
-    <div className="contact-copy" data-reveal="rise"><h2>Start a conversation.</h2><p>Most of what we build is our own.</p><p>We partner selectively—when the idea is strong, the problem is meaningful, and the fit is right.</p><a className="contact-start" href="mailto:hello@1118.io">hello@1118.io <span aria-hidden="true">↗</span></a></div>
+    <div className="contact-copy" data-reveal="rise"><h2>Start a conversation.</h2><p>Have an idea, a product, or a problem worth solving? Tell us what you're working on.</p></div>
     <ContactPanel />
   </div></section>;
 }

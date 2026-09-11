@@ -9,7 +9,7 @@ const serverOutput = await mkdtemp(join(root, '.1118-prerender-'));
 const origin = 'https://1118.io';
 const organization = { '@id': `${origin}/#organization` };
 const routes = {
-  '/': ['1118 — AI-First Product Studio', '1118 designs, builds, launches, and operates original software.'],
+  '/': ['1118 — AI-First Product Studio', 'Original products, built from problems we understand and ideas we believe should exist.'],
   '/work': ['Selected Work | 1118', 'Explore Portrait and Signal: products designed, built, and launched by 1118.'],
   '/work/portrait': ['Portrait — From Photograph to Editorial Portrait | 1118', 'How 1118 built Portrait: an image-to-portrait experience, finished outputs, and an app distributed through the App Store.'],
   '/work/signal': ['Signal — Quantitative Commodities Analytics | 1118', 'Signal was designed, built, and launched by 1118, used in live markets, licensed commercially, and later acquired.'],
@@ -41,7 +41,7 @@ const products = [
   },
   {
     '@type': 'CreativeWork', '@id': `${origin}/#signal`, name: 'Signal',
-    description: '1118 designed, built, and launched Signal, a quantitative commodities analytics platform created to uncover compelling trade ideas using data, quantitative analysis, and machine learning. Signal was used in live markets, licensed commercially, and later acquired.',
+    description: '1118 designed and built Signal to help commodities traders uncover compelling trade ideas through data, quantitative analysis, and machine learning. Signal was used in live markets, licensed commercially, and later acquired.',
     url: `${origin}/work/signal`, creator: organization, creativeWorkStatus: 'Built, licensed, and acquired',
   },
 ];
@@ -54,7 +54,7 @@ function schema(pathname, title, description) {
       {
         '@type': 'Organization', ...organization, name: '1118', legalName: '1118, LLC',
         url: `${origin}/`, logo: `${origin}/brand/1118-restored-dark.svg`,
-        description: '1118 designs, builds, launches, and operates original software.',
+        description: 'Original products, built from problems we understand and ideas we believe should exist.',
       },
       {
         '@type': 'WebSite', '@id': `${origin}/#website`, name: '1118', url: `${origin}/`,

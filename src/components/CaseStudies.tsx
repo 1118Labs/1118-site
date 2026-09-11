@@ -41,7 +41,7 @@ function WorkIndex() {
     <header className="work-index-header case-shell">
       <p className="case-kicker">1118 / Selected work</p>
       <h1>Selected work.</h1>
-      <p className="case-intro">1118 designs, builds, launches, and operates original software.</p>
+      <p className="case-intro">Original products, built from problems we understand and ideas we believe should exist.</p>
     </header>
     <div className="work-features">
       <article className="work-feature work-feature-portrait">
@@ -60,7 +60,7 @@ function WorkIndex() {
           <div className="work-feature-copy">
             <p className="case-kicker">Signal / {productStatus.signal}</p>
             <h2>Quantitative intelligence<br />for commodities trading.</h2>
-            <p>1118 designed, built, and launched Signal, a quantitative commodities analytics platform created to uncover compelling trade ideas using data, quantitative analysis, and machine learning.</p>
+            <p>1118 designed and built Signal to help commodities traders uncover compelling trade ideas through data, quantitative analysis, and machine learning.</p>
             <span className="case-text-link">Explore Signal <span aria-hidden="true">→</span></span>
           </div>
           <div className="work-feature-image"><img src={signalOverview} width="2167" height="1046" alt="Authentic Signal seasonal and correlation analysis interface from 2019" loading="lazy" decoding="async" /></div>
@@ -79,7 +79,7 @@ function PortraitCase() {
   return <article className="case-page case-portrait">
     <header className="case-hero case-shell">
       <a className="case-back" href="/work">← Selected work</a>
-      <p className="case-kicker">01 / {productStatus.portrait}</p>
+      <p className="case-kicker">{productStatus.portrait}</p>
       <div className="case-product-name"><img src={portraitIcon} width="64" height="64" alt="" /><span>Portrait</span></div>
       <h1>Editorial portraits<br />from real photographs.</h1>
       <p className="case-intro">Portrait turns one clear photograph into a refined editorial portrait, ready for profiles, websites, social media, and print.</p>
@@ -126,9 +126,9 @@ function SignalCase() {
   return <article className="case-page case-signal">
     <header className="case-hero case-shell">
       <a className="case-back" href="/work">← Selected work</a>
-      <p className="case-kicker">01 / Signal · {productStatus.signal}</p>
+      <p className="case-kicker">Signal · {productStatus.signal}</p>
       <h1>Quantitative intelligence<br />for commodities trading.</h1>
-      <p className="case-intro">1118 designed, built, and launched Signal, a quantitative commodities analytics platform created to uncover compelling trade ideas using data, quantitative analysis, and machine learning.</p><p className="case-intro">Signal was used in live markets, licensed commercially, and later acquired.</p>
+      <p className="case-intro">1118 designed and built Signal to help commodities traders uncover compelling trade ideas through data, quantitative analysis, and machine learning.</p><p className="case-intro">Signal was used in live markets, licensed commercially, and later acquired.</p>
     </header>
     <div className="case-signal-hero"><SignalWorkstation /></div>
     <div className="case-shell">

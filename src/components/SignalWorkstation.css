@@ -1,4 +1,4 @@
-.signal-workstation { width:100%; margin:0; padding:16px 24px 48px; background:#080a0d; color:#fff; }
+.signal-workstation { width:100%; margin:0; padding:16px 24px 48px; background:#192e43; color:#fff; }
 .signal-archive-display { display:block; width:100%; }
 .signal-archive-display img { display:block; width:100%; height:auto; }
 .signal-workstation figcaption { display:flex; align-items:center; justify-content:space-between; gap:24px; width:var(--shell); margin:24px auto 0; font-size:14px; line-height:1.6; color:#c6cbd0; }

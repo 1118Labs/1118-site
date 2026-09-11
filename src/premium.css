@@ -200,3 +200,57 @@
 .footer-link-group strong,.section-eyebrow,.product-index,.eyebrow-pill,.portrait-lead-caption { font-size:14px; }
 @media(max-width:1000px) { .fleet-launch-copy h2 { grid-row:auto; } }
 @media(max-width:600px) { .hero-portrait { padding:6px; border-radius:40px; } .hero-portrait .portrait-comparison { border-radius:32px; } .hero-copy-body,.hero-philosophy { font-size:18px; } .etchr-product-lockup .fleet-showcase-name { font-size:36px; } .reviews-product-lockup { gap:14px; } .reviews-product-lockup .fleet-showcase-name { font-size:26px; } .reviews-product-lockup > img { width:52px; height:64px; } .section-eyebrow { letter-spacing:.045em; } }
+
+/* Founder correction: product-led color, consistent identity, and tighter rhythm. */
+:root { --blue:#176ab5; --navy:#192e43; --mist:#f4f3ef; }
+.floating-nav-shell,.hero-section { background:#faf8f2; }
+.hero-blue-rule { display:block; width:52px; height:3px; background:var(--blue); }
+.hero-copy .primary-button { color:var(--blue); border-color:var(--blue); }
+.hero-portrait { background:#fff; }
+.hero-portrait .portrait-comparison-handle { border-color:#176ab5; box-shadow:0 0 0 2px #ffffffb3; }
+.hero-section { padding-bottom:64px; }
+.fleet-launch { padding-block:72px; }
+.fleet-launch-shell { gap:36px; }
+.fleet-launch[data-product="portrait"] { padding-block:56px; }
+.fleet-launch-copy > .etchr-product-lockup,.fleet-launch-copy > .reviews-product-lockup,.fleet-launch-copy > .property-product-lockup,.fleet-launch-copy > .fleet-showcase-name { grid-row:1; margin-bottom:12px; }
+.fleet-launch-meta { grid-row:2; margin-bottom:24px; }
+.reviews-product-lockup { gap:16px; }
+.reviews-product-lockup > img { width:48px; height:59px; }
+.reviews-product-lockup .fleet-showcase-name { font-size:36px; white-space:nowrap; letter-spacing:-.035em; }
+.etchr-product-lockup img { width:60px; height:60px; border-radius:14px; }
+.etchr-product-lockup .fleet-showcase-name { font-size:40px; }
+.fleet-launch[data-product="signal"],.case-signal,.work-feature-signal { background:#192e43; }
+.fleet-launch[data-product="signal"] .fleet-showcase-name { text-transform:none; }
+.studio-section { background:#faf8f2; }
+.operating-principle h3 { margin-top:0; }
+.contact-section { background:#174d78; color:#fff; }
+.contact-copy h2 { color:#fff; }
+.contact-copy p { color:#e5edf4; }
+.contact-section .contact-panel label { color:#fff; font-size:16px; }
+.contact-section .contact-panel label span { color:#d2e0ec; }
+.contact-section .contact-panel :is(input,textarea,select) { width:100%; padding:14px 16px; border:1px solid #d2dce4; border-radius:8px; background:#fff; color:#152332; min-height:56px; font:inherit; font-size:18px; line-height:1.5; }
+.contact-section .contact-panel :is(input,textarea,select):focus { outline:3px solid #8bdaff; outline-offset:3px; border-color:#174d78; }
+.contact-section .contact-panel :is(input,textarea,select)[aria-invalid="true"] { border:2px solid #f1a496; }
+.contact-section .contact-panel button { background:#fff; color:#174d78; padding:12px 24px; border:1px solid #fff; border-radius:8px; min-width:150px; }
+.contact-section .contact-panel button:hover { opacity:1; background:#eaf5fc; }
+.contact-section .contact-panel-privacy,.contact-section .contact-panel-notice { color:#e5edf4; }
+.contact-section .contact-field-error,.contact-section .contact-panel-notice.is-error { color:#ffded7; }
+.contact-section .contact-panel button:focus-visible,.contact-section .contact-panel a:focus-visible { outline-color:#8bdaff; }
+.site-footer { background:#192e43; }
+.site-footer .logo-mark { width:106px; filter:invert(1); }
+@media(max-width:1000px) { .fleet-launch-copy > .etchr-product-lockup,.fleet-launch-copy > .reviews-product-lockup,.fleet-launch-copy > .property-product-lockup,.fleet-launch-copy > .fleet-showcase-name,.fleet-launch-meta { grid-row:auto; } }
+@media(max-width:600px) {
+ .hero-section { padding-bottom:40px; }
+ .fleet-launch,.fleet-launch[data-product="portrait"] { padding-block:44px; }
+ .fleet-launch-shell { gap:28px; }
+ .reviews-product-lockup { gap:12px; }
+ .reviews-product-lockup .fleet-showcase-name { font-size:clamp(22px,6.5vw,29px); letter-spacing:-.045em; }
+ .reviews-product-lockup > img { width:38px; height:47px; }
+ .etchr-product-lockup .fleet-showcase-name { font-size:36px; }
+ .etchr-product-lockup img { width:52px; height:52px; }
+ .fleet-launch-meta { margin-bottom:22px; }
+ .operating-principle { display:block; }
+ .operating-principle h3 { margin-bottom:12px; }
+ .site-footer .logo-mark { width:80px; }
+ .contact-shell { padding-block:56px; }
+}

@@ -110,7 +110,6 @@ export default function ReviewsProof() {
         </div>
       </div>
       <div className="re-proof-controls">
-        <span className="re-proof-hint">{reduceMotion ? 'Scroll to explore customer stories.' : 'Real stories, in their own words.'}</span>
         {!reduceMotion && (
           <button
             aria-label={userPaused ? 'Resume reviews' : 'Pause reviews'}

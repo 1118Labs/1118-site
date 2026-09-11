@@ -146,7 +146,7 @@
  .case-page .portrait-story-screen figcaption, .case-page .portrait-story-caption { font-size: 14px; }
 }
 
-.case-signal,.work-feature-signal { background:#080a0d; color:#fff; }
+.case-signal,.work-feature-signal { background:#192e43; color:#fff; }
 .case-signal .case-intro,.case-signal .case-kicker,.case-signal .case-section-body p,.case-signal .case-workflow p,.case-signal .case-workflow span,.case-signal .case-archive-detail p,.case-signal figcaption,.work-feature-signal .case-kicker,.work-feature-signal .work-feature-copy > p:not(.case-kicker) { color:#c6cbd0; }
 .case-signal .case-section,.case-signal .case-next,.case-signal .case-workflow > div { border-color:#394149; }
 .case-signal a:focus-visible { outline-color:#fff; }

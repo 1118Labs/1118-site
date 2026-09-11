@@ -36,3 +36,11 @@
 
 .re-card-card { border-radius:24px; background:#fff; overflow:hidden; }
 .re-card-card > img { border-radius:24px 24px 0 0; }
+
+.re-proof-controls { justify-content:flex-end; margin-top:22px; }
+.re-card-copy blockquote { max-width:32ch; }
+.re-card-copy footer strong { font-size:16px; }
+.re-card-copy { padding:20px 22px; }
+.re-card-copy footer { margin-top:18px; }
+.re-card-card { align-self:flex-start; }
+@media(max-width:760px) { .re-proof { --re-column:min(340px,calc(100vw - 40px)); } .re-card-copy { padding:20px; } }

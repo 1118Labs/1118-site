@@ -13,4 +13,4 @@ export const caseMeta: Record<string, { title: string; description: string }> = 
   },
 };
 
-export const signalStory = '1118 designed, built, and launched Signal, a quantitative commodities analytics platform created to uncover compelling trade ideas using data, quantitative analysis, and machine learning. The platform was used in live markets, licensed commercially, and later acquired.';
+export const signalStory = '1118 designed and built Signal to help commodities traders uncover compelling trade ideas through data, quantitative analysis, and machine learning. The platform was used in live markets, licensed commercially, and later acquired.';
