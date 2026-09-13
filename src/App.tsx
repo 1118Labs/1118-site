@@ -269,6 +269,7 @@ function ProductSection() {
                     </span>
                   ))}
                 </h2>
+                {product.slug === "signal" && <div className="fleet-launch-stage signal-marketing-stage"><SignalWorkstation /></div>}
                 {product.continuation ? <div className="fleet-showcase-body"><p>{product.descriptor}</p><p>{product.description}</p><p>{product.continuation}</p></div> : <p className="fleet-showcase-body">{product.description}</p>}
                 {product.note ? <p className="fleet-showcase-why">{product.note}</p> : null}
                 {product.link ? (
@@ -293,13 +294,13 @@ function ProductSection() {
               </div>
 
 
-              <div className="fleet-launch-stage" data-reveal="rise">
+              {product.slug !== "signal" && <div className="fleet-launch-stage" data-reveal="rise">
                 <div className="fleet-showcase-media-shell">
                   <div className="fleet-showcase-media media-frame">
                     <ProductVisual product={product} />
                   </div>
                 </div>
-              </div>
+              </div>}
             </div>
           </article>
         ))}
