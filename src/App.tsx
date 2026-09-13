@@ -59,7 +59,7 @@ const products: Product[] = [
     slug: "property-insights",
     name: "Property Insights",
     link: { href: "https://insights.1118.io", label: "Explore the product" },
-    headline: "We brought property intelligence\ninto the service workflow.",
+    headline: "We brought property intelligence\ninto the service\u00a0workflow.",
     description: "Service businesses often quote jobs with less context than they should have. Property Insights connects incoming requests to property data, physical context, risks, and recommendations so operators can understand the job before the estimate begins.",
   },
   {
@@ -67,7 +67,7 @@ const products: Product[] = [
     name: "Signal",
     descriptor: "Quantitative intelligence for commodities trading.",
     continuation: "1118 worked with domain expertise in commodities trading to codify that process into Signal—a platform combining market data, quantitative analysis, visualization, and machine learning to help surface compelling trade ideas.",
-    headline: "We built a better way\nto uncover commodities trade ideas.",
+    headline: "We built a better way\nto uncover commodities trade\u00a0ideas.",
     description:
       "Signal began with a sophisticated quantitative trading process and a question: could that way of analyzing markets be turned into a visual software product?",
     note: "Signal was used in live markets, licensed commercially, and later acquired.",

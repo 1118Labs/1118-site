@@ -59,7 +59,7 @@ function WorkIndex() {
         <a className="work-feature-link case-shell" href="/work/signal">
           <div className="work-feature-copy">
             <p className="case-kicker">Signal / {productStatus.signal}</p>
-            <h2>We built a better way<br />to uncover commodities trade ideas.</h2>
+            <h2>We built a better way<br />to uncover commodities trade&nbsp;ideas.</h2>
             <p>Signal began with a sophisticated quantitative trading process and a question: could that way of analyzing markets be turned into a visual software product?</p>
             <span className="case-text-link">Explore Signal <span aria-hidden="true">→</span></span>
           </div>
@@ -124,7 +124,7 @@ function SignalCase() {
     <header className="case-hero case-shell">
       <a className="case-back" href="/work">← Selected work</a>
       <p className="case-kicker">Signal · {productStatus.signal}</p>
-      <h1>We built a better way<br />to uncover commodities trade ideas.</h1>
+      <h1>We built a better way<br />to uncover commodities trade&nbsp;ideas.</h1>
       <p className="case-intro">Signal began with a sophisticated quantitative trading process and a question: could that way of analyzing markets be turned into a visual software product?</p><p className="case-intro">Signal was used in live markets, licensed commercially, and later acquired.</p>
     </header>
     <div className="case-signal-hero"><SignalWorkstation /></div>
