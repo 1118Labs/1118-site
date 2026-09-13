@@ -6,14 +6,14 @@ const TEST_KEYS = /^[123]x0+/;
 const RETRY = 'The security check couldn’t be completed. Please refresh the check and try again. Your details are still here.';
 
 export function turnstileConfig(env = process.env) {
-  const sitekey = env.TURNSTILE_SITE_KEY;
-  const secret = env.TURNSTILE_SECRET_KEY;
-  const test = env.CONTACT_TURNSTILE_TEST_MODE === 'true';
   const nonProduction = ['preview', 'development'].includes(env.VERCEL_ENV);
+  if (!nonProduction && env.VERCEL_ENV !== 'production') return null;
+  // Protected Preview always uses the public official QA pair, never Production credentials.
+  const sitekey = nonProduction ? TEST_SITE_KEY : env.TURNSTILE_SITE_KEY;
+  const secret = nonProduction ? TEST_SECRET_KEY : env.TURNSTILE_SECRET_KEY;
+  const test = nonProduction;
   if (!sitekey || !secret || !/^[a-zA-Z0-9_-]{20,100}$/.test(sitekey) || !/^[a-zA-Z0-9_-]{20,100}$/.test(secret)) return null;
-  if (test) {
-    if (!nonProduction || sitekey !== TEST_SITE_KEY || secret !== TEST_SECRET_KEY) return null;
-  } else if (TEST_KEYS.test(sitekey) || TEST_KEYS.test(secret)) return null;
+  if (!test && (env.CONTACT_TURNSTILE_TEST_MODE === 'true' || TEST_KEYS.test(sitekey) || TEST_KEYS.test(secret))) return null;
   return { sitekey, secret, test };
 }
 

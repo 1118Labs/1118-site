@@ -19,6 +19,7 @@ import { caseMeta } from "./content/case-studies";
 import "./premium.css";
 import "./prelaunch.css";
 import "./typography.css";
+import "./lower-page.css";
 
 import portraitIcon from "./assets/showcase/portrait/portrait-native-icon.png";
 import reviewsShield from "./assets/showcase/reviews-engine/reviews-engine-shield-primary.png";
@@ -308,25 +309,20 @@ function ProductSection() {
 }
 
 function AboutSection() {
-  return (
-    <section className="studio-section" id="about">
-      <div className="section-shell studio-shell">
-        <div className="studio-intro" data-reveal="rise">
-
-          <h2>Most of what we build<br />is our own.<span className="studio-partnership">We partner occasionally.</span></h2>
-          <div className="studio-intro-copy"><p>When the idea is sharp, the problem is real, and we believe the product should exist.</p><p>We create web platforms, apps, and specialized software—mostly our own.</p></div>
-        </div>
-        <div className="operating-model" id="process">
-          <div className="operating-intro"><h3>From idea<br />to working product.</h3><p>We move from an idea worth pursuing to something people can actually use.</p></div>
-          {buildSteps.map((item) => (
-            <article className="operating-principle" key={item.step}>
-              <span className="operating-number">{item.step}</span><h3>{item.title}</h3><p>{item.body}</p>
-            </article>
-          ))}
-        </div>
+  return <>
+    <section className="studio-pause" id="about">
+      <div className="section-shell studio-pause-shell">
+        <h2>Most of what we build<br />is our own.<span>We partner occasionally.</span></h2>
+        <div className="studio-pause-copy"><p>When the idea is sharp, the problem is real, and we believe the product should exist.</p><p>We create web platforms, apps, and specialized software—mostly our own.</p></div>
       </div>
     </section>
-  );
+    <section className="process-band" id="process" aria-labelledby="process-title">
+      <div className="section-shell">
+        <div className="process-intro"><h2 id="process-title">From idea<br />to working product.</h2><p>We move from an idea worth pursuing to something people can actually use.</p></div>
+        <ol className="process-grid" role="list">{buildSteps.map(item => <li className="process-step" key={item.step}><span className="process-number" aria-hidden="true">{item.step}</span><h3>{item.title}</h3><p>{item.body}</p></li>)}</ol>
+      </div>
+    </section>
+  </>;
 }
 
 function ContactSection() {
@@ -354,7 +350,7 @@ function PolicyPage({ pathname }: { pathname: string }) {
     return (
       <PolicyLayout eyebrow="Policy" title="Privacy">
         <section><h2>What this site collects</h2><p>1118 does not intentionally use advertising cookies or analytics on this website. Our hosting provider may process standard request information—such as IP address, browser details, requested URL, and time of access—to deliver and protect the site.</p></section>
-        <section><h2>Contact</h2><p>When you submit the contact form, the details you provide are processed by our hosting provider and Formspree to deliver and store your inquiry. We use them to respond and maintain relevant business records. Cloudflare Turnstile processes basic device and request information to check for automated abuse before a message is sent. Basic request information is also used to limit repeated submissions. Please do not include sensitive personal information.</p></section>
+        <section><h2>Contact</h2><p>When you submit the contact form, the details you provide are processed by our hosting provider and Resend to deliver your inquiry. We use them to respond and maintain relevant business records. Cloudflare Turnstile processes basic device and request information to check for automated abuse before a message is sent. Basic request information is also used to limit repeated submissions. Please do not include sensitive personal information.</p></section>
         <section><h2>External services</h2><p>Links to Portrait, the App Store, and other websites are governed by those services’ own privacy practices.</p></section>
         <section><h2>Your questions</h2><p>To ask about privacy or request access, correction, or deletion of information you sent directly to 1118, use the <a href="/#contact">contact form</a>.</p></section>
       </PolicyLayout>

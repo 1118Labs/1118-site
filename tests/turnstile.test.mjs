@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { turnstileConfig, verifyTurnstile, createContactConfigHandler, TEST_SITE_KEY, TEST_SECRET_KEY } from '../server/turnstile.mjs';
 import { createContactHandler } from '../server/contact-core.mjs';
-const env = { VERCEL_ENV: 'production', TURNSTILE_SITE_KEY: 'real-shaped-sitekey-000000', TURNSTILE_SECRET_KEY: 'private-server-secret-000000', FORMSPREE_FORM_ID: 'abcdefgh' };
+const env = { VERCEL_ENV: 'production', TURNSTILE_SITE_KEY: 'real-shaped-sitekey-000000', TURNSTILE_SECRET_KEY: 'private-server-secret-000000', RESEND_API_KEY: 'synthetic-key', CONTACT_FROM: 'contact@1118.io', CONTACT_TO: 'recipient@example.test' };
 const valid = { name: 'QA Founder', email: 'qa@example.test', company: '', stage: 'Idea', message: 'This is a synthetic verification request.', website: '', submissionId: 'f51fe04c-adb7-4ec2-a82d-19656690919d', turnstileToken: 'opaque-token' };
 const good = { success: true, hostname: '1118.io', action: 'contact' };
 const mock = payload => async () => ({ ok: true, json: async () => payload });
@@ -41,7 +41,7 @@ test('hostname, action, spent, expired, malformed and network failures reject', 
 });
 test('every valid submission verifies before provider delivery, including accepted retries', async () => {
  const calls = [];
- const handler = createContactHandler({ env, allowRequest: () => true, verify: async () => { calls.push('verify'); return { ok: true, json: async () => good }; }, send: async () => { calls.push('send'); return { ok: true, json: async () => ({ ok: true }) }; } });
+ const handler = createContactHandler({ env, allowRequest: () => true, verify: async () => { calls.push('verify'); return { ok: true, json: async () => good }; }, send: async () => { calls.push('send'); return { ok: true, json: async () => ({ id: 'synthetic-id' }) }; } });
  assert.equal((await invoke(handler)).statusCode, 202);
  assert.equal((await invoke(handler, { ...valid, turnstileToken: 'fresh-token' })).statusCode, 202);
  assert.deepEqual(calls, ['verify', 'send', 'verify']);
@@ -61,3 +61,5 @@ test('public config returns only sitekey and action; unconfigured mode is 503', 
   assert.equal(JSON.stringify(response.body).includes(env.TURNSTILE_SECRET_KEY), false);
  }
 });
+
+test('Preview ignores real credentials and unknown environment fails closed',()=>{assert.equal(turnstileConfig({...env,VERCEL_ENV:undefined}),null);for(const VERCEL_ENV of ['preview','development'])assert.deepEqual(turnstileConfig({...env,VERCEL_ENV}),{sitekey:TEST_SITE_KEY,secret:TEST_SECRET_KEY,test:true});});
