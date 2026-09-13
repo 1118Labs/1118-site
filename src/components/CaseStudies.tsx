@@ -7,6 +7,7 @@ import SignalWorkstation from './SignalWorkstation';
 import portraitResult from '../assets/showcase/portrait/elise-result.webp';
 import portraitIcon from '../assets/showcase/portrait/portrait-native-icon.png';
 import signalOverview from '../assets/showcase/signal/signal-archival-interface.png';
+import signalEnvironment from '../assets/showcase/signal/signal-workstation-authentic-composite-20260913.webp';
 import signalHistory from '../assets/showcase/signal/signal-historical-data-2019.png';
 import signalStructures from '../assets/showcase/signal/signal-manage-structures-2019.png';
 import appStoreBadge from '../assets/showcase/etchr/download-on-the-app-store.svg';
@@ -63,7 +64,7 @@ function WorkIndex() {
             <p>Signal began with a sophisticated quantitative trading process and a question: could that way of analyzing markets be turned into a visual software product?</p>
             <span className="case-text-link">Explore Signal <span aria-hidden="true">→</span></span>
           </div>
-          <div className="work-feature-image"><img src={signalOverview} width="2167" height="1046" alt="Authentic Signal seasonal and correlation analysis interface from 2019" loading="lazy" decoding="async" /></div>
+          <div className="work-feature-image"><img src={signalEnvironment} width="1536" height="1024" alt="Signal commodities analytics interface presented in an illustrative trading-workstation environment." loading="lazy" decoding="async" /></div>
         </a>
       </article>
     </div>
@@ -142,6 +143,7 @@ function SignalCase() {
     <section className="case-experience case-shell" aria-labelledby="signal-experience-title">
       <p className="case-kicker">05 / Product experience</p>
       <h2 id="signal-experience-title">Authentic archival UI.</h2>
+      <figure className="case-archive-figure"><a href={signalOverview} target="_blank" rel="noreferrer" aria-label="Open the full-size original Signal interface"><img src={signalOverview} width="2167" height="1046" alt="Authentic Signal interface from 2019, showing seasonal commodity data and correlation analysis." loading="lazy" decoding="async" /></a><figcaption>Original Signal interface · 2019 <a href={signalOverview} target="_blank" rel="noreferrer">Explore the original screen ↗</a></figcaption></figure>
       <div className="case-workflow"><div><span>01</span><h3>Define the structure.</h3><p>Choose the contract, metric, expiration, and time shift.</p></div><div><span>02</span><h3>Explore the history.</h3><p>Set a time window and examine changes across the selected series.</p></div><div><span>03</span><h3>Compare relationships.</h3><p>Move between historical, seasonal, and correlation views.</p></div></div>
       <figure className="case-archive-figure"><a href={signalHistory} target="_blank" rel="noreferrer" aria-label="Open full-size Signal historical data screenshot"><img src={signalHistory} alt="Authentic Signal historical-data screen with selectable analytical structures, time-series charts, and a time-range navigator" width="2329" height="984" loading="lazy" decoding="async" /></a><figcaption>Historical data and time-window exploration · Authentic Signal interface, August 2019 <a href={signalHistory} target="_blank" rel="noreferrer">View full image ↗</a></figcaption></figure>
       <div className="case-archive-detail"><figure className="case-archive-figure"><a href={signalStructures} target="_blank" rel="noreferrer" aria-label="Open full-size Signal Manage Structures screenshot"><img src={signalStructures} alt="Authentic Signal Manage Structures dialog showing contract, expiration, skew, time-shift, and metric controls" width="1211" height="843" loading="lazy" decoding="async" /></a><figcaption>Manage Structures · Authentic Signal interface, August 2019 <a href={signalStructures} target="_blank" rel="noreferrer">View full image ↗</a></figcaption></figure><div><h3>The analytical choices stay visible.</h3><p>The structure editor makes the ingredients of an analysis explicit. Its controls connect the market question to the data shown in the workspace.</p></div></div>

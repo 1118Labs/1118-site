@@ -6,7 +6,7 @@
   --ink:var(--navy);
   --ink-soft:#526475;
   --line:#D6DEE5;
-  --editorial:Didot,Georgia,serif;
+  --editorial:var(--body-font);
   --body-font:Manrope,system-ui,sans-serif;
   --display-product:clamp(52px,4.4vw,64px);
   --display-section:clamp(52px,4.4vw,64px);
