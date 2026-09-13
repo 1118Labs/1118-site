@@ -1,4 +1,4 @@
-/* One licensed variable family for 1118 marketing; native product proof is untouched. */
+/* Manrope foundation; selected Newsreader statement roles are scoped below. Native product proof is untouched. */
 .hero-copy h1,
 .fleet-launch-copy h2,
 .studio-intro h2,
@@ -157,4 +157,91 @@
   .case-section h2, .case-experience > h2 { font-size: 34px; }
   .work-feature-copy h2 { font-size: 36px; }
   .work-feature-signal .work-feature-link { grid-template-columns: 1fr; }
+}
+
+/* Final editorial rhythm: two explicit roles, never a serif inside native product proof. */
+:root { --statement-font: "Newsreader", Georgia, serif; }
+.hero-copy h1,
+.fleet-launch[data-product] .fleet-launch-copy h2,
+.studio-intro h2,
+.contact-copy h2,
+.case-hero h1,
+.work-feature-copy h2 {
+  font-family: var(--statement-font);
+  font-weight: 450;
+  font-optical-sizing: auto;
+  letter-spacing: -.035em;
+  line-height: 1.06;
+  text-wrap: balance;
+}
+.hero-copy h1 { font-size: clamp(66px, 5.4vw, 88px); letter-spacing: -.04em; margin-block: 30px 34px; }
+.hero-copy-body { max-width: 39ch; font-size: clamp(25px, 2.05vw, 30px); line-height: 1.45; margin-bottom: 28px; }
+.fleet-launch[data-product] .fleet-launch-copy h2 { font-size: clamp(48px, 4.2vw, 64px); }
+.fleet-launch[data-product="signal"] .fleet-launch-copy h2 { font-size: clamp(43px, 3.6vw, 54px); }
+.fleet-launch[data-product="signal"] .fleet-showcase-body { max-width: 54ch; }
+.case-hero h1 { font-size: clamp(60px, 5.65vw, 86px); }
+.work-feature-copy h2 { font-size: clamp(42px, 3.45vw, 52px); }
+
+.studio-shell { padding-block: 128px 112px; }
+.studio-intro { grid-template-columns: 1.35fr 1fr; align-items: end; padding-block: 22px 56px; }
+.studio-intro h2 { font-size: clamp(64px, 5.4vw, 82px); line-height: 1.03; }
+.studio-partnership { font-family: var(--body-font); font-size: clamp(26px, 2.2vw, 34px); font-weight: 500; line-height: 1.35; letter-spacing: -.025em; margin-top: 36px; }
+.studio-intro-copy { padding-bottom: 5px; }
+.studio-intro-copy p:first-child { font-size: 22px; line-height: 1.55; }
+.operating-model { grid-template-columns: 1.05fr .95fr; gap: 62px 12%; margin-top: 56px; }
+.operating-intro { grid-template-columns: 1.05fr .95fr; gap: 12%; padding-top: 52px; }
+.operating-principle { border-top: 0; padding-top: 0; grid-template-columns: 72px 1fr; gap: 22px 28px; }
+.operating-principle:nth-of-type(even) { padding-top: 42px; }
+.operating-number { font-size: 56px; font-weight: 500; }
+.operating-principle h3 { margin: 6px 0 0; font-size: 18px; line-height: 1.4; }
+.operating-principle p { max-width: 35ch; line-height: 1.65; }
+
+.contact-shell { grid-template-columns: 1fr; row-gap: 28px; }
+.contact-copy { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 10%; align-items: start; }
+.contact-copy h2 { grid-column: 1; grid-row: 1/3; font-size: clamp(52px, 4.6vw, 70px); margin: 0; }
+.contact-copy p { grid-column: 2; margin: 0; max-width: 54ch; font-size: 20px; line-height: 1.65; }
+.contact-panel-unavailable { width: 45%; margin-left: 55%; }
+
+@media(max-width:1000px) {
+  .hero-copy h1 { font-size: clamp(60px, 8.7vw, 80px); }
+  .fleet-launch[data-product] .fleet-launch-copy h2 { max-width: 25ch; font-size: clamp(48px, 6.8vw, 62px); }
+  .fleet-launch[data-product="signal"] .fleet-launch-copy h2 { max-width: 28ch; font-size: 54px; }
+  .studio-intro { grid-template-columns: 1fr; padding-block: 0 28px; }
+  .studio-intro h2 { font-size: 72px; }
+  .studio-intro-copy { max-width: 60ch; }
+  .operating-model { gap: 48px 10%; }
+  .operating-intro { gap: 10%; }
+  .operating-principle { grid-template-columns: 1fr; gap: 22px; }
+  .operating-number, .operating-principle h3, .operating-principle p { grid-column: 1; grid-row: auto; }
+  .operating-principle:nth-of-type(even) { padding-top: 32px; }
+  .case-hero h1 { font-size: clamp(54px, 7.6vw, 74px); }
+  .work-feature-copy h2 { font-size: 42px; }
+  .contact-copy { column-gap: 7%; }
+  .contact-copy h2 { font-size: 54px; }
+  .contact-copy p { font-size: 19px; }
+  .contact-panel-unavailable { width: 46.5%; margin-left: 53.5%; }
+}
+@media(max-width:700px) {
+  .hero-copy h1 { font-size: clamp(46px, 12.2vw, 66px); line-height: 1.06; margin-block: 26px 28px; }
+  .hero-copy-body { font-size: 23px; line-height: 1.45; }
+  .fleet-launch[data-product] .fleet-launch-copy h2 { max-width: none; font-size: clamp(40px, 10.75vw, 52px); line-height: 1.1; }
+  .fleet-launch[data-product="signal"] .fleet-launch-copy h2 { font-size: 43px; }
+  .studio-shell { padding-block: 80px 72px; }
+  .studio-intro { gap: 32px; padding-bottom: 36px; }
+  .studio-intro h2 { font-size: clamp(48px, 13.25vw, 64px); }
+  .studio-partnership { font-size: 26px; margin-top: 28px; }
+  .studio-intro-copy p:first-child { font-size: 21px; }
+  .operating-model { grid-template-columns: 1fr; margin-top: 32px; gap: 42px; }
+  .operating-intro { padding-top: 38px; }
+  .operating-principle, .operating-principle:nth-of-type(even) { grid-template-columns: 52px 1fr; padding-top: 0; gap: 18px 24px; }
+  .operating-number { grid-column: 1; grid-row: 1/3; font-size: 44px; }
+  .operating-principle h3 { grid-column: 2; grid-row: 1; font-size: 16px; margin-top: 2px; }
+  .operating-principle p { grid-column: 2; grid-row: 2; font-size: 17px; }
+  .case-hero h1 { font-size: clamp(44px, 11.8vw, 60px); }
+  .work-feature-copy h2 { font-size: 42px; }
+  .contact-copy { display: block; }
+  .contact-copy h2 { font-size: 48px; margin-bottom: 30px; }
+  .contact-copy p { font-size: 18px; margin: 0 0 24px; }
+  .contact-copy p:last-child { margin-bottom: 0; }
+  .contact-panel-unavailable { width: 100%; margin: 0; }
 }

@@ -33,7 +33,6 @@ const REVIEWS_ENGINE_PUBLIC_PROOF_URL = "https://www.skypupstreats.com/reviews";
 type Product = {
   description: string;
   descriptor?: string;
-  continuation?: string;
   headline: string;
   link?: { href: string; label: string };
   name: string;
@@ -67,19 +66,18 @@ const products: Product[] = [
     slug: "signal",
     name: "Signal",
     descriptor: "Quantitative intelligence for commodities trading.",
-    continuation: "1118 worked with domain expertise in commodities trading to codify that process into Signal—a platform combining market data, quantitative analysis, visualization, and machine learning to help surface compelling trade ideas.",
     headline: "We built a better way\nto uncover commodities trade\u00a0ideas.",
     description:
-      "Signal began with a sophisticated quantitative trading process and a question: could that way of analyzing markets be turned into a visual software product?",
+      "1118 designed and built Signal, combining market data, quantitative analysis, visualization, and machine learning to help surface compelling trade ideas.",
     note: "Signal was used in live markets, licensed commercially, and later acquired.",
   },
 ];
 
 const buildSteps = [
-  { step: "01", title: "FIND THE OPPORTUNITY", body: "See what is missing, broken, or harder than it should be." },
+  { step: "01", title: "SEE THE OPENING", body: "Notice what is missing, broken, or harder than it should be." },
   { step: "02", title: "DEFINE THE PRODUCT", body: "Turn the idea into a clear proposition, experience, and operating model." },
   { step: "03", title: "BUILD IT", body: "Bring design, software, AI, and infrastructure together into a working product." },
-  { step: "04", title: "LAUNCH AND LEARN", body: "Put it into the world, see what happens, and keep making it better." },
+  { step: "04", title: "PUT IT INTO THE WORLD", body: "Launch, learn quickly, and keep making the product better." },
 ] as const;
 
 const policyMeta: Record<string, { description: string; title: string }> = {
@@ -270,7 +268,7 @@ function ProductSection() {
                   ))}
                 </h2>
                 {product.slug === "signal" && <div className="fleet-launch-stage signal-marketing-stage"><SignalWorkstation /></div>}
-                {product.continuation ? <div className="fleet-showcase-body"><p>{product.descriptor}</p><p>{product.description}</p><p>{product.continuation}</p></div> : <p className="fleet-showcase-body">{product.description}</p>}
+                {product.descriptor ? <div className="fleet-showcase-body"><p>{product.descriptor}</p><p>{product.description}</p></div> : <p className="fleet-showcase-body">{product.description}</p>}
                 {product.note ? <p className="fleet-showcase-why">{product.note}</p> : null}
                 {product.link ? (
                   <div className="fleet-launch-actions">
@@ -333,7 +331,7 @@ function AboutSection() {
 
 function ContactSection() {
   return <section className="contact-section" id="contact"><div className="section-shell contact-shell">
-    <div className="contact-copy" data-reveal="rise"><h2>Start a conversation.</h2><p>Have an idea, a product, or a problem worth solving? Tell us what you're working on.</p></div>
+    <div className="contact-copy" data-reveal="rise"><h2>Start a conversation.</h2><p>Founders, operators, and teams usually come to us because they’ve found a product gap—something they need that doesn’t quite exist.</p><p>Most of what we build is our own. We partner selectively when the problem is real and we believe the product should exist.</p></div>
     <ContactPanel />
   </div></section>;
 }
