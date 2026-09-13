@@ -135,3 +135,11 @@
  .footer-link-group strong { line-height:22px; }
  .footer-link-group nav,.footer-link-group:nth-child(1) nav { display:flex; gap:0 22px; }
 }
+
+/* Editorial copy fit: keep the approved hero phrase together on desktop. */
+@media (min-width:1001px) {
+ .hero-copy h1 { font-size:clamp(69px,5.65vw,86px); }
+}
+.hero-copy-body,
+.fleet-launch[data-product="property-insights"] h2,
+.fleet-launch[data-product="signal"] h2 { text-wrap:balance; }

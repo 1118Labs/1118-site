@@ -31,6 +31,8 @@ const REVIEWS_ENGINE_PUBLIC_PROOF_URL = "https://www.skypupstreats.com/reviews";
 
 type Product = {
   description: string;
+  descriptor?: string;
+  continuation?: string;
   headline: string;
   link?: { href: string; label: string };
   name: string;
@@ -42,56 +44,47 @@ const products: Product[] = [
   {
     slug: "portrait",
     name: "Portrait",
-    headline: "Editorial portraits\nfrom real photographs.",
-    description: "Portrait turns one clear photograph into a refined editorial portrait, ready for profiles, websites, social media, and print.",
+    headline: "We made AI portraits\nfeel worthy of print.",
+    description: "Most AI-generated portraits still look unmistakably generated. Portrait starts with one real photograph and turns it into a refined editorial portrait designed to look like you—and look good enough to publish.",
     link: { href: APP_STORE_URL, label: "View on the App Store" },
   },
   {
     slug: "reviews-engine",
     name: "Reviews Engine",
-    headline: "Turn customer reviews\ninto a better reputation.",
-    description: "A platform for collecting, moderating, and publishing customer reviews.",
+    headline: "We turned customer reviews\ninto a trust engine.",
+    description: "Businesses work hard to earn great reviews, then leave them scattered across platforms or buried where customers rarely see them. Reviews Engine collects, moderates, and publishes that proof where it can actually build trust.",
     link: { href: REVIEWS_ENGINE_PUBLIC_PROOF_URL, label: "See Reviews Engine in use" },
   },
   {
     slug: "property-insights",
     name: "Property Insights",
-    link: { href: "https://insights.1118.io", label: "Explore Property Insights" },
-    headline: "Turn service requests\ninto quote-ready property intelligence.",
-    description: "Property context, risk, and recommendations assembled before the estimate begins.",
+    link: { href: "https://insights.1118.io", label: "Explore the product" },
+    headline: "We brought property intelligence\ninto the service workflow.",
+    description: "Service businesses often quote jobs with less context than they should have. Property Insights connects incoming requests to property data, physical context, risks, and recommendations so operators can understand the job before the estimate begins.",
   },
   {
     slug: "signal",
     name: "Signal",
-    headline: "Quantitative intelligence\nfor commodities trading.",
+    descriptor: "Quantitative intelligence for commodities trading.",
+    continuation: "1118 worked with domain expertise in commodities trading to codify that process into Signal—a platform combining market data, quantitative analysis, visualization, and machine learning to help surface compelling trade ideas.",
+    headline: "We built a better way\nto uncover commodities trade ideas.",
     description:
-      "1118 designed and built Signal to help commodities traders uncover compelling trade ideas through data, quantitative analysis, and machine learning.",
+      "Signal began with a sophisticated quantitative trading process and a question: could that way of analyzing markets be turned into a visual software product?",
     note: "Signal was used in live markets, licensed commercially, and later acquired.",
   },
 ];
 
 const buildSteps = [
-  {
-    step: "01",
-    title: "DIRECTION",
-    body: "We decide what deserves to be built and what good looks like.",
-  },
-  {
-    step: "02",
-    title: "EXECUTION",
-    body: "AI and specialist tools help us move from idea to working product quickly.",
-  },
-  {
-    step: "03",
-    title: "REVIEW",
-    body: "We test the work, challenge the assumptions, and decide what ships.",
-  },
+  { step: "01", title: "FIND THE OPPORTUNITY", body: "See what is missing, broken, or harder than it should be." },
+  { step: "02", title: "DEFINE THE PRODUCT", body: "Turn the idea into a clear proposition, experience, and operating model." },
+  { step: "03", title: "BUILD IT", body: "Bring design, software, AI, and infrastructure together into a working product." },
+  { step: "04", title: "LAUNCH AND LEARN", body: "Put it into the world, see what happens, and keep making it better." },
 ] as const;
 
 const policyMeta: Record<string, { description: string; title: string }> = {
   "/": {
     title: "1118 — Original Software & Products",
-    description: "1118 creates original software, including Portrait, Reviews Engine, and Property Insights, from problems we understand and ideas we believe should exist.",
+    description: "1118 creates web platforms, apps, and specialized software—mostly our own. Original products, built from ideas we believe should exist.",
   },
   "/privacy": {
     title: "Privacy | 1118",
@@ -229,9 +222,8 @@ function Hero({ reduceMotion }: { reduceMotion: boolean }) {
     <div className="hero-shell">
       <div className="hero-copy">
         <span className="hero-blue-rule" aria-hidden="true" />
-        <h1>We build the software<br />{" "}we keep looking for.</h1>
-        <p className="hero-copy-body">Original products, built from problems we understand and ideas we believe should exist.</p>
-        <p className="hero-philosophy">Most of what we build is our own.</p>
+        <h1>We build the products<br />{" "}we keep looking for.</h1>
+        <p className="hero-copy-body">Original products, built from ideas we believe should exist.</p>
         <a className="primary-button" href="#work">See what we build <span aria-hidden="true">→</span></a>
       </div>
       <div className="hero-portrait"><PortraitComparison className="portrait-lead-comparison" priority /></div>
@@ -276,7 +268,7 @@ function ProductSection() {
                     </span>
                   ))}
                 </h2>
-                <p className="fleet-showcase-body">{product.description}</p>
+                {product.continuation ? <div className="fleet-showcase-body"><p>{product.descriptor}</p><p>{product.description}</p><p>{product.continuation}</p></div> : <p className="fleet-showcase-body">{product.description}</p>}
                 {product.note ? <p className="fleet-showcase-why">{product.note}</p> : null}
                 {product.link ? (
                   <div className="fleet-launch-actions">
@@ -291,7 +283,7 @@ function ProductSection() {
                       </>
                     ) : (
                       <a className="text-link fleet-showcase-link" href={product.link.href} rel="noreferrer" target="_blank">
-                        {product.link.label} <span aria-hidden="true">↗</span>
+                        {product.link.label} <span aria-hidden="true">{product.slug === "property-insights" ? "→" : "↗"}</span>
                       </a>
                     )}
                   </div>
@@ -321,13 +313,14 @@ function AboutSection() {
       <div className="section-shell studio-shell">
         <div className="studio-intro" data-reveal="rise">
 
-          <h2>We build our own<br />software.</h2>
-          <div className="studio-intro-copy"><p>1118 creates original software from problems we understand firsthand and ideas we believe should exist.</p><p>Most of what we build is our own. We partner selectively when the problem is meaningful and the fit is right.</p></div>
+          <h2>Most of what we build<br />is our own.<br />We partner occasionally.</h2>
+          <div className="studio-intro-copy"><p>When the idea is sharp, the problem is real, and we believe the product should exist.</p><p>We create web platforms, apps, and specialized software—mostly our own.</p></div>
         </div>
         <div className="operating-model" id="process">
+          <div className="operating-principle"><h3>From idea<br />to working product.</h3><p>We move from an idea worth pursuing to something people can actually use.</p></div>
           {buildSteps.map((item) => (
             <article className="operating-principle" key={item.step}>
-              <h3>{item.title}</h3><p>{item.body}</p>
+              <span className="operating-number">{item.step}</span><h3>{item.title}</h3><p>{item.body}</p>
             </article>
           ))}
         </div>

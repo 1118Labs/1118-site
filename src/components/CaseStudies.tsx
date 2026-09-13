@@ -40,16 +40,16 @@ function WorkIndex() {
   return <article className="work-index">
     <header className="work-index-header case-shell">
       <p className="case-kicker">1118 / Selected work</p>
-      <h1>Selected work.</h1>
-      <p className="case-intro">Original products, built from problems we understand and ideas we believe should exist.</p>
+      <h1>What we’ve built.</h1>
+      <p className="case-intro">Each began with an idea for something we thought should exist.</p>
     </header>
     <div className="work-features">
       <article className="work-feature work-feature-portrait">
         <a className="work-feature-link case-shell" href="/work/portrait">
           <div className="work-feature-copy">
             <p className="case-kicker">Portrait / {productStatus.portrait}</p>
-            <h2>Editorial portraits<br />from real photographs.</h2>
-            <p>Portrait turns one clear photograph into a refined editorial portrait, ready for profiles, websites, social media, and print.</p>
+            <h2>We made AI portraits<br />feel worthy of print.</h2>
+            <p>Most AI-generated portraits still look unmistakably generated. Portrait starts with one real photograph and turns it into a refined editorial portrait designed to look like you—and look good enough to publish.</p>
             <span className="case-text-link">Explore Portrait <span aria-hidden="true">→</span></span>
           </div>
           <div className="work-feature-image"><img src={portraitResult} width="1024" height="1024" alt="Elise shown as a finished Portrait editorial illustration" loading="lazy" decoding="async" /></div>
@@ -59,8 +59,8 @@ function WorkIndex() {
         <a className="work-feature-link case-shell" href="/work/signal">
           <div className="work-feature-copy">
             <p className="case-kicker">Signal / {productStatus.signal}</p>
-            <h2>Quantitative intelligence<br />for commodities trading.</h2>
-            <p>1118 designed and built Signal to help commodities traders uncover compelling trade ideas through data, quantitative analysis, and machine learning.</p>
+            <h2>We built a better way<br />to uncover commodities trade ideas.</h2>
+            <p>Signal began with a sophisticated quantitative trading process and a question: could that way of analyzing markets be turned into a visual software product?</p>
             <span className="case-text-link">Explore Signal <span aria-hidden="true">→</span></span>
           </div>
           <div className="work-feature-image"><img src={signalOverview} width="2167" height="1046" alt="Authentic Signal seasonal and correlation analysis interface from 2019" loading="lazy" decoding="async" /></div>
@@ -69,8 +69,8 @@ function WorkIndex() {
     </div>
     <section className="work-more case-shell" aria-labelledby="work-more-title">
       <h2 id="work-more-title">More from 1118.</h2>
-      <div><a href="/#reviews-engine">Reviews Engine <span aria-hidden="true">↗</span></a><p>A platform for collecting, moderating, and publishing customer reviews.</p></div>
-      <div><p className="case-product-status">{productStatus["property-insights"]}</p><a href="/#property-insights">Property Insights <span aria-hidden="true">↗</span></a><p>Property context and operator decision support.</p></div>
+      <div><a href="/#reviews-engine">Reviews Engine <span aria-hidden="true">↗</span></a><p>A platform that turns scattered customer feedback into clean, controlled, embeddable proof.</p></div>
+      <div><p className="case-product-status">{productStatus["property-insights"]}</p><a href="/#property-insights">Property Insights <span aria-hidden="true">↗</span></a><p>Better quoting starts with better context.</p></div>
     </section>
   </article>;
 }
@@ -81,24 +81,22 @@ function PortraitCase() {
       <a className="case-back" href="/work">← Selected work</a>
       <p className="case-kicker">{productStatus.portrait}</p>
       <div className="case-product-name"><img src={portraitIcon} width="64" height="64" alt="" /><span>Portrait</span></div>
-      <h1>Editorial portraits<br />from real photographs.</h1>
-      <p className="case-intro">Portrait turns one clear photograph into a refined editorial portrait, ready for profiles, websites, social media, and print.</p>
+      <h1>We made AI portraits<br />feel worthy of print.</h1>
+      <p className="case-intro">Most AI-generated portraits still look unmistakably generated. Portrait starts with one real photograph and turns it into a refined editorial portrait designed to look like you—and look good enough to publish.</p>
     </header>
     <figure className="case-portrait-hero case-shell">
       <img src={portraitResult} alt="A finished Portrait of Elise, with detailed editorial line work" width="1024" height="1024" decoding="async" fetchPriority="high" />
       <figcaption>Finished Portrait output · Elise · Studio example</figcaption>
     </figure>
     <div className="case-shell">
-      <CaseSection number="02" label="Problem" title="Product idea.">
-        <p>A portrait needs to work beyond the moment it is made: in a profile, on a website, or wherever someone chooses to represent themselves.</p>
-        <p>The product challenge was to make an editorial transformation feel approachable, then make the result easy to keep and use.</p>
+      <CaseSection number="02" label="Portrait" title="The gap.">
+        <p>Most AI-generated portraits still look unmistakably generated—too synthetic, too stylized, or too far from the person in the original photograph.</p>
       </CaseSection>
-      <CaseSection number="03" label="Product idea" title="Transformation experience.">
-        <p>Start with a clear photograph. Turn it into a finished editorial portrait. Keep the journey focused on the image, from the first comparison to the final output.</p>
+      <CaseSection number="03" label="Portrait" title="The idea.">
+        <p>Create an editorial portrait from one real photograph while preserving the person, expression, and character that made the photograph theirs.</p>
       </CaseSection>
-      <CaseSection number="04" label="What 1118 built" title="Product design and AI image pipeline.">
-        <p>1118 brought product design, an AI image-generation workflow, and the app experience together in Portrait.</p>
-        <p>The published App Store experience includes photo selection, a before-and-after comparison, and a completed portrait with Save to Photos and Share controls.</p>
+      <CaseSection number="04" label="Portrait" title="What we built.">
+        <p>Portrait takes users from source photograph to finished editorial portrait, then prepares that portrait for the places people actually use it—profiles, websites, social media, and print.</p>
       </CaseSection>
     </div>
     <section className="case-experience case-shell" aria-labelledby="portrait-experience-title">
@@ -109,9 +107,8 @@ function PortraitCase() {
       <div className="case-portrait-gallery">{[{name:'Rowan',src:rowanPortrait},{name:'Theo',src:theoPortrait},{name:'Graham',src:grahamPortrait}].map(item=><figure key={item.name}><a href="https://getportrait.ai/gallery" target="_blank" rel="noreferrer"><img src={item.src} width="1024" height="1024" alt={`${item.name}, approved Portrait studio example`} loading="lazy" decoding="async" /></a><figcaption>{item.name} · Studio example</figcaption></figure>)}</div>
     </section>
     <div className="case-shell">
-      <CaseSection number="06" label="Outcome" title="Available on the App Store.">
-        <p>Portrait is available through the App Store, with a public product experience at getportrait.ai.</p>
-        <p>The public App Store listing currently retains the legacy name Etchr Portraits. The current product website uses Portrait.</p>
+      <CaseSection number="06" label="Portrait" title="Product outcome.">
+        <p>A finished portrait that feels composed enough to publish and familiar enough to still feel like you.</p>
       </CaseSection>
       <CaseSection number="07" label="Status" title="App Store.">
         <p>Explore the current product and its App Store listing.</p>
@@ -127,22 +124,19 @@ function SignalCase() {
     <header className="case-hero case-shell">
       <a className="case-back" href="/work">← Selected work</a>
       <p className="case-kicker">Signal · {productStatus.signal}</p>
-      <h1>Quantitative intelligence<br />for commodities trading.</h1>
-      <p className="case-intro">1118 designed and built Signal to help commodities traders uncover compelling trade ideas through data, quantitative analysis, and machine learning.</p><p className="case-intro">Signal was used in live markets, licensed commercially, and later acquired.</p>
+      <h1>We built a better way<br />to uncover commodities trade ideas.</h1>
+      <p className="case-intro">Signal began with a sophisticated quantitative trading process and a question: could that way of analyzing markets be turned into a visual software product?</p><p className="case-intro">Signal was used in live markets, licensed commercially, and later acquired.</p>
     </header>
     <div className="case-signal-hero"><SignalWorkstation /></div>
     <div className="case-shell">
-      <CaseSection number="02" label="Problem" title="The problem and domain.">
-        <p>Commodities analysis brings together different contracts, time periods, and market relationships. Signal was built to make those quantitative workflows visual.</p>
-        <p>The opportunity was to translate domain expertise into a workspace for exploring the data behind a trade idea.</p>
+      <CaseSection number="02" label="Signal" title="The gap.">
+        <p>Sophisticated commodities analysis often lived inside spreadsheets, models, and the expertise of the people using them.</p>
       </CaseSection>
-      <CaseSection number="03" label="Product idea" title="Translating quantitative expertise into software.">
-        <p>Signal combined data, quantitative analysis, and machine learning to help uncover compelling trade ideas.</p>
-        <p>Historical, seasonal, and correlation views gave different perspectives on the same analytical question.</p>
+      <CaseSection number="03" label="Signal" title="The idea.">
+        <p>Turn a quantitative way of analyzing markets into a visual product that made relationships, structures, and opportunities easier to explore.</p>
       </CaseSection>
-      <CaseSection number="04" label="What 1118 built" title="Product experience.">
-        <p>1118 designed, built, and launched the platform. The interface brought analytical structures, time-window selection, charting, and detailed comparisons into one product.</p>
-        <p>The original screens show how a user could define contracts and metrics, adjust expirations and time shifts, and explore the resulting relationships.</p>
+      <CaseSection number="04" label="Signal" title="What we built.">
+        <p>1118 designed and built Signal, combining market data, quantitative analysis, visualization, and machine learning in one commodities research platform.</p>
       </CaseSection>
     </div>
     <section className="case-experience case-shell" aria-labelledby="signal-experience-title">
@@ -153,9 +147,8 @@ function SignalCase() {
       <div className="case-archive-detail"><figure className="case-archive-figure"><a href={signalStructures} target="_blank" rel="noreferrer" aria-label="Open full-size Signal Manage Structures screenshot"><img src={signalStructures} alt="Authentic Signal Manage Structures dialog showing contract, expiration, skew, time-shift, and metric controls" width="1211" height="843" loading="lazy" decoding="async" /></a><figcaption>Manage Structures · Authentic Signal interface, August 2019 <a href={signalStructures} target="_blank" rel="noreferrer">View full image ↗</a></figcaption></figure><div><h3>The analytical choices stay visible.</h3><p>The structure editor makes the ingredients of an analysis explicit. Its controls connect the market question to the data shown in the workspace.</p></div></div>
     </section>
     <div className="case-shell">
-      <CaseSection number="06" label="Outcome" title="Commercialization and acquisition.">
-        <p>The platform was used in live markets, licensed commercially, and later acquired.</p>
-        <p>Signal is part of 1118's history of turning specialized expertise into working software and bringing it into commercial use.</p>
+      <CaseSection number="06" label="Signal" title="Product outcome.">
+        <p>Signal was used in live markets, licensed commercially, and later acquired.</p>
       </CaseSection>
       <CaseSection number="07" label="Status" title="Built · Licensed · Acquired.">
         <p>Signal is presented here as historical work. The product screens are authentic archives from 2019.</p>
