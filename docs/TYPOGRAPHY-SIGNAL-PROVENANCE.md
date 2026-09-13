@@ -7,7 +7,7 @@ Copy authority: `95c4152e23126445502a357da9355219b55692ae`. Marketing prose is u
 Use existing self-hosted Manrope variable Latin WOFF2, licensed under the SIL Open Font License retained in `public/fonts/Manrope-OFL.txt`. No new font download or Apple SF Pro installation.
 
 - Hero: Manrope 780.
-- Product headlines: Manrope 720; Signal homepage 700.
+- Product headlines: Manrope 720, including Signal.
 - Section headlines: Manrope 700.
 - Work/case hero: Manrope 750; Work product headlines 720.
 - Body: Manrope 400–500, with marketing chapter copy 450.
