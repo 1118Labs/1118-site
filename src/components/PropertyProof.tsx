@@ -4,7 +4,7 @@ import './PropertyProof.css';
 
 export function PropertyBrand() {
   return <span className="pi-brand" role="img" aria-label="Property Insights">
-    <img src={propertyMark} width="1254" height="1254" alt="" aria-hidden="true" />
+    <img src={propertyMark} width="1254" height="1254" alt="" aria-hidden="true" loading="lazy" decoding="async" fetchPriority="low" />
     <span className="pi-brand-wordmark" aria-hidden="true"><span>Property</span><span>Insights</span></span>
   </span>;
 }

@@ -254,7 +254,7 @@ function ProductSection() {
                     <p className="fleet-showcase-name">{product.name}</p>
                   </div>
                  ) : product.slug === "reviews-engine" ? (
-                  <div className="reviews-product-lockup"><img src={reviewsShield} width="470" height="575" alt="" /><p className="fleet-showcase-name">Reviews <span>Engine</span></p></div>
+                  <div className="reviews-product-lockup"><img src={reviewsShield} width="470" height="575" alt="" loading="lazy" decoding="async" fetchPriority="low" /><p className="fleet-showcase-name">Reviews <span>Engine</span></p></div>
                 ) : product.slug === "property-insights" ? (
                   <div className="property-product-lockup"><PropertyBrand /></div>
                 ) : (
