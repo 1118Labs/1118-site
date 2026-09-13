@@ -85,12 +85,12 @@ export default function PortraitComparison({ className = '', interactive = true,
       <img className="portrait-comparison-image portrait-comparison-source" src={portrait.source}
         alt={`${portrait.name}, original photograph for the Portrait studio example`}
         width={portrait.width} height={portrait.height} draggable={false}
-        loading={priority ? 'eager' : 'lazy'} fetchPriority={priority ? 'high' : 'auto'}
+        loading={priority ? 'eager' : 'lazy'} fetchPriority={priority ? 'high' : 'low'}
         decoding={priority ? 'sync' : 'async'} style={{ transform: portrait.transform }} />
       <div className="portrait-comparison-result">
         <img className="portrait-comparison-image" src={portrait.result}
           alt={`${portrait.name}, finished editorial portrait`} width={1024} height={1024}
-          draggable={false} loading={priority ? 'eager' : 'lazy'} decoding={priority ? 'sync' : 'async'} />
+          draggable={false} loading={priority ? 'eager' : 'lazy'} fetchPriority={priority ? 'high' : 'low'} decoding={priority ? 'sync' : 'async'} />
       </div>
       <div className="portrait-comparison-labels" aria-hidden="true"><span>Finished portrait</span><span>Original photo</span></div>
       <div className="portrait-comparison-divider" aria-hidden="true" />

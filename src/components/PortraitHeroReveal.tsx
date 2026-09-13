@@ -384,7 +384,7 @@ export default function PortraitHeroReveal({ sourceUrl, outputUrl, sourceImageSt
     style={{ cursor: dragging ? 'grabbing' : 'pointer', touchAction: 'pan-y', '--reveal-duration': duration } as CSSProperties}>
     <span className="portrait-hero-stage">
       <img src={sourceUrl} alt={sourceAlt} width="768" height="1024" decoding="sync" loading="eager" fetchPriority="high" draggable={false} style={sourceImageStyle} />
-      <span className="portrait-hero-result" style={{clipPath:`inset(0 ${100-visiblePercent}% 0 0)`}}><img src={outputUrl} alt={outputAlt} width="1024" height="1024" decoding="sync" loading="eager" draggable={false}/></span>
+      <span className="portrait-hero-result" style={{clipPath:`inset(0 ${100-visiblePercent}% 0 0)`}}><img src={outputUrl} alt={outputAlt} width="1024" height="1024" decoding="sync" loading="eager" fetchPriority="high" draggable={false}/></span>
       <span aria-hidden="true" data-etchr-reveal-divider="true" className="portrait-hero-divider" style={{left:`${clamp(visiblePercent,3,97)}%`,opacity:mode==='rest'?.94:1}}>
         <span data-etchr-reveal-handle="true" className="portrait-hero-handle" style={{opacity:mode==='rest'?.94:1,transform:`translate(-50%, -50%) scale(${mode==='rest'?.92:1})`}}><span><i/></span></span>
       </span>

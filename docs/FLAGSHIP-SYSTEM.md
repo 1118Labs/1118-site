@@ -42,3 +42,9 @@ Twelve read-only specialist roles completed before final integration review: Shi
 Before publication: confirm privateCONTACT_TO; complete controlled realManaged submission on canonicalhostname, server success, Resend acceptance and exactlyone matching inbox message/no duplicate. No safe canonical-host test is configured without publishing the candidate. Manual spoken screen-reader completion of realManaged flow remainsP1. Hosted mobile performance must be reported separately from local lab evidence.
 
 Release sequence after explicit founder authorization: recordcurrentProduction rollback identity; verifyserverenv/realwidget; release exact reviewedSHA through existingPR; first action controlled canonical submission/inbox/dedupe verification; smoke9routes/assets/canonicalredirect/headers/indexing; roll back on deliveryorcriticalregression. Never claim deployment or founderapproval fromREADYPreview.
+
+## Controlled Preview acceptance
+
+On protected87f345c Preview, one actual official-test Siteverify + Resend test-sink submission returned202. A deliberately simulated lost browser success response preserved the draft/UUID; the unchanged retry with a refreshed widget returned202. Resend email e1769f49-3e57-481c-859c-eb15ec6192c7 was delivered to its official test sink at2026-09-13T23:38:33.415Z; all six submitted field values matched. Provider listing after both requests contained exactlyone1118 message, no duplicate. Seventeen browser assertions passed. This is not realManaged/canonical-host/private-inbox verification.
+
+First hosted slow-mobile lab measuredLCP3.208s but the hero result finished at10.63s while five large proof images competed. The narrow follow-up gives both hero images high priority and lower proof-image priority. Files, crops and interactions unchanged. Final measurement is reported with its ownSHA in the artifact evidence.
