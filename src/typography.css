@@ -225,7 +225,7 @@
   .hero-copy h1 { font-size: clamp(46px, 12.2vw, 66px); line-height: 1.06; margin-block: 26px 28px; }
   .hero-copy-body { font-size: 23px; line-height: 1.45; }
   .fleet-launch[data-product] .fleet-launch-copy h2 { max-width: none; font-size: clamp(40px, 10.75vw, 52px); line-height: 1.1; }
-  .fleet-launch[data-product="signal"] .fleet-launch-copy h2 { font-size: 43px; }
+  .fleet-launch[data-product="signal"] .fleet-launch-copy h2 { font-size: 40px; }
   .studio-shell { padding-block: 80px 72px; }
   .studio-intro { gap: 32px; padding-bottom: 36px; }
   .studio-intro h2 { font-size: clamp(48px, 13.25vw, 64px); }
