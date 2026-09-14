@@ -37,7 +37,7 @@ export default function PortraitStory({ variant = 'homepage' }: { variant?: 'hom
       </section>
       <section className="portrait-workflow-panel portrait-pack-panel">
         <div className="portrait-workflow-heading"><h3>Use it</h3></div>
-        <div className="portrait-pack-master"><ResponsiveImage sizes={portraitImageSizes} deferUntilNear={variant === 'homepage' ? 800 : undefined} src={square} width="1024" height="1024" alt="Sloane, finished editorial portrait" loading="lazy" decoding="async" fetchPriority="low" /></div>
+        <div className="portrait-pack-master"><ResponsiveImage sizes={portraitImageSizes} deferUntilNear={variant === 'homepage' ? 1600 : undefined} deferUntilScroll={variant === 'homepage'} src={square} width="1024" height="1024" alt="Sloane, finished editorial portrait" loading="lazy" decoding="async" fetchPriority="low" /></div>
         <div className="portrait-native-formats">
           {[{src:profile,label:'Profile',width:640,height:800},{src:circle,label:'Circle',width:640,height:640}].map(item=><figure key={item.label} className={`portrait-format portrait-format-${item.label.toLowerCase()}`}><ResponsiveImage deferUntilNear={variant === 'homepage' ? 250 : undefined} sizes={item.label === 'Profile' ? '137px' : '170px'} src={item.src} width={item.width} height={item.height} alt={`Sloane’s original Portrait ${item.label.toLowerCase()} export`} loading="lazy" decoding="async" fetchPriority="low"/><figcaption>{item.label}</figcaption></figure>)}
         </div>

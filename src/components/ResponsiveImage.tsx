@@ -8,7 +8,7 @@ export const wideImageSizes = '(max-width: 1504px) 96vw, 1440px';
 
 // The approved source remains the fallback and full-size editorial reference.
 // Picture sources let the browser select format and DPR without downloading both.
-export default function ResponsiveImage({ src, sizes, deferUntilNear, ...props }: ImgHTMLAttributes<HTMLImageElement> & { deferUntilNear?: number }) {
+export default function ResponsiveImage({ src, sizes, deferUntilNear, deferUntilScroll = false, ...props }: ImgHTMLAttributes<HTMLImageElement> & { deferUntilNear?: number; deferUntilScroll?: boolean }) {
   const target = useRef<HTMLImageElement>(null);
   const [near, setNear] = useState(deferUntilNear === undefined);
   useEffect(() => {
@@ -16,9 +16,15 @@ export default function ResponsiveImage({ src, sizes, deferUntilNear, ...props }
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) { setNear(true); observer.disconnect(); }
     }, { rootMargin: `${deferUntilNear}px` });
-    observer.observe(target.current);
-    return () => observer.disconnect();
-  }, [near, deferUntilNear]);
+    const observe = () => {
+      if (deferUntilScroll && window.scrollY === 0) return;
+      if (target.current) observer.observe(target.current);
+      window.removeEventListener('scroll', observe);
+    };
+    observe();
+    if (deferUntilScroll) window.addEventListener('scroll', observe, { passive: true });
+    return () => { observer.disconnect(); window.removeEventListener('scroll', observe); };
+  }, [near, deferUntilNear, deferUntilScroll]);
   // Reserve the final image box, but keep remote sources absent until approach.
   const ready = deferUntilNear === undefined || near;
   const image = responsiveImages[src ?? ''];

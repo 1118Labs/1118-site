@@ -84,13 +84,13 @@ export default function PortraitComparison({ className = '', interactive = true,
     <div className={`portrait-comparison ${className}`} data-subject={subject} ref={stage}
       style={{ '--portrait-position': `${position}%` } as CSSProperties}
       onPointerDown={begin} onPointerMove={move} onPointerUp={finish} onPointerCancel={finish}>
-      <ResponsiveImage deferUntilNear={gallery ? 800 : undefined} sizes={portraitSourceSizes} className="portrait-comparison-image portrait-comparison-source" src={portrait.source}
+      <ResponsiveImage deferUntilNear={gallery ? 1600 : undefined} deferUntilScroll={gallery} sizes={portraitSourceSizes} className="portrait-comparison-image portrait-comparison-source" src={portrait.source}
         alt={`${portrait.name}, original photograph`}
         width={portrait.width} height={portrait.height} draggable={false}
         loading={priority ? 'eager' : 'lazy'} fetchPriority={priority ? 'high' : gallery ? 'auto' : 'low'}
         decoding={priority ? 'sync' : 'async'} style={{ transform: portrait.transform }} />
       <div className="portrait-comparison-result">
-        <ResponsiveImage deferUntilNear={gallery ? 800 : undefined} sizes={portraitImageSizes} className="portrait-comparison-image" src={portrait.result}
+        <ResponsiveImage deferUntilNear={gallery ? 1600 : undefined} deferUntilScroll={gallery} sizes={portraitImageSizes} className="portrait-comparison-image" src={portrait.result}
           alt={`${portrait.name}, finished editorial portrait`} width={1024} height={1024}
           draggable={false} loading={priority ? 'eager' : 'lazy'} fetchPriority={priority ? 'high' : gallery ? 'auto' : 'low'} decoding={priority ? 'sync' : 'async'} />
       </div>
