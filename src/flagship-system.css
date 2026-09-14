@@ -179,3 +179,16 @@
 .portrait-story-homepage .portrait-format-profile img { width:min(100%,136.4px); height:auto; aspect-ratio:640/800; }
 .portrait-story-homepage .portrait-format-circle img { width:min(100%,170px); height:auto; aspect-ratio:1; }
 .portrait-story-homepage img:not([src]) { visibility:hidden; }
+
+/* Founder-directed corrections: hero color/copy and Signal surface only. */
+.hero-copy .primary-button { color:var(--navy); border-color:var(--navy); }
+.hero-copy .primary-button:hover { color:var(--navy); border-color:var(--navy); opacity:1; }
+.hero-copy .primary-button:focus-visible { outline:2px solid var(--navy); outline-offset:5px; }
+@media(min-width:1001px) {
+ .hero-copy .hero-copy-body { max-width:none; font-size:clamp(18px,1.39vw,20px); font-weight:550; line-height:1.5; text-wrap:normal; }
+}
+.fleet-launch[data-product="signal"] { background:var(--mist); color:var(--navy); }
+.fleet-launch[data-product="signal"] :is(h2,.fleet-showcase-name,.fleet-showcase-body,.fleet-showcase-why,.product-action) { color:var(--navy); }
+.fleet-launch[data-product="signal"] .product-action:hover { color:var(--navy); border-color:var(--navy); }
+.fleet-launch[data-product="signal"] :focus-visible { outline-color:var(--navy); }
+.fleet-launch[data-product="signal"] .signal-workstation { background:transparent; color:var(--navy); }
