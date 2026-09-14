@@ -10,7 +10,7 @@ The supplied light canvas, dimensional navy enclosure, red/green candlesticks, r
 
 Responsive AVIF and WebP derivatives are 96, 192 and 288 pixels square. AVIF quality 85 with 4:4:4 chroma; WebP quality 94. Encoded bytes respectively: AVIF 2,089 / 4,502 / 7,319; WebP 2,386 / 5,350 / 9,128. The PNG is retained as provenance and is not imported into the client bundle.
 
-SignalIdentity uses native picture sources, lazy loading, async decoding and low fetch priority. No preload is added. The adjacent Signal name supplies accessible text; the icon is decorative with empty alt text.
+SignalIdentity uses native picture sources, lazy loading, async decoding and low fetch priority. No preload is added. Per-asset no-inline imports keep even the smallest variants out of initial HTML and JavaScript. The adjacent Signal name supplies accessible text; the icon is decorative with empty alt text.
 
 The inset graphic occupies about 75% of its source canvas, so the raster is displayed at four-thirds the existing product identity height: approximately 85.33px desktop, 74.67px tablet and 64px mobile. The apparent graphic is approximately 64 / 56 / 48px. Existing identity row height, 32px headline spacing and Signal typography remain unchanged. Negative vertical margins account for the source's light padding, preserving chapter geometry. The image/name gap is 12px; the source includes additional internal whitespace. No other product identity is modified.
 

@@ -43,7 +43,7 @@
 .property-product-lockup .pi-brand-wordmark { font-size:32px; }
 .fleet-launch[data-product="signal"] .fleet-showcase-name { font-size:42px; font-weight:700; letter-spacing:-.04em; }
 /* Preserve the supplied light canvas; its inset mark is about 75% of the raster. */
-.signal-product-lockup { gap:12px; }
+.signal-product-lockup { gap:12px; height:var(--product-identity-height); }
 .signal-product-lockup picture { display:block; flex:none; width:calc(var(--product-identity-height) * 4 / 3); margin-block:calc(var(--product-identity-height) / -6); }
 .signal-product-lockup img { display:block; width:100%; height:auto; border-radius:12px; }
 .signal-product-lockup .fleet-showcase-name { margin:0; }

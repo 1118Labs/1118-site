@@ -1,9 +1,9 @@
-import avif96 from '../assets/responsive/signal-portfolio/icon-96.avif';
-import avif192 from '../assets/responsive/signal-portfolio/icon-192.avif';
-import avif288 from '../assets/responsive/signal-portfolio/icon-288.avif';
-import webp96 from '../assets/responsive/signal-portfolio/icon-96.webp';
-import webp192 from '../assets/responsive/signal-portfolio/icon-192.webp';
-import webp288 from '../assets/responsive/signal-portfolio/icon-288.webp';
+import avif96 from '../assets/responsive/signal-portfolio/icon-96.avif?no-inline';
+import avif192 from '../assets/responsive/signal-portfolio/icon-192.avif?no-inline';
+import avif288 from '../assets/responsive/signal-portfolio/icon-288.avif?no-inline';
+import webp96 from '../assets/responsive/signal-portfolio/icon-96.webp?no-inline';
+import webp192 from '../assets/responsive/signal-portfolio/icon-192.webp?no-inline';
+import webp288 from '../assets/responsive/signal-portfolio/icon-288.webp?no-inline';
 
 // Founder-approved 2026 portfolio identity; not an original historical Signal icon.
 export default function SignalIdentity() {
