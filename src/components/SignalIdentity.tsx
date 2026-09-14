@@ -1,13 +1,13 @@
-import avif96 from '../assets/responsive/signal-portfolio/icon-96.avif?no-inline';
-import avif192 from '../assets/responsive/signal-portfolio/icon-192.avif?no-inline';
-import avif288 from '../assets/responsive/signal-portfolio/icon-288.avif?no-inline';
-import webp96 from '../assets/responsive/signal-portfolio/icon-96.webp?no-inline';
-import webp192 from '../assets/responsive/signal-portfolio/icon-192.webp?no-inline';
-import webp288 from '../assets/responsive/signal-portfolio/icon-288.webp?no-inline';
+import avif96 from '../assets/responsive/signal-portfolio/icon-dark-96.avif?no-inline';
+import avif192 from '../assets/responsive/signal-portfolio/icon-dark-192.avif?no-inline';
+import avif288 from '../assets/responsive/signal-portfolio/icon-dark-288.avif?no-inline';
+import webp96 from '../assets/responsive/signal-portfolio/icon-dark-96.webp?no-inline';
+import webp192 from '../assets/responsive/signal-portfolio/icon-dark-192.webp?no-inline';
+import webp288 from '../assets/responsive/signal-portfolio/icon-dark-288.webp?no-inline';
 
 // Founder-approved 2026 portfolio identity; not an original historical Signal icon.
 export default function SignalIdentity() {
-  const sizes = '(max-width: 720px) 64px, (max-width: 1000px) 75px, 86px';
+  const sizes = '(max-width: 720px) 56px, (max-width: 1000px) 64px, 72px';
   return <div className="signal-product-lockup">
     <picture>
       <source type="image/avif" srcSet={`${avif96} 96w, ${avif192} 192w, ${avif288} 288w`} sizes={sizes} />

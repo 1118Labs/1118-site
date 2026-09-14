@@ -42,10 +42,10 @@
 .property-product-lockup .pi-brand > img { width:calc(var(--product-identity-height) + 8px); height:calc(var(--product-identity-height) + 8px); }
 .property-product-lockup .pi-brand-wordmark { font-size:32px; }
 .fleet-launch[data-product="signal"] .fleet-showcase-name { font-size:42px; font-weight:700; letter-spacing:-.04em; }
-/* Preserve the supplied light canvas; its inset mark is about 75% of the raster. */
+/* Transparent derivative keeps the metallic silhouette native to the navy surface. */
 .signal-product-lockup { gap:12px; height:var(--product-identity-height); }
-.signal-product-lockup picture { display:block; flex:none; width:calc(var(--product-identity-height) * 4 / 3); margin-block:calc(var(--product-identity-height) / -6); }
-.signal-product-lockup img { display:block; width:100%; height:auto; border-radius:12px; }
+.signal-product-lockup picture { display:block; flex:none; width:calc(var(--product-identity-height) + 8px); margin-block:-4px; }
+.signal-product-lockup img { display:block; width:100%; height:auto; }
 .signal-product-lockup .fleet-showcase-name { margin:0; }
 .fleet-launch .portrait-story,.fleet-launch .pi-proof { width:100%; padding-inline:0; }
 .portrait-story-homepage .portrait-story-panels { grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--composition-gap); }
@@ -163,3 +163,19 @@
 @media(prefers-reduced-motion:reduce) { .photo-drift { animation:none; transform:none; } .photo-motion-toggle { display:none; } }
 
 .portrait-workflow-heading { min-height:28px; }
+
+/* Bounded final founder corrections; frozen chapters retain their shared tokens. */
+.fleet-launch[data-product="portrait"] .etchr-product-lockup img { width:calc(var(--product-identity-height) + 8px); height:calc(var(--product-identity-height) + 8px); }
+.fleet-launch[data-product="reviews-engine"] .reviews-product-lockup > img { height:calc(var(--product-identity-height) + 8px); }
+.fleet-launch[data-product="portrait"] .fleet-launch-actions { column-gap:32px; row-gap:16px; align-items:center; }
+.fleet-launch[data-product="portrait"] .case-study-link { margin-top:24px; }
+.portrait-story-homepage .portrait-story-caption { justify-content:flex-end; }
+.portrait-story-homepage .portrait-destination [data-platform-icon-badge] { width:52px; height:52px; padding:2px; }
+.portrait-story-homepage .portrait-platforms { gap:18px 8px; }
+@media(min-width:901px) {
+ .fleet-launch[data-product="portrait"] .fleet-showcase-body,.fleet-launch[data-product="reviews-engine"] .fleet-showcase-body { font-size:20px; line-height:1.65; }
+}
+/* Definite thumbnail widths keep the same reserved boxes while sources attach. */
+.portrait-story-homepage .portrait-format-profile img { width:min(100%,136.4px); height:auto; aspect-ratio:640/800; }
+.portrait-story-homepage .portrait-format-circle img { width:min(100%,170px); height:auto; aspect-ratio:1; }
+.portrait-story-homepage img:not([src]) { visibility:hidden; }

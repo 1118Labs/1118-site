@@ -1,0 +1,15 @@
+# Final founder polish — 2026-09-14
+
+Continues the reviewed 059c87356f44d6bff6d4123223d500b967a77cd3 candidate on the existing review branch. Preview-only; no merge or Production authorization.
+
+- Portrait: Visit Portrait precedes the authentic Apple badge in DOM and visual order; 32px horizontal spacing, 24px separation before the tertiary “Explore the case study” link. Exact explanatory copy retained, 20px desktop / 18px tablet / 17px mobile. Identity grows 8px at each breakpoint.
+- Reviews: shield grows 8px, intro 20px desktop. Carousel source, cards, paws, timing, input and accessibility behavior untouched.
+- Destination marks: compared against the current available Portrait founder integration source (`portrait-founder-os-wave4`, PlatformIcon.tsx). Glyphs are identical apart from the local class-name utility. Retain these source SVGs, increase homepage badge size to 52px, preserve optical corrections and labels. No third-party logo generation or raster upscaling. The independent live getportrait.ai origin could not be read by the web connector; no neighboring repository was edited.
+- Homepage Sloane studio-example caption removed; gallery destination retained. Source names and provenance remain internal. Case-study architecture unchanged.
+- Gallery: first photo sources attach within 1000px, comparison and master within 800px, thumbnails within 250px. First photo/comparison use normal priority; secondary images remain low priority. No gallery preloads. Existing responsive AVIF/WebP and full source references retained. Thumbnail sizes and boxes explicitly reserved; deferred sources cannot collapse their layout. Photo motion additionally waits for a successful decode, and still respects visibility, manual pause and reduced motion.
+- Sloane finished-image AVIF derivatives retain 4:4:4 chroma, using quality 65. Bytes at 480/768/1024px: 45,071 / 113,979 / 209,611, down from 55,552 / 138,855 / 253,613. Identical result and square exports deduplicate to one browser request. Originals and WebP alternatives preserved. Face/detail comparison inspected at full size.
+- CTA family: existing navy/rule/right-arrow treatment retained across light chapters, with primary/tertiary hierarchy. Apple retains black. Signal keeps the pre-existing white inverse treatment on navy for contrast; all-navy text would be unreadable without an unauthorized surface/layout change. This explicit exception needs founder acceptance.
+- Signal: transparent dark-surface variant described in SIGNAL-PORTFOLIO-ICON-2026.md; no changes to the scene, copy, case-study or chapter geometry.
+- Property Insights source, assets, copy, CTA and composition unchanged. Hero, global type, section colors, Process, Studio, Contact, footer and contact configuration untouched.
+
+Hosted screenshots, walkthroughs, performance and source-freeze evidence live in the task's private artifact directory, not the deployed site. Hosted performance must be reported from the new deployment, separately from local measurements.

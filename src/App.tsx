@@ -269,11 +269,11 @@ function ProductSection() {
                   <div className="fleet-launch-actions">
                     {product.slug === "portrait" ? (
                       <>
-                        <a className="app-store-badge-link" href={product.link.href} rel="noreferrer" target="_blank">
-                          <img loading="lazy" fetchPriority="low" alt="Download Portrait on the App Store" height="40" src={appStoreBadge} width="120" />
-                        </a>
                         <a className="product-action product-action-primary" href={PORTRAIT_URL} rel="noreferrer" target="_blank">
                           Visit Portrait <span aria-hidden="true">→</span>
+                        </a>
+                        <a className="app-store-badge-link" href={product.link.href} rel="noreferrer" target="_blank">
+                          <img loading="lazy" fetchPriority="low" alt="Download Portrait on the App Store" height="40" src={appStoreBadge} width="120" />
                         </a>
                       </>
                     ) : (
@@ -283,7 +283,7 @@ function ProductSection() {
                     )}
                   </div>
                 ) : null}
-                {(product.slug === "portrait" || product.slug === "signal") && <a className={`case-study-link product-action ${product.slug === "signal" ? "product-action-primary" : "product-action-secondary"}`} href={`/work/${product.slug}`}>Explore the {product.name} case study <span aria-hidden="true">→</span></a>}
+                {(product.slug === "portrait" || product.slug === "signal") && <a className={`case-study-link product-action ${product.slug === "signal" ? "product-action-primary" : "product-action-secondary"}`} href={`/work/${product.slug}`}>Explore the {product.slug === "portrait" ? "" : `${product.name} `}case study <span aria-hidden="true">→</span></a>}
               </div>
 
 
