@@ -13,6 +13,7 @@ import PortraitStory from "./components/PortraitStory";
 import ReviewsProof from "./components/ReviewsProof";
 import PropertyProof, { PropertyBrand } from "./components/PropertyProof";
 import SignalWorkstation from "./components/SignalWorkstation";
+import SignalIdentity from "./components/SignalIdentity";
 import CaseStudies from "./components/CaseStudies";
 import ContactPanel from "./components/ContactPanel";
 import { caseMeta } from "./content/case-studies";
@@ -259,7 +260,7 @@ function ProductSection() {
                 ) : product.slug === "property-insights" ? (
                   <div className="property-product-lockup"><PropertyBrand /></div>
                 ) : (
-                  <p className="fleet-showcase-name">{product.name}</p>
+                  <SignalIdentity />
                 )}
                 <h2>{product.headline.replaceAll("\n", " ")}</h2>
                 {product.descriptor ? <div className="fleet-showcase-body"><p>{product.descriptor}</p><p>{product.description}</p></div> : <p className="fleet-showcase-body">{product.description}</p>}

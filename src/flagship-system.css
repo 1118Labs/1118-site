@@ -34,7 +34,7 @@
 .fleet-launch[data-product] .case-study-link { grid-column:2; grid-row:5; margin-top:16px; }
 .fleet-launch[data-product] .fleet-launch-stage { width:var(--wide-width); margin-inline:auto; }
 .fleet-launch[data-product="reviews-engine"] .fleet-launch-stage { width:var(--bleed-width); }
-.fleet-launch-copy > :is(.etchr-product-lockup,.reviews-product-lockup,.property-product-lockup,.fleet-showcase-name) { grid-column:1/-1; grid-row:1; min-height:var(--product-identity-height); margin:0 0 32px; display:flex; align-items:center; }
+.fleet-launch-copy > :is(.etchr-product-lockup,.reviews-product-lockup,.property-product-lockup,.signal-product-lockup,.fleet-showcase-name) { grid-column:1/-1; grid-row:1; min-height:var(--product-identity-height); margin:0 0 32px; display:flex; align-items:center; }
 .etchr-product-lockup img { width:var(--product-identity-height); height:var(--product-identity-height); }
 .etchr-product-lockup .fleet-showcase-name { font-size:var(--product-identity-type); }
 .reviews-product-lockup > img { height:var(--product-identity-height); width:auto; }
@@ -42,6 +42,11 @@
 .property-product-lockup .pi-brand > img { width:calc(var(--product-identity-height) + 8px); height:calc(var(--product-identity-height) + 8px); }
 .property-product-lockup .pi-brand-wordmark { font-size:32px; }
 .fleet-launch[data-product="signal"] .fleet-showcase-name { font-size:42px; font-weight:700; letter-spacing:-.04em; }
+/* Preserve the supplied light canvas; its inset mark is about 75% of the raster. */
+.signal-product-lockup { gap:12px; }
+.signal-product-lockup picture { display:block; flex:none; width:calc(var(--product-identity-height) * 4 / 3); margin-block:calc(var(--product-identity-height) / -6); }
+.signal-product-lockup img { display:block; width:100%; height:auto; border-radius:12px; }
+.signal-product-lockup .fleet-showcase-name { margin:0; }
 .fleet-launch .portrait-story,.fleet-launch .pi-proof { width:100%; padding-inline:0; }
 .portrait-story-homepage .portrait-story-panels { grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--composition-gap); }
 .portrait-story-homepage :is(.portrait-native-plate,.portrait-workflow-comparison,.portrait-pack-master) { border-radius:var(--media-radius); }
