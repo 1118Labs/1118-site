@@ -13,7 +13,7 @@
 .pi-ready { padding:8px 14px; border-radius:999px; color:#047366; background:#e8f7f2; }
 .pi-product-grid { display:grid; grid-template-columns:1.05fr 1fr; }
 .pi-house { position:relative; min-height:560px; overflow:hidden; }
-.pi-house > img { display:block; position:absolute; inset:0; height:100%; width:100%; object-fit:cover; }
+.pi-house img { display:block; position:absolute; inset:0; height:100%; width:100%; object-fit:cover; }
 .pi-house-facts { position:absolute; bottom:0; left:0; right:0; padding:100px 32px 32px; background:linear-gradient(transparent,#071a32bf 45%,#071a32); color:#fff; }
 .pi-house-facts > span { text-transform:uppercase; letter-spacing:.14em; font-size:14px; font-weight:750; color:#8ceaff; }
 .pi-house-facts p { font-size:clamp(26px,2.5vw,38px); font-weight:750; letter-spacing:-.035em; line-height:1.2; margin:16px 0 0; }

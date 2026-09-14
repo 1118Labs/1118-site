@@ -13,14 +13,18 @@ import PortraitStory from "./components/PortraitStory";
 import ReviewsProof from "./components/ReviewsProof";
 import PropertyProof, { PropertyBrand } from "./components/PropertyProof";
 import SignalWorkstation from "./components/SignalWorkstation";
+import SignalIdentity from "./components/SignalIdentity";
 import CaseStudies from "./components/CaseStudies";
 import ContactPanel from "./components/ContactPanel";
 import { caseMeta } from "./content/case-studies";
 import "./premium.css";
 import "./prelaunch.css";
+import "./typography.css";
+import "./lower-page.css";
+import "./flagship-system.css";
 
-import portraitIcon from "./assets/showcase/portrait/portrait-native-icon.png";
-import reviewsShield from "./assets/showcase/reviews-engine/reviews-engine-shield-primary.png";
+import portraitIcon from "./assets/responsive/portrait-icon.webp";
+import reviewsShield from "./assets/responsive/reviews-shield.webp";
 import appStoreBadge from "./assets/showcase/etchr/download-on-the-app-store.svg";
 import PortraitComparison from "./components/PortraitComparison";
 
@@ -31,6 +35,7 @@ const REVIEWS_ENGINE_PUBLIC_PROOF_URL = "https://www.skypupstreats.com/reviews";
 
 type Product = {
   description: string;
+  descriptor?: string;
   headline: string;
   link?: { href: string; label: string };
   name: string;
@@ -42,56 +47,46 @@ const products: Product[] = [
   {
     slug: "portrait",
     name: "Portrait",
-    headline: "Editorial portraits\nfrom real photographs.",
-    description: "Portrait turns one clear photograph into a refined editorial portrait, ready for profiles, websites, social media, and print.",
+    headline: "We made AI portraits\nfeel worthy of print.",
+    description: "Most AI-generated portraits still look unmistakably generated. Portrait starts with one real photograph and turns it into a refined editorial portrait designed to look like you—and look good enough to publish.",
     link: { href: APP_STORE_URL, label: "View on the App Store" },
   },
   {
     slug: "reviews-engine",
     name: "Reviews Engine",
-    headline: "Turn customer reviews\ninto a better reputation.",
-    description: "A platform for collecting, moderating, and publishing customer reviews.",
+    headline: "We turned customer reviews\ninto a trust engine.",
+    description: "Businesses work hard to earn great reviews, then leave them scattered across platforms or buried where customers rarely see them. Reviews Engine collects, moderates, and publishes that proof where it can actually build trust.",
     link: { href: REVIEWS_ENGINE_PUBLIC_PROOF_URL, label: "See Reviews Engine in use" },
   },
   {
     slug: "property-insights",
     name: "Property Insights",
     link: { href: "https://insights.1118.io", label: "Explore Property Insights" },
-    headline: "Turn service requests\ninto quote-ready property intelligence.",
-    description: "Property context, risk, and recommendations assembled before the estimate begins.",
+    headline: "We brought property intelligence\ninto the service\u00a0workflow.",
+    description: "Service businesses often quote jobs with less context than they should have. Property Insights connects incoming requests to property data, physical context, risks, and recommendations so operators can understand the job before the estimate begins.",
   },
   {
     slug: "signal",
     name: "Signal",
-    headline: "Quantitative intelligence\nfor commodities trading.",
+    descriptor: "Quantitative intelligence for commodities trading.",
+    headline: "We built a better way\nto uncover commodities trade\u00a0ideas.",
     description:
-      "1118 designed and built Signal to help commodities traders uncover compelling trade ideas through data, quantitative analysis, and machine learning.",
+      "1118 designed and built Signal, combining market data, quantitative analysis, visualization, and machine learning to help surface compelling trade ideas.",
     note: "Signal was used in live markets, licensed commercially, and later acquired.",
   },
 ];
 
 const buildSteps = [
-  {
-    step: "01",
-    title: "DIRECTION",
-    body: "We decide what deserves to be built and what good looks like.",
-  },
-  {
-    step: "02",
-    title: "EXECUTION",
-    body: "AI and specialist tools help us move from idea to working product quickly.",
-  },
-  {
-    step: "03",
-    title: "REVIEW",
-    body: "We test the work, challenge the assumptions, and decide what ships.",
-  },
+  { step: "01", title: "SEE THE OPENING", body: "Notice what is missing, broken, or harder than it should be." },
+  { step: "02", title: "DEFINE THE PRODUCT", body: "Turn the idea into a clear proposition, experience, and operating model." },
+  { step: "03", title: "BUILD IT", body: "Bring design, software, AI, and infrastructure together into a working product." },
+  { step: "04", title: "PUT IT INTO THE WORLD", body: "Launch, learn quickly, and keep making the product better." },
 ] as const;
 
 const policyMeta: Record<string, { description: string; title: string }> = {
   "/": {
     title: "1118 — Original Software & Products",
-    description: "1118 creates original software, including Portrait, Reviews Engine, and Property Insights, from problems we understand and ideas we believe should exist.",
+    description: "1118 creates web platforms, apps, and specialized software—mostly our own. Original products, built from ideas we believe should exist.",
   },
   "/privacy": {
     title: "Privacy | 1118",
@@ -229,9 +224,8 @@ function Hero({ reduceMotion }: { reduceMotion: boolean }) {
     <div className="hero-shell">
       <div className="hero-copy">
         <span className="hero-blue-rule" aria-hidden="true" />
-        <h1>We build the software<br />{" "}we keep looking for.</h1>
-        <p className="hero-copy-body">Original products, built from problems we understand and ideas we believe should exist.</p>
-        <p className="hero-philosophy">Most of what we build is our own.</p>
+        <h1>We build the products<br />{" "}we keep looking for.</h1>
+        <p className="hero-copy-body">Original products, built from ideas we believe should exist.</p>
         <a className="primary-button" href="#work">See what we build <span aria-hidden="true">→</span></a>
       </div>
       <div className="hero-portrait"><PortraitComparison className="portrait-lead-comparison" priority /></div>
@@ -262,41 +256,34 @@ function ProductSection() {
                     <p className="fleet-showcase-name">{product.name}</p>
                   </div>
                  ) : product.slug === "reviews-engine" ? (
-                  <div className="reviews-product-lockup"><img src={reviewsShield} width="470" height="575" alt="" /><p className="fleet-showcase-name">Reviews <span>Engine</span></p></div>
+                  <div className="reviews-product-lockup"><img src={reviewsShield} width="470" height="575" alt="" loading="lazy" decoding="async" fetchPriority="low" /><p className="fleet-showcase-name">Reviews <span>Engine</span></p></div>
                 ) : product.slug === "property-insights" ? (
                   <div className="property-product-lockup"><PropertyBrand /></div>
                 ) : (
-                  <p className="fleet-showcase-name">{product.name}</p>
+                  <SignalIdentity />
                 )}
-                <h2>
-                  {product.headline.split("\n").map((line, lineIndex) => (
-                    <span key={line}>
-                      {lineIndex ? <><br />{" "}</> : null}
-                      {line}
-                    </span>
-                  ))}
-                </h2>
-                <p className="fleet-showcase-body">{product.description}</p>
+                <h2>{product.headline.replaceAll("\n", " ")}</h2>
+                {product.descriptor ? <div className="fleet-showcase-body"><p>{product.descriptor}</p><p>{product.description}</p></div> : <p className="fleet-showcase-body">{product.description}</p>}
                 {product.note ? <p className="fleet-showcase-why">{product.note}</p> : null}
                 {product.link ? (
                   <div className="fleet-launch-actions">
                     {product.slug === "portrait" ? (
                       <>
-                        <a className="app-store-badge-link" href={product.link.href} rel="noreferrer" target="_blank">
-                          <img alt="Download Portrait on the App Store" height="40" src={appStoreBadge} width="120" />
+                        <a className="product-action product-action-primary" href={PORTRAIT_URL} rel="noreferrer" target="_blank">
+                          Visit Portrait <span aria-hidden="true">→</span>
                         </a>
-                        <a className="text-link fleet-showcase-link" href={PORTRAIT_URL} rel="noreferrer" target="_blank">
-                          Visit Portrait <span aria-hidden="true">↗</span>
+                        <a className="app-store-badge-link" href={product.link.href} rel="noreferrer" target="_blank">
+                          <img loading="lazy" fetchPriority="low" alt="Download Portrait on the App Store" height="40" src={appStoreBadge} width="120" />
                         </a>
                       </>
                     ) : (
-                      <a className="text-link fleet-showcase-link" href={product.link.href} rel="noreferrer" target="_blank">
-                        {product.link.label} <span aria-hidden="true">↗</span>
+                      <a className="product-action product-action-primary" href={product.link.href} rel="noreferrer" target="_blank">
+                        {product.link.label} <span aria-hidden="true">→</span>
                       </a>
                     )}
                   </div>
                 ) : null}
-                {(product.slug === "portrait" || product.slug === "signal") && <a className="case-study-link" href={`/work/${product.slug}`}>Explore the {product.name} case study <span aria-hidden="true">→</span></a>}
+                {(product.slug === "portrait" || product.slug === "signal") && <a className={`case-study-link product-action ${product.slug === "signal" ? "product-action-primary" : "product-action-secondary"}`} href={`/work/${product.slug}`}>Explore the {product.slug === "portrait" ? "" : `${product.name} `}case study <span aria-hidden="true">→</span></a>}
               </div>
 
 
@@ -316,29 +303,25 @@ function ProductSection() {
 }
 
 function AboutSection() {
-  return (
-    <section className="studio-section" id="about">
-      <div className="section-shell studio-shell">
-        <div className="studio-intro" data-reveal="rise">
-
-          <h2>We build our own<br />software.</h2>
-          <div className="studio-intro-copy"><p>1118 creates original software from problems we understand firsthand and ideas we believe should exist.</p><p>Most of what we build is our own. We partner selectively when the problem is meaningful and the fit is right.</p></div>
-        </div>
-        <div className="operating-model" id="process">
-          {buildSteps.map((item) => (
-            <article className="operating-principle" key={item.step}>
-              <h3>{item.title}</h3><p>{item.body}</p>
-            </article>
-          ))}
-        </div>
+  return <>
+    <section className="studio-pause" id="about">
+      <div className="section-shell studio-pause-shell">
+        <h2>Most of what we build<br />is our own.<span>We partner occasionally.</span></h2>
+        <div className="studio-pause-copy"><p>When the idea is sharp, the problem is real, and we believe the product should exist.</p><p>We create web platforms, apps, and specialized software—mostly our own.</p></div>
       </div>
     </section>
-  );
+    <section className="process-band" id="process" aria-labelledby="process-title">
+      <div className="section-shell">
+        <div className="process-intro"><h2 id="process-title">From idea to working product.</h2></div>
+        <ol className="process-grid" role="list">{buildSteps.map(item => <li className="process-step" key={item.step}><span className="process-number" aria-hidden="true">{item.step}</span><h3>{item.title}</h3><p>{item.body}</p></li>)}</ol>
+      </div>
+    </section>
+  </>;
 }
 
 function ContactSection() {
   return <section className="contact-section" id="contact"><div className="section-shell contact-shell">
-    <div className="contact-copy" data-reveal="rise"><h2>Start a conversation.</h2><p>Have an idea, a product, or a problem worth solving? Tell us what you're working on.</p></div>
+    <div className="contact-copy" data-reveal="rise"><h2>Start a conversation.</h2><p>Founders, operators, and teams usually come to us because they’ve found a product gap—something they need that doesn’t quite exist.</p><p>Most of what we build is our own. We partner selectively when the problem is real and we believe the product should exist.</p></div>
     <ContactPanel />
   </div></section>;
 }
@@ -361,7 +344,7 @@ function PolicyPage({ pathname }: { pathname: string }) {
     return (
       <PolicyLayout eyebrow="Policy" title="Privacy">
         <section><h2>What this site collects</h2><p>1118 does not intentionally use advertising cookies or analytics on this website. Our hosting provider may process standard request information—such as IP address, browser details, requested URL, and time of access—to deliver and protect the site.</p></section>
-        <section><h2>Contact</h2><p>When you submit the contact form, the details you provide are processed by our hosting provider and Formspree to deliver and store your inquiry. We use them to respond and maintain relevant business records. Cloudflare Turnstile processes basic device and request information to check for automated abuse before a message is sent. Basic request information is also used to limit repeated submissions. Please do not include sensitive personal information.</p></section>
+        <section><h2>Contact</h2><p>When you submit the contact form, the details you provide are processed by our hosting provider and Resend to deliver your inquiry. We use them to respond and maintain relevant business records. Cloudflare Turnstile processes basic device and request information to check for automated abuse before a message is sent. Basic request information is also used to limit repeated submissions. Please do not include sensitive personal information.</p></section>
         <section><h2>External services</h2><p>Links to Portrait, the App Store, and other websites are governed by those services’ own privacy practices.</p></section>
         <section><h2>Your questions</h2><p>To ask about privacy or request access, correction, or deletion of information you sent directly to 1118, use the <a href="/#contact">contact form</a>.</p></section>
       </PolicyLayout>

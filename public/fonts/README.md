@@ -6,3 +6,5 @@ Existing 1118 typeface, self-hosted for predictable loading and no runtime Googl
 - Latin variable WOFF2: https://fonts.gstatic.com/s/manrope/v20/xn7gYHE41ni1AdIRggexSvfedN4.woff2
 - License: SIL Open Font License 1.1, retained in Manrope-OFL.txt; original https://github.com/google/fonts/blob/main/ofl/manrope/OFL.txt
 - Downloaded September 11, 2026. The same upstream WOFF2 supports all five requested weights.
+
+Typography mechanics follow Shipyard public homepage at commit ad9c54d73160024fe9c1d7591acf9b11a763d37b. See docs/FLAGSHIP-SYSTEM.md.

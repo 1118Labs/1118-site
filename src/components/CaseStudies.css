@@ -8,7 +8,7 @@
 .case-product-name { display: flex; align-items: center; gap: 13px; margin-bottom: 24px; font-size: 22px; font-weight: 650; }
 .case-product-name img { width: 96px; height: 96px; border-radius: 22px; }
 .case-portrait-hero { margin-block: 0 96px; padding: 56px; background: var(--mist); text-align: center; }
-.case-portrait-hero > img { display: block; width: min(690px, 100%); height: auto; margin: auto; }
+.case-portrait-hero img { display: block; width: min(690px, 100%); height: auto; margin: auto; }
 .case-page figcaption { margin-top: 20px; font-size: 14px; line-height: 1.65; color: var(--ink-soft); }
 .case-section { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(48px, 7vw, 112px); padding-block: 72px; border-top: 1px solid var(--mist); }
 .case-section h2, .case-experience > h2 { margin: 0; max-width: 730px; font-size: clamp(38px, 3.5vw, 54px); line-height: 1.12; letter-spacing: -.047em; font-weight: 600; text-wrap: balance; }
@@ -108,7 +108,7 @@
 .case-product-name { gap: 20px; font-size: 32px; font-weight: 500; }
 .case-product-name img { width: 88px; height: 88px; }
 .case-portrait-hero { width: min(1120px, calc(100% - 96px)); padding: 0; background: var(--paper); margin-bottom: 80px; }
-.case-portrait-hero > img { width: min(840px, 100%); }
+.case-portrait-hero img { width: min(840px, 100%); }
 .case-section { grid-template-columns: .9fr 1.1fr; gap: clamp(48px, 6vw, 96px); padding-block: 64px; }
 .case-section h2, .case-experience > h2 { font-size: clamp(36px, 3.6vw, 52px); font-weight: 500; line-height: 1.15; }
 .case-section-body p, .case-archive-detail p { font-size: 19px; }
@@ -151,7 +151,7 @@
 .case-signal .case-section,.case-signal .case-next,.case-signal .case-workflow > div { border-color:var(--navy); }
 .case-signal a:focus-visible { outline-color:var(--paper); }
 .case-signal .case-text-link { color:var(--paper); }
-.case-portrait-hero > img,.work-feature-portrait .work-feature-image img { border-radius:32px; }
+.case-portrait-hero img,.work-feature-portrait .work-feature-image img { border-radius:32px; }
 .case-product-name { font-family:var(--body-font); font-size:40px; }
 .case-page .portrait-story { padding:0; }
 .case-page .portrait-workflow-heading h3 { font-size:24px; }

@@ -5,14 +5,16 @@ export const BODY_LIMIT = 12_000;
 const EMAIL = /^[^\s<>@]+@[^\s<>@]+\.[^\s<>@]+$/;
 const CONTROL = /[\u0000-\u001f\u007f]/;
 const SESSION_ID = /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i;
-const UNAVAILABLE = 'We couldn’t send your message right now. Your details are still here. Please try again later.';
+const UNAVAILABLE = 'We couldn’t send your note. Please try again.';
 
 export function validateContact(input) {
   const fields = {};
   if (!input || typeof input !== 'object' || Array.isArray(input)) return { fields: { message: 'Please check your message and try again.' } };
   const values = {};
-  for (const field of ['name', 'email', 'company', 'message', 'website', 'submissionId', 'stage']) {
-    if (typeof input[field] !== 'string') values[field] = '';
+  const allowed = new Set(['name', 'email', 'company', 'stage', 'links', 'message', 'website', 'submissionId', 'turnstileToken']);
+  if (Object.keys(input).some(key => !allowed.has(key))) fields.form = 'Please use the contact form to send your note.';
+  for (const field of ['name', 'email', 'company', 'message', 'website', 'submissionId', 'stage', 'links']) {
+    if (typeof input[field] !== 'string') { values[field] = ''; if (input[field] !== undefined || !['company', 'links', 'website'].includes(field)) fields[field] = 'Enter a valid value.'; }
     else values[field] = input[field].trim();
   }
   if (values.name.length < 2 || values.name.length > 100 || CONTROL.test(values.name)) fields.name = 'Enter your name (2–100 characters).';
@@ -21,6 +23,13 @@ export function validateContact(input) {
   if (values.message.length < 20 || values.message.length > 5000 || /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/.test(values.message)) fields.message = 'Tell us a little more (20–5,000 characters).';
   if (!['Idea', 'Prototype', 'Launching', 'Scaling'].includes(values.stage)) fields.stage = 'Select your stage.';
   if (!SESSION_ID.test(values.submissionId)) fields.form = 'Please refresh this page and try again.';
+  if (values.links) {
+    try {
+      const url = new URL(values.links);
+      if (values.links.length > 2048 || CONTROL.test(values.links) || !['https:', 'http:'].includes(url.protocol) || url.username || url.password) throw Error('Invalid URL');
+      values.links = url.href;
+    } catch { fields.links = 'Enter a complete http or https URL (up to 2,048 characters).'; }
+  }
   if (values.website) fields.form = 'We couldn’t accept this submission. Please try again.';
   return { values, fields };
 }
@@ -54,8 +63,11 @@ function header(request, key) {
 }
 function originAllowed(request, env) {
   const allowed = new Set(['https://1118.io', 'https://www.1118.io']);
-  for (const host of [env.VERCEL_URL, env.VERCEL_BRANCH_URL, env.VERCEL_PROJECT_PRODUCTION_URL]) if (host) allowed.add(`https://${host}`);
-  for (const origin of (env.CONTACT_ALLOWED_ORIGINS || '').split(',').filter(Boolean)) allowed.add(origin.trim());
+  if (['preview', 'development'].includes(env.VERCEL_ENV)) {
+    allowed.clear();
+    for (const host of [env.VERCEL_URL, env.VERCEL_BRANCH_URL]) if (host) allowed.add(`https://${host}`);
+    if (env.VERCEL_ENV === 'development') for (const origin of (env.CONTACT_ALLOWED_ORIGINS || '').split(',').filter(Boolean)) allowed.add(origin.trim());
+  }
   return allowed.has(header(request, 'origin')) && header(request, 'sec-fetch-site') !== 'cross-site';
 }
 async function readBody(request) {
@@ -90,20 +102,23 @@ export function createContactHandler({ env = process.env, send = fetch, verify =
     if (!originAllowed(request, env)) return reply(403, { ok: false, message: 'Please open the contact form on this website and try again.' });
     if (!/^application\/json(?:\s*;|$)/i.test(header(request, 'content-type'))) return reply(415, { ok: false, message: 'Please use the contact form to send your message.' });
     const ip = header(request, 'x-vercel-forwarded-for').split(',')[0].trim() || request.socket?.remoteAddress || 'unknown';
-    if (!allowRequest(ip)) { response.setHeader('Retry-After', '3600'); return reply(429, { ok: false, message: 'Please wait before sending another message. Your details are still here.' }); }
+    let allowed;
+    try { allowed = await allowRequest(ip); } catch { return reply(503, { ok: false, message: UNAVAILABLE }); }
+    if (!allowed) { response.setHeader('Retry-After', '3600'); return reply(429, { ok: false, message: 'Please wait before sending another message. Your details are still here.' }); }
     let data;
     try { data = await readBody(request); }
     catch (error) { return reply(error.status || 400, { ok: false, message: error.status === 413 ? 'Your message is too long. Please shorten it and try again.' : 'Please check your message and try again.' }); }
     const { values, fields } = validateContact(data);
     if (Object.keys(fields).length) return reply(422, { ok: false, message: fields.form || 'Please check the highlighted fields.', fields });
-    const formspree = env.FORMSPREE_FORM_ID;
-    const useFormspree = typeof formspree === 'string' && /^[a-z]{8}$/.test(formspree);
-    if (formspree && !useFormspree) return reply(503, { ok: false, message: UNAVAILABLE });
-    if (!useFormspree && (!env.RESEND_API_KEY || !EMAIL.test(env.CONTACT_TO || '') || !EMAIL.test(env.CONTACT_FROM || '') || CONTROL.test(env.CONTACT_TO || '') || CONTROL.test(env.CONTACT_FROM || ''))) return reply(503, { ok: false, message: UNAVAILABLE });
     const security = await verifyTurnstile({ token: data.turnstileToken, origin: header(request, 'origin'), ip, env, verify });
     if (!security.ok) return reply(security.status, { ok: false, message: security.message });
-    // Prevent concurrent/accepted duplicate sends on this warm instance. Resend
-    // also enforces the key remotely; Formspree has no equivalent guarantee.
+    // Preview is pinned to Resend's official test sink. It cannot deliver to the company inbox.
+    const production = env.VERCEL_ENV === 'production';
+    const recipient = production ? env.CONTACT_TO : 'delivered@resend.dev';
+    const key = production ? env.RESEND_API_KEY : env.CONTACT_PREVIEW_RESEND_API_KEY;
+    const sender = production ? env.CONTACT_FROM : env.CONTACT_PREVIEW_FROM;
+    if (!key || !EMAIL.test(recipient || '') || !EMAIL.test(sender || '') || CONTROL.test(recipient || '') || CONTROL.test(sender || '') || (production && !sender.toLowerCase().endsWith('@1118.io'))) return reply(503, { ok: false, message: UNAVAILABLE });
+    // Coalesce concurrent retries locally; Resend enforces the same key across instances for 24 hours.
     const now = Date.now();
     for (const [key, entry] of deliveries) if (entry.expires <= now) deliveries.delete(key);
     const fingerprint = createHash('sha256').update(JSON.stringify(values)).digest('hex');
@@ -112,20 +127,20 @@ export function createContactHandler({ env = process.env, send = fetch, verify =
     if (!existing && deliveries.size >= 1024) return reply(503, { ok: false, message: UNAVAILABLE });
     const deliver = async () => {
       try {
-        const result = await send(useFormspree ? `https://formspree.io/f/${formspree}` : 'https://api.resend.com/emails', {
+        const result = await send('https://api.resend.com/emails', {
           method: 'POST',
-          headers: useFormspree ? { Accept: 'application/json', 'Content-Type': 'application/json' } : { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json', 'Idempotency-Key': `1118-contact-${values.submissionId}` },
-          body: JSON.stringify(useFormspree ? { name: values.name, email: values.email, company: values.company, stage: values.stage, message: values.message, _subject: 'New conversation from 1118', submissionId: values.submissionId } : { from: `1118 <${env.CONTACT_FROM}>`, to: [env.CONTACT_TO], reply_to: values.email, subject: 'New conversation from 1118', text: `Name: ${values.name}\nEmail: ${values.email}\nCompany: ${values.company || 'Not provided'}\nStage: ${values.stage}\n\n${values.message}` }),
+          headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json', 'Idempotency-Key': `1118-contact-${values.submissionId}` },
+          body: JSON.stringify({ from: `1118 <${sender}>`, to: [recipient], reply_to: values.email, subject: 'New conversation from 1118', text: `Name: ${values.name}\nEmail: ${values.email}\nCompany: ${values.company || 'Not provided'}\nStage: ${values.stage}\nLinks / attachments URL: ${values.links || 'Not provided'}\n\n${values.message}` }),
           signal: AbortSignal.timeout(8000),
         });
         const payload = await result.json().catch(() => ({}));
-        return result.ok && (useFormspree ? payload.ok === true : typeof payload.id === 'string' && Boolean(payload.id));
+        return result.ok && (typeof payload.id === 'string' && Boolean(payload.id));
       } catch { return false; }
     };
     const entry = existing || { fingerprint, expires: now + 86_400_000, promise: deliver() };
     if (!existing) deliveries.set(values.submissionId, entry);
     const accepted = await entry.promise;
     if (!accepted) { deliveries.delete(values.submissionId); return reply(503, { ok: false, message: UNAVAILABLE }); }
-    return reply(202, { ok: true, message: 'Thank you. Your message is on its way. We’ll be in touch.' });
+    return reply(202, { ok: true, message: 'Thank you. We received your note. We’ll be in touch if there’s a fit.' });
   };
 }

@@ -1,10 +1,11 @@
 import house from '../assets/showcase/property-insights/product-showroom-home.webp';
-import propertyMark from '../assets/showcase/property-insights/brand/property-insights-mark.png';
+import propertyMark from '../assets/responsive/property-mark.webp';
 import './PropertyProof.css';
+import ResponsiveImage from './ResponsiveImage';
 
 export function PropertyBrand() {
   return <span className="pi-brand" role="img" aria-label="Property Insights">
-    <img src={propertyMark} width="1254" height="1254" alt="" aria-hidden="true" />
+    <img src={propertyMark} width="1254" height="1254" alt="" aria-hidden="true" loading="lazy" decoding="async" fetchPriority="low" />
     <span className="pi-brand-wordmark" aria-hidden="true"><span>Property</span><span>Insights</span></span>
   </span>;
 }
@@ -14,9 +15,9 @@ export function PropertyBrand() {
 export default function PropertyProof() {
   return <figure className="pi-proof">
     <div className="pi-product-frame">
-      <div className="pi-frame-bar"><span><i aria-hidden="true" />Synthetic example</span><span className="pi-ready">Ready to quote</span></div>
+      <div className="pi-frame-bar"><span aria-hidden="true"><i /></span><span className="pi-ready">Ready to quote</span></div>
       <div className="pi-product-grid">
-        <div className="pi-property"><div className="pi-house"><img src={house} width="1536" height="1024" alt="House image from Property Insights’ public product showroom, used in this synthetic example" loading="lazy" decoding="async" />
+        <div className="pi-property"><div className="pi-house"><ResponsiveImage sizes="(max-width: 900px) 92vw, 760px" src={house} width="1536" height="1024" alt="Two-story home with a front lawn and driveway" loading="lazy" decoding="async" />
           <div className="pi-house-facts"><span>Property found</span><p>3 bed · 2 bath · 1,640 sq ft</p></div>
         </div>
           <dl className="pi-property-stats">{[["Beds","3"],["Baths","2"],["Square feet","1,640"],["Lot size","6,100 sq ft"],["Year built","1989"],["Property type","Single-family"]].map(([label,value])=><div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
@@ -33,6 +34,6 @@ export default function PropertyProof() {
         </div>
       </div>
     </div>
-    <figcaption><span>Property Insights product showroom · Synthetic example</span><a href="https://insights.1118.io/#product" target="_blank" rel="noreferrer">Explore the product →</a></figcaption>
+    <figcaption><a className="product-action product-action-secondary" href="https://insights.1118.io/#product" target="_blank" rel="noreferrer">Explore Property Insights →</a></figcaption>
   </figure>;
 }

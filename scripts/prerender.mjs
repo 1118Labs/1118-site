@@ -10,7 +10,7 @@ const origin = 'https://1118.io';
 const indexing = process.env.VERCEL_ENV === 'production' && process.env.PUBLIC_INDEXING_ENABLED === 'true';
 const organization = { '@id': `${origin}/#organization` };
 const routes = {
-  '/': ['1118 — Original Software & Products', '1118 creates original software, including Portrait, Reviews Engine, and Property Insights, from problems we understand and ideas we believe should exist.'],
+  '/': ['1118 — Original Software & Products', '1118 creates web platforms, apps, and specialized software—mostly our own. Original products, built from ideas we believe should exist.'],
   '/work': ['Selected Work | 1118', 'Explore Portrait and Signal: products designed, built, and launched by 1118.'],
   '/work/portrait': ['Portrait — From Photograph to Editorial Portrait | 1118', 'How 1118 built Portrait: an image-to-portrait experience, finished outputs, and an app distributed through the App Store.'],
   '/work/signal': ['Signal — Quantitative Commodities Analytics | 1118', 'Signal was designed, built, and launched by 1118, used in live markets, licensed commercially, and later acquired.'],
@@ -55,7 +55,7 @@ function schema(pathname, title, description) {
       {
         '@type': 'Organization', ...organization, name: '1118', legalName: '1118, LLC',
         url: `${origin}/`, logo: `${origin}/brand/1118-restored-dark.svg`,
-        description: 'Original products, built from problems we understand and ideas we believe should exist.',
+        description: 'We create web platforms, apps, and specialized software—mostly our own.',
       },
       {
         '@type': 'WebSite', '@id': `${origin}/#website`, name: '1118', url: `${origin}/`,
