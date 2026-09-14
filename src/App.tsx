@@ -22,8 +22,8 @@ import "./typography.css";
 import "./lower-page.css";
 import "./flagship-system.css";
 
-import portraitIcon from "./assets/showcase/portrait/portrait-native-icon.png";
-import reviewsShield from "./assets/showcase/reviews-engine/reviews-engine-shield-primary.png";
+import portraitIcon from "./assets/responsive/portrait-icon.webp";
+import reviewsShield from "./assets/responsive/reviews-shield.webp";
 import appStoreBadge from "./assets/showcase/etchr/download-on-the-app-store.svg";
 import PortraitComparison from "./components/PortraitComparison";
 
@@ -60,7 +60,7 @@ const products: Product[] = [
   {
     slug: "property-insights",
     name: "Property Insights",
-    link: { href: "https://insights.1118.io", label: "Explore the product" },
+    link: { href: "https://insights.1118.io", label: "Explore Property Insights" },
     headline: "We brought property intelligence\ninto the service\u00a0workflow.",
     description: "Service businesses often quote jobs with less context than they should have. Property Insights connects incoming requests to property data, physical context, risks, and recommendations so operators can understand the job before the estimate begins.",
   },
@@ -269,20 +269,20 @@ function ProductSection() {
                     {product.slug === "portrait" ? (
                       <>
                         <a className="app-store-badge-link" href={product.link.href} rel="noreferrer" target="_blank">
-                          <img alt="Download Portrait on the App Store" height="40" src={appStoreBadge} width="120" />
+                          <img loading="lazy" fetchPriority="low" alt="Download Portrait on the App Store" height="40" src={appStoreBadge} width="120" />
                         </a>
-                        <a className="text-link fleet-showcase-link" href={PORTRAIT_URL} rel="noreferrer" target="_blank">
-                          Visit Portrait <span aria-hidden="true">↗</span>
+                        <a className="product-action product-action-primary" href={PORTRAIT_URL} rel="noreferrer" target="_blank">
+                          Visit Portrait <span aria-hidden="true">→</span>
                         </a>
                       </>
                     ) : (
-                      <a className="text-link fleet-showcase-link" href={product.link.href} rel="noreferrer" target="_blank">
-                        {product.link.label} <span aria-hidden="true">{product.slug === "property-insights" ? "→" : "↗"}</span>
+                      <a className="product-action product-action-primary" href={product.link.href} rel="noreferrer" target="_blank">
+                        {product.link.label} <span aria-hidden="true">→</span>
                       </a>
                     )}
                   </div>
                 ) : null}
-                {(product.slug === "portrait" || product.slug === "signal") && <a className="case-study-link" href={`/work/${product.slug}`}>Explore the {product.name} case study <span aria-hidden="true">→</span></a>}
+                {(product.slug === "portrait" || product.slug === "signal") && <a className={`case-study-link product-action ${product.slug === "signal" ? "product-action-primary" : "product-action-secondary"}`} href={`/work/${product.slug}`}>Explore the {product.name} case study <span aria-hidden="true">→</span></a>}
               </div>
 
 
@@ -311,7 +311,7 @@ function AboutSection() {
     </section>
     <section className="process-band" id="process" aria-labelledby="process-title">
       <div className="section-shell">
-        <div className="process-intro"><h2 id="process-title">From idea<br />to working product.</h2><p>We move from an idea worth pursuing to something people can actually use.</p></div>
+        <div className="process-intro"><h2 id="process-title">From idea to working product.</h2></div>
         <ol className="process-grid" role="list">{buildSteps.map(item => <li className="process-step" key={item.step}><span className="process-number" aria-hidden="true">{item.step}</span><h3>{item.title}</h3><p>{item.body}</p></li>)}</ol>
       </div>
     </section>

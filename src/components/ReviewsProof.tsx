@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { useReducedMotion } from 'framer-motion';
 import { currentSkyPupsReviews as reviews } from '../content/reviews';
 import './ReviewsProof.css';
+import ReviewImage from './ReviewImage';
 
 // Native Reviews Engine PawGlyph: ReviewCard.tsx, verified 2026-09-11.
 function NativePaw() {
@@ -84,15 +85,7 @@ export default function ReviewsProof() {
                   }}
                   onPointerLeave={() => setHoverPaused(false)}
                 >
-                  <img
-                    alt={`${review.name} from the SkyPups review collection`}
-                    decoding="async"
-                    height="1200"
-                    loading="lazy"
-                    src={review.image}
-                    style={{ objectPosition: review.imagePosition }}
-                    width="900"
-                  />
+                  <ReviewImage src={review.image} alt={`${review.name} from the SkyPups review collection`} position={review.imagePosition} viewport={windowRef} />
                   <div className="re-card-copy">
                     <p aria-label={`${review.paws} out of 5 paws`} className="re-paw-rating" role="img">
                       <span aria-hidden="true" className="re-paws">

@@ -7,6 +7,7 @@ import sloaneSource from '../assets/showcase/portrait/sloane-source.webp';
 import sloaneResult from '../assets/showcase/portrait/sloane-result.webp';
 import './PortraitComparison.css';
 import PortraitHeroReveal from './PortraitHeroReveal';
+import ResponsiveImage, { portraitImageSizes, portraitSourceSizes } from './ResponsiveImage';
 
 interface PortraitComparisonProps {
   className?: string;
@@ -82,13 +83,13 @@ export default function PortraitComparison({ className = '', interactive = true,
     <div className={`portrait-comparison ${className}`} data-subject={subject} ref={stage}
       style={{ '--portrait-position': `${position}%` } as CSSProperties}
       onPointerDown={begin} onPointerMove={move} onPointerUp={finish} onPointerCancel={finish}>
-      <img className="portrait-comparison-image portrait-comparison-source" src={portrait.source}
+      <ResponsiveImage sizes={portraitSourceSizes} className="portrait-comparison-image portrait-comparison-source" src={portrait.source}
         alt={`${portrait.name}, original photograph for the Portrait studio example`}
         width={portrait.width} height={portrait.height} draggable={false}
         loading={priority ? 'eager' : 'lazy'} fetchPriority={priority ? 'high' : 'low'}
         decoding={priority ? 'sync' : 'async'} style={{ transform: portrait.transform }} />
       <div className="portrait-comparison-result">
-        <img className="portrait-comparison-image" src={portrait.result}
+        <ResponsiveImage sizes={portraitImageSizes} className="portrait-comparison-image" src={portrait.result}
           alt={`${portrait.name}, finished editorial portrait`} width={1024} height={1024}
           draggable={false} loading={priority ? 'eager' : 'lazy'} fetchPriority={priority ? 'high' : 'low'} decoding={priority ? 'sync' : 'async'} />
       </div>

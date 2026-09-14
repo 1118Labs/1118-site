@@ -19,7 +19,7 @@ Canonical website: https://1118.io/
 - [Privacy](https://1118.io/privacy)
 - [Security](https://1118.io/security)
 
-This is a plain-language index of the public website, not an additional source of product claims.
-
 - [Terms](https://1118.io/terms): Terms of use.
 - [Accessibility](https://1118.io/accessibility): Accessibility approach and support.
+
+This is a plain-language index of the public website, not an additional source of product claims.

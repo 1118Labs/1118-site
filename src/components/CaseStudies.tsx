@@ -1,11 +1,12 @@
 import type { ReactNode } from 'react';
+import ResponsiveImage, { wideImageSizes } from './ResponsiveImage';
 import rowanPortrait from '../assets/showcase/portrait/rowan-result.webp';
 import theoPortrait from '../assets/showcase/portrait/theo-result.webp';
 import grahamPortrait from '../assets/showcase/portrait/graham-result.webp';
 import PortraitStory from './PortraitStory';
 import SignalWorkstation from './SignalWorkstation';
 import portraitResult from '../assets/showcase/portrait/elise-result.webp';
-import portraitIcon from '../assets/showcase/portrait/portrait-native-icon.png';
+import portraitIcon from '../assets/responsive/portrait-icon.webp';
 import signalOverview from '../assets/showcase/signal/signal-archival-interface.png';
 import signalEnvironment from '../assets/showcase/signal/signal-workstation-authentic-composite-20260913.webp';
 import signalHistory from '../assets/showcase/signal/signal-historical-data-2019.png';
@@ -53,7 +54,7 @@ function WorkIndex() {
             <p>Most AI-generated portraits still look unmistakably generated. Portrait starts with one real photograph and turns it into a refined editorial portrait designed to look like you—and look good enough to publish.</p>
             <span className="case-text-link">Explore Portrait <span aria-hidden="true">→</span></span>
           </div>
-          <div className="work-feature-image"><img src={portraitResult} width="1024" height="1024" alt="Elise shown as a finished Portrait editorial illustration" loading="lazy" decoding="async" /></div>
+          <div className="work-feature-image"><ResponsiveImage sizes="(max-width: 900px) 92vw, 600px" src={portraitResult} width="1024" height="1024" alt="Elise shown as a finished Portrait editorial illustration" loading="lazy" decoding="async" /></div>
         </a>
       </article>
       <article className="work-feature work-feature-signal">
@@ -64,7 +65,7 @@ function WorkIndex() {
             <p>Signal began with a sophisticated quantitative trading process and a question: could that way of analyzing markets be turned into a visual software product?</p>
             <span className="case-text-link">Explore Signal <span aria-hidden="true">→</span></span>
           </div>
-          <div className="work-feature-image"><img src={signalEnvironment} width="1536" height="1024" alt="Signal commodities analytics interface presented in an illustrative trading-workstation environment." loading="lazy" decoding="async" /></div>
+          <div className="work-feature-image"><ResponsiveImage sizes={wideImageSizes} src={signalEnvironment} width="1536" height="1024" alt="Signal commodities analytics interface presented in an illustrative trading-workstation environment." loading="lazy" decoding="async" /></div>
         </a>
       </article>
     </div>
@@ -86,7 +87,7 @@ function PortraitCase() {
       <p className="case-intro">Most AI-generated portraits still look unmistakably generated. Portrait starts with one real photograph and turns it into a refined editorial portrait designed to look like you—and look good enough to publish.</p>
     </header>
     <figure className="case-portrait-hero case-shell">
-      <img src={portraitResult} alt="A finished Portrait of Elise, with detailed editorial line work" width="1024" height="1024" decoding="async" fetchPriority="high" />
+      <ResponsiveImage sizes="(max-width: 900px) 92vw, 600px" src={portraitResult} alt="A finished Portrait of Elise, with detailed editorial line work" width="1024" height="1024" decoding="async" fetchPriority="high" />
       <figcaption>Finished Portrait output · Elise · Studio example</figcaption>
     </figure>
     <div className="case-shell">
@@ -105,7 +106,7 @@ function PortraitCase() {
       <h2 id="portrait-experience-title">Product experience.</h2>
       <p className="case-intro">The source photograph, transformation, and finished profile formats from Portrait.</p>
       <PortraitStory variant="case-study" />
-      <div className="case-portrait-gallery">{[{name:'Rowan',src:rowanPortrait},{name:'Theo',src:theoPortrait},{name:'Graham',src:grahamPortrait}].map(item=><figure key={item.name}><a href="https://getportrait.ai/gallery" target="_blank" rel="noreferrer"><img src={item.src} width="1024" height="1024" alt={`${item.name}, approved Portrait studio example`} loading="lazy" decoding="async" /></a><figcaption>{item.name} · Studio example</figcaption></figure>)}</div>
+      <div className="case-portrait-gallery">{[{name:'Rowan',src:rowanPortrait},{name:'Theo',src:theoPortrait},{name:'Graham',src:grahamPortrait}].map(item=><figure key={item.name}><a href="https://getportrait.ai/gallery" target="_blank" rel="noreferrer"><ResponsiveImage sizes="(max-width: 700px) 90vw, 400px" src={item.src} width="1024" height="1024" alt={`${item.name}, approved Portrait studio example`} loading="lazy" decoding="async" /></a><figcaption>{item.name} · Studio example</figcaption></figure>)}</div>
     </section>
     <div className="case-shell">
       <CaseSection number="06" label="Portrait" title="Product outcome.">
@@ -128,7 +129,7 @@ function SignalCase() {
       <h1>We built a better way<br />to uncover commodities trade&nbsp;ideas.</h1>
       <p className="case-intro">Signal began with a sophisticated quantitative trading process and a question: could that way of analyzing markets be turned into a visual software product?</p><p className="case-intro">Signal was used in live markets, licensed commercially, and later acquired.</p>
     </header>
-    <div className="case-signal-hero"><SignalWorkstation /></div>
+    <div className="case-signal-hero"><SignalWorkstation archival /></div>
     <div className="case-shell">
       <CaseSection number="02" label="Signal" title="The gap.">
         <p>Sophisticated commodities analysis often lived inside spreadsheets, models, and the expertise of the people using them.</p>
@@ -143,10 +144,10 @@ function SignalCase() {
     <section className="case-experience case-shell" aria-labelledby="signal-experience-title">
       <p className="case-kicker">05 / Product experience</p>
       <h2 id="signal-experience-title">Authentic archival UI.</h2>
-      <figure className="case-archive-figure"><a href={signalOverview} target="_blank" rel="noreferrer" aria-label="Open the full-size original Signal interface"><img src={signalOverview} width="2167" height="1046" alt="Authentic Signal interface from 2019, showing seasonal commodity data and correlation analysis." loading="lazy" decoding="async" /></a><figcaption>Original Signal interface · 2019 <a href={signalOverview} target="_blank" rel="noreferrer">Explore the original screen ↗</a></figcaption></figure>
+      <figure className="case-archive-figure"><a href={signalOverview} target="_blank" rel="noreferrer" aria-label="Open the full-size original Signal interface"><ResponsiveImage sizes={wideImageSizes} src={signalOverview} width="2167" height="1046" alt="Authentic Signal interface from 2019, showing seasonal commodity data and correlation analysis." loading="lazy" decoding="async" /></a><figcaption>Original Signal interface · 2019 <a href={signalOverview} target="_blank" rel="noreferrer">Explore the original screen ↗</a></figcaption></figure>
       <div className="case-workflow"><div><span>01</span><h3>Define the structure.</h3><p>Choose the contract, metric, expiration, and time shift.</p></div><div><span>02</span><h3>Explore the history.</h3><p>Set a time window and examine changes across the selected series.</p></div><div><span>03</span><h3>Compare relationships.</h3><p>Move between historical, seasonal, and correlation views.</p></div></div>
-      <figure className="case-archive-figure"><a href={signalHistory} target="_blank" rel="noreferrer" aria-label="Open full-size Signal historical data screenshot"><img src={signalHistory} alt="Authentic Signal historical-data screen with selectable analytical structures, time-series charts, and a time-range navigator" width="2329" height="984" loading="lazy" decoding="async" /></a><figcaption>Historical data and time-window exploration · Authentic Signal interface, August 2019 <a href={signalHistory} target="_blank" rel="noreferrer">View full image ↗</a></figcaption></figure>
-      <div className="case-archive-detail"><figure className="case-archive-figure"><a href={signalStructures} target="_blank" rel="noreferrer" aria-label="Open full-size Signal Manage Structures screenshot"><img src={signalStructures} alt="Authentic Signal Manage Structures dialog showing contract, expiration, skew, time-shift, and metric controls" width="1211" height="843" loading="lazy" decoding="async" /></a><figcaption>Manage Structures · Authentic Signal interface, August 2019 <a href={signalStructures} target="_blank" rel="noreferrer">View full image ↗</a></figcaption></figure><div><h3>The analytical choices stay visible.</h3><p>The structure editor makes the ingredients of an analysis explicit. Its controls connect the market question to the data shown in the workspace.</p></div></div>
+      <figure className="case-archive-figure"><a href={signalHistory} target="_blank" rel="noreferrer" aria-label="Open full-size Signal historical data screenshot"><ResponsiveImage sizes={wideImageSizes} src={signalHistory} alt="Authentic Signal historical-data screen with selectable analytical structures, time-series charts, and a time-range navigator" width="2329" height="984" loading="lazy" decoding="async" /></a><figcaption>Historical data and time-window exploration · Authentic Signal interface, August 2019 <a href={signalHistory} target="_blank" rel="noreferrer">View full image ↗</a></figcaption></figure>
+      <div className="case-archive-detail"><figure className="case-archive-figure"><a href={signalStructures} target="_blank" rel="noreferrer" aria-label="Open full-size Signal Manage Structures screenshot"><ResponsiveImage sizes="(max-width: 900px) 92vw, 800px" src={signalStructures} alt="Authentic Signal Manage Structures dialog showing contract, expiration, skew, time-shift, and metric controls" width="1211" height="843" loading="lazy" decoding="async" /></a><figcaption>Manage Structures · Authentic Signal interface, August 2019 <a href={signalStructures} target="_blank" rel="noreferrer">View full image ↗</a></figcaption></figure><div><h3>The analytical choices stay visible.</h3><p>The structure editor makes the ingredients of an analysis explicit. Its controls connect the market question to the data shown in the workspace.</p></div></div>
     </section>
     <div className="case-shell">
       <CaseSection number="06" label="Signal" title="Product outcome.">
