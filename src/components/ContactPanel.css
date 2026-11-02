@@ -33,3 +33,13 @@
 
 .contact-panel-unavailable { border-top: 1px solid var(--line); padding-top: 24px; }
 .contact-panel-unavailable p { margin: 0; color: var(--ink-soft); font-size: 18px; line-height: 1.6; }
+
+/* The completed form becomes a clear success card; no input values remain visible. */
+.contact-section .contact-panel-complete { min-height: 360px; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 28px; }
+.contact-panel-success { width: 100%; outline: none; }
+.contact-panel-success-icon { display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 64px; margin-bottom: 24px; border-radius: 50%; background: #e8f2ec; color: #24583b; }
+.contact-section .contact-panel-success h3 { margin: 0 0 14px; color: #192e43; font-size: clamp(28px, 3vw, 36px); font-weight: 650; line-height: 1.2; letter-spacing: -.025em; }
+.contact-section .contact-panel-success p { max-width: 40ch; margin: 0; color: #46586a; font-size: 18px; line-height: 1.65; }
+.contact-section .contact-panel .contact-panel-send-another { min-height: 48px; padding: 12px 18px; background: transparent; color: #192e43; border: 1px solid #8b9baa; border-radius: 6px; font-size: 15px; gap: 20px; white-space: normal; text-align: left; }
+.contact-section .contact-panel .contact-panel-send-another:hover { background: #f0f4f7; border-color: #192e43; }
+@media (max-width: 640px) { .contact-section .contact-panel-complete { min-height: 320px; gap: 24px; } .contact-panel-success-icon { width: 56px; height: 56px; margin-bottom: 20px; } .contact-section .contact-panel-success p { font-size: 17px; } }
